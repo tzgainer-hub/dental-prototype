@@ -1596,7 +1596,7 @@ footer {
   transition: all 0.2s;
 }
 .mobile-sticky-book {
-  flex: 1.4;
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1609,18 +1609,32 @@ footer {
   border-radius: 10px;
   transition: all 0.2s;
 }
+.mobile-sticky-chat {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--teal);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.92rem;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+}
 @media (max-width: 768px) {
   .mobile-sticky-cta { display: flex; }
   body { padding-bottom: 72px; }
 }
 
 /* ─── TAWK.TO ─── */
+/* Desktop: normal position. Mobile: hidden via JS API, opened by Chat button in sticky bar */
 #tawk-bubble-container { right: 20px !important; bottom: 20px !important; }
 div[id^="tawk"] { z-index: 150 !important; }
-@media (max-width: 768px) {
-  /* Push chat bubble above the mobile sticky CTA bar */
-  #tawk-bubble-container { bottom: 82px !important; right: 12px !important; }
-}
 
 /* ─── PAGE HERO (interior pages) ─── */
 .page-hero {
