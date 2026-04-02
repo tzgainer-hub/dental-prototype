@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us | Scottsdale Surgical Arts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- TOP INFO BAR -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-left">
+        <div class="topbar-item">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8a8 8 0 1 1 16 0c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+          Scottsdale · Sedona
+        </div>
+        <div class="topbar-item">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Same-Day Emergency Appointments Available
+        </div>
+      </div>
+      <div class="topbar-right">
+        <a href="tel:4809229933" class="topbar-phone">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.38 2 2 0 0 1 3.59 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17z"/></svg>
+          (480) 922-9933
+        </a>
+        <a href="#" class="topbar-link">Patient Portal</a>
+        <a href="#" class="topbar-link">Pay My Bill</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- STICKY NAVIGATION -->
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-text">
+          <span class="logo-name">Scottsdale Surgical Arts</span>
+          <span class="logo-sub">Oral &amp; Maxillofacial Surgery</span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Our Services</a></li>
+        <li><a href="about.html" class="nav-active">About Us</a></li>
+        <li><a href="team.html">Our Team</a></li>
+        <li><a href="contact.html">Patient Info</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="tel:4809229933" class="nav-phone-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.38 2 2 0 0 1 3.59 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17z"/></svg>
+          (480) 922-9933
+        </a>
+        <a href="contact.html" class="nav-book-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span>Book Appointment</span>
+        </a>
+      </div>
+      <button class="nav-hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="index.html">Home</a>
+      <a href="services.html">Our Services</a>
+      <a href="about.html">About Us</a>
+      <a href="team.html">Our Team</a>
+      <a href="contact.html">Patient Info</a>
+      <a href="tel:4809229933">(480) 922-9933</a>
+      <a href="contact.html" class="mobile-book">📅 Book Your Appointment →</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="section-inner">
+      <div class="page-hero-eyebrow">Who We Are</div>
+      <h1 class="page-hero-title">About Scottsdale Surgical Arts</h1>
+      <div class="page-hero-breadcrumb"><a href="index.html">Home</a> → About Us</div>
+    </div>
+  </section>
+
+  <!-- ABOUT / WHY US -->
+  <section class="about-section" id="about">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div class="about-photo-col">
+          <div class="about-main-photo">
+            <img
+              src="https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=800&q=80&auto=format&fit=crop"
+              alt="Modern dental office consultation"
+              loading="lazy"
+            />
+          </div>
+          <div class="about-accent-card">
+            <span class="about-accent-num">20+</span>
+            <span class="about-accent-label">Years Serving<br>the Valley</span>
+          </div>
+        </div>
+        <div class="about-content">
+          <div class="section-eyebrow">Why Patients Choose Us</div>
+          <h2 class="section-title">Board-Certified Expertise.<br><em>Hometown Warmth.</em></h2>
+          <p class="section-desc">We believe exceptional surgical care and a warm, welcoming experience aren't mutually exclusive. At Scottsdale Surgical Arts, you're never a number — you're family.</p>
+          <div class="about-points">
+            <div class="about-point">
+              <div class="about-point-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+              <div class="about-point-text">
+                <h4>Fellowship-Trained Surgeons</h4>
+                <p>Our surgeons completed advanced fellowship training at top institutions and hold active board certification from the American Board of Oral &amp; Maxillofacial Surgery.</p>
+              </div>
+            </div>
+            <div class="about-point">
+              <div class="about-point-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg></div>
+              <div class="about-point-text">
+                <h4>Hospital-Level Safety Standards</h4>
+                <p>Our state-of-the-art surgical suites are equipped to handle any procedure, with AAAHC-accredited facilities and a dedicated in-house anesthesia team.</p>
+              </div>
+            </div>
+            <div class="about-point">
+              <div class="about-point-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+              <div class="about-point-text">
+                <h4>Clear Communication, Always</h4>
+                <p>We take time to explain every step of your treatment, answer all your questions, and make sure you feel fully informed and confident — before, during, and after.</p>
+              </div>
+            </div>
+            <div class="about-point">
+              <div class="about-point-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+              <div class="about-point-text">
+                <h4>Flexible Payment Options</h4>
+                <p>We accept most major insurance plans and offer CareCredit financing for 0% APR payment plans. We'll never let cost stand between you and the care you deserve.</p>
+              </div>
+            </div>
+          </div>
+          <div class="about-stats-row">
+            <div class="about-stat">
+              <span class="about-stat-num" data-target="4.9" data-suffix="★">4.9★</span>
+              <span class="about-stat-label">Google Rating</span>
+            </div>
+            <div class="about-stat">
+              <span class="about-stat-num" data-target="15000" data-suffix="K+">15K+</span>
+              <span class="about-stat-label">Procedures Performed</span>
+            </div>
+            <div class="about-stat">
+              <span class="about-stat-num" data-target="20" data-suffix="+">20+</span>
+              <span class="about-stat-label">Years in Practice</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECHNOLOGY SECTION -->
+  <section class="tech-section reveal">
+    <div class="section-inner">
+      <div class="tech-grid">
+        <div class="tech-content">
+          <div class="section-eyebrow">Advanced Technology</div>
+          <h2 class="section-title">Surgical Precision Powered by<br><em>Cutting-Edge Tools</em></h2>
+          <p class="section-desc">We invest in technology so our patients experience shorter procedures, faster recovery, and more predictable outcomes than ever before.</p>
+          <div class="tech-items">
+            <div class="tech-item">
+              <div class="tech-item-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div class="tech-item-text">
+                <h4>3D Cone Beam CT Imaging (CBCT)</h4>
+                <p>Full 3D scans of your jaw, teeth, and sinuses in seconds — giving surgeons a precise roadmap before a single incision is made.</p>
+              </div>
+            </div>
+            <div class="tech-item">
+              <div class="tech-item-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              </div>
+              <div class="tech-item-text">
+                <h4>Digital Implant Planning Software</h4>
+                <p>Every implant case is planned digitally before surgery — optimal position, angle, and depth mapped out with surgical-grade accuracy.</p>
+              </div>
+            </div>
+            <div class="tech-item">
+              <div class="tech-item-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              </div>
+              <div class="tech-item-text">
+                <h4>Surgical Microscope</h4>
+                <p>High-magnification visualization ensures precision down to fractions of a millimeter — critical for complex reconstructive cases.</p>
+              </div>
+            </div>
+            <div class="tech-item">
+              <div class="tech-item-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/><path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"/><path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"/><path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"/><path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"/><path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"/><path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"/></svg>
+              </div>
+              <div class="tech-item-text">
+                <h4>IV &amp; In-Office Anesthesia</h4>
+                <p>Full in-house anesthesia team — no hospital visit needed. We provide the same level of monitoring and safety as a licensed surgical center.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tech-visual">
+          <div class="tech-photo-wrap">
+            <img src="https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=700&q=80&auto=format&fit=crop" alt="Advanced dental imaging technology" loading="lazy" />
+          </div>
+          <div class="tech-badges">
+            <div class="tech-badge">
+              <span class="tech-badge-icon">🏥</span>
+              <span>AAAHC Accredited Facility</span>
+            </div>
+            <div class="tech-badge">
+              <span class="tech-badge-icon">🔬</span>
+              <span>Hospital-Grade Sterilization</span>
+            </div>
+            <div class="tech-badge">
+              <span class="tech-badge-icon">📡</span>
+              <span>Real-Time Patient Monitoring</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <div class="cta-band">
+    <div class="cta-band-inner">
+      <h2>Ready to Transform Your Smile?</h2>
+      <p>Schedule your free consultation today and take the first step toward the confident, healthy smile you deserve.</p>
+      <div class="cta-band-actions">
+        <a href="contact.html" class="btn-white">
+          📅 Book My Free Consult
+        </a>
+        <a href="tel:4809229933" class="btn-outline-white">
+          📞 (480) 922-9933
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo-name">Scottsdale Surgical Arts</div>
+          <span class="footer-logo-sub">Oral &amp; Maxillofacial Surgery</span>
+          <p class="footer-bio">Serving the Scottsdale Valley since 2004. Board-certified oral surgeons committed to exceptional outcomes and an experience that leaves you smiling — literally.</p>
+          <div class="footer-socials">
+            <a href="#" class="footer-social" aria-label="Facebook">f</a>
+            <a href="#" class="footer-social" aria-label="Instagram">📷</a>
+            <a href="#" class="footer-social" aria-label="Google">G</a>
+            <a href="#" class="footer-social" aria-label="YouTube">▶</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title">Our Services</div>
+          <div class="footer-links">
+            <a href="services.html">Dental Implants</a>
+            <a href="services.html">Wisdom Teeth</a>
+            <a href="services.html">Bone Grafting</a>
+            <a href="services.html">Jaw Surgery</a>
+            <a href="services.html">Facial Trauma</a>
+            <a href="services.html">IV Sedation</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title">Quick Links</div>
+          <div class="footer-links">
+            <a href="about.html">About Us</a>
+            <a href="team.html">Our Team</a>
+            <a href="index.html#reviews">Patient Reviews</a>
+            <a href="contact.html">Patient FAQ</a>
+            <a href="contact.html">Book Appointment</a>
+            <a href="#">Patient Portal</a>
+            <a href="#">Pay My Bill</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title">Our Locations</div>
+          <div class="footer-location">
+            <div class="footer-location-name">Scottsdale</div>
+            <p>10603 North Hayden Road, Suite H-112<br>Scottsdale, AZ 85260</p>
+            <a href="tel:4809229933">(480) 922-9933</a>
+          </div>
+          <div class="footer-location">
+            <div class="footer-location-name">Sedona</div>
+            <p>2935 Southwest Drive, Suite 100<br>Sedona, AZ 86336</p>
+            <a href="tel:9282821224">(928) 282-1224</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© 2026 Scottsdale Surgical Arts. All rights reserved.</div>
+        <div style="display:flex;gap:20px;">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Use</a>
+          <a href="#">Accessibility</a>
+          <a href="#">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('open');
+    }
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('mobile-menu').classList.remove('open');
+      });
+    });
+
+    // ── Scroll reveal animations ──
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // ── Animated stat counters ──
+    if (document.querySelectorAll('[data-target]').length > 0) {
+      function animateCounter(el) {
+        const target = parseFloat(el.dataset.target);
+        const suffix = el.dataset.suffix || '';
+        const duration = 1800;
+        const start = performance.now();
+        const isDecimal = target % 1 !== 0;
+        const update = (now) => {
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const value = eased * target;
+          el.textContent = (isDecimal ? value.toFixed(1) : Math.floor(value).toLocaleString()) + suffix;
+          if (progress < 1) requestAnimationFrame(update);
+        };
+        requestAnimationFrame(update);
+      }
+      const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            animateCounter(entry.target);
+            counterObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.5 });
+      document.querySelectorAll('[data-target]').forEach(el => counterObserver.observe(el));
+    }
+
+    // Subtle nav shadow on scroll
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('main-nav');
+      if (window.scrollY > 20) {
+        nav.style.boxShadow = '0 4px 24px rgba(12,26,46,0.12)';
+      } else {
+        nav.style.boxShadow = '0 2px 16px rgba(12,26,46,0.06)';
+      }
+    });
+  </script>
+
+  <!-- MOBILE STICKY CTA BAR -->
+  <div class="mobile-sticky-cta" id="mobile-sticky">
+    <a href="tel:4809229933" class="mobile-sticky-call">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.38 2 2 0 0 1 3.59 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17z"/></svg>
+      Call Now
+    </a>
+    <a href="contact.html" class="mobile-sticky-book">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Book Appointment
+    </a>
+  </div>
+
+  <!--Start of Tawk.to Script-->
+  <script type="text/javascript">
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+  s1.async=true;
+  s1.src='https://embed.tawk.to/69cdbcadb8aa781c3b30ef8f/1jl5qi1c1';
+  s1.charset='UTF-8';
+  s1.setAttribute('crossorigin','*');
+  s0.parentNode.insertBefore(s1,s0);
+  })();
+  </script>
+  <!--End of Tawk.to Script-->
+
+</body>
+</html>

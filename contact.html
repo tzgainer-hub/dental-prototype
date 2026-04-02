@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Patient Info | Scottsdale Surgical Arts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- TOP INFO BAR -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-left">
+        <div class="topbar-item">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8a8 8 0 1 1 16 0c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+          Scottsdale · Sedona
+        </div>
+        <div class="topbar-item">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Same-Day Emergency Appointments Available
+        </div>
+      </div>
+      <div class="topbar-right">
+        <a href="tel:4809229933" class="topbar-phone">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.38 2 2 0 0 1 3.59 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17z"/></svg>
+          (480) 922-9933
+        </a>
+        <a href="#" class="topbar-link">Patient Portal</a>
+        <a href="#" class="topbar-link">Pay My Bill</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- STICKY NAVIGATION -->
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-text">
+          <span class="logo-name">Scottsdale Surgical Arts</span>
+          <span class="logo-sub">Oral &amp; Maxillofacial Surgery</span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Our Services</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="team.html">Our Team</a></li>
+        <li><a href="contact.html" class="nav-active">Patient Info</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="tel:4809229933" class="nav-phone-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.38 2 2 0 0 1 3.59 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17z"/></svg>
+          (480) 922-9933
+        </a>
+        <a href="contact.html" class="nav-book-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span>Book Appointment</span>
+        </a>
+      </div>
+      <button class="nav-hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="index.html">Home</a>
+      <a href="services.html">Our Services</a>
+      <a href="about.html">About Us</a>
+      <a href="team.html">Our Team</a>
+      <a href="contact.html">Patient Info</a>
+      <a href="tel:4809229933">(480) 922-9933</a>
+      <a href="contact.html" class="mobile-book">📅 Book Your Appointment →</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="section-inner">
+      <div class="page-hero-eyebrow">We're Here to Help</div>
+      <h1 class="page-hero-title">Patient Information</h1>
+      <div class="page-hero-breadcrumb"><a href="index.html">Home</a> → Patient Info</div>
+    </div>
+  </section>
+
+  <!-- BOOK APPOINTMENT -->
+  <section class="appt-section" id="appointment">
+    <div class="section-inner">
+      <div class="appt-grid">
+        <div class="appt-form-wrap">
+          <div class="form-title">Request an Appointment</div>
+          <p class="form-subtitle">Fill out the form and our team will confirm within 2 hours.</p>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">First Name</label>
+              <input type="text" id="fname" placeholder="Jane" />
+            </div>
+            <div class="form-group">
+              <label for="lname">Last Name</label>
+              <input type="text" id="lname" placeholder="Smith" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" placeholder="(480) 000-0000" />
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" placeholder="jane@example.com" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="service">Service Needed</label>
+            <select id="service">
+              <option value="">Select a service...</option>
+              <option>Dental Implants</option>
+              <option>Wisdom Teeth Removal</option>
+              <option>Bone Grafting</option>
+              <option>Jaw Surgery</option>
+              <option>Facial Trauma / Emergency</option>
+              <option>Sedation Consultation</option>
+              <option>Not Sure – Need a Consult</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="date">Preferred Date</label>
+              <input type="date" id="date" />
+            </div>
+            <div class="form-group">
+              <label for="location">Preferred Location</label>
+              <select id="location">
+                <option>Scottsdale — 10603 N. Hayden Rd.</option>
+                <option>Sedona — 2935 Southwest Dr.</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="message">Anything else we should know?</label>
+            <textarea id="message" placeholder="Tell us about your situation, concerns, or questions..."></textarea>
+          </div>
+          <button type="submit" class="form-submit">
+            📅 Request My Appointment
+          </button>
+          <p class="form-note">🔒 Your information is private and never shared. We'll reach out within 2 hours.</p>
+        </div>
+
+        <div class="appt-info">
+          <div class="section-eyebrow">Schedule Today</div>
+          <div class="appt-info-title">We're Here When<br>You Need Us Most</div>
+          <p class="appt-info-desc">Same-day emergency appointments available. No long waits, no referral runaround — just expert care exactly when you need it.</p>
+          <div class="appt-cards">
+            <div class="appt-card">
+              <div class="appt-card-icon">📍</div>
+              <div class="appt-card-text">
+                <h4>Scottsdale Office</h4>
+                <p>10603 North Hayden Road, Suite H-112<br>Scottsdale, AZ 85260<br><a href="tel:4809229933">(480) 922-9933</a></p>
+              </div>
+            </div>
+            <div class="appt-card">
+              <div class="appt-card-icon">📍</div>
+              <div class="appt-card-text">
+                <h4>Sedona Office</h4>
+                <p>2935 Southwest Drive, Suite 100<br>Sedona, AZ 86336<br><a href="tel:9282821224">(928) 282-1224</a></p>
+              </div>
+            </div>
+            <div class="appt-card">
+              <div class="appt-card-icon">🕐</div>
+              <div class="appt-card-text">
+                <h4>Office Hours</h4>
+                <table class="hours-table">
+                  <tr><td>Monday – Thursday</td><td>7:00 AM – 5:00 PM</td></tr>
+                  <tr><td>Friday</td><td>7:00 AM – 3:00 PM</td></tr>
+                  <tr><td>Saturday</td><td>8:00 AM – 12:00 PM</td></tr>
+                  <tr><td>Sunday</td><td>Closed</td></tr>
+                </table>
+              </div>
+            </div>
+            <div class="appt-card">
+              <div class="appt-card-icon">🚨</div>
+              <div class="appt-card-text">
+                <h4>Dental Emergency?</h4>
+                <p>Call us immediately at <a href="tel:4809229933">(480) 922-9933</a>. We offer same-day emergency appointments and after-hours urgent care for existing patients.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAP SECTION -->
+  <section class="map-section">
+    <div class="map-section-header">
+      <div class="section-inner">
+        <div class="section-eyebrow">Find Us</div>
+        <h2 class="section-title">2 Convenient <em>Locations</em></h2>
+      </div>
+    </div>
+    <div class="map-container">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d106538.48455963487!2d-111.99085589613!3d33.50412777950607!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x872b08b9b42c1629%3A0xc30fb1d0d14b4a92!2sScottsdale%2C%20AZ!5e0!3m2!1sen!2sus!4v1"
+        width="100%" height="420" style="border:0;" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade" title="Scottsdale Surgical Arts locations">
+      </iframe>
+    </div>
+    <div class="map-location-pills">
+      <div class="section-inner">
+        <div class="map-pills-row">
+          <a href="https://maps.google.com/?q=10603+North+Hayden+Road+Suite+H-112+Scottsdale+AZ+85260" target="_blank" class="map-pill">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8a8 8 0 1 1 16 0c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+            Scottsdale — 10603 N. Hayden Rd. · Get Directions
+          </a>
+          <a href="https://maps.google.com/?q=2935+Southwest+Drive+Suite+100+Sedona+AZ+86336" target="_blank" class="map-pill">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8a8 8 0 1 1 16 0c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+            Sedona — 2935 Southwest Dr. · Get Directions
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ / PATIENT INFO -->
+  <section class="faq-section" id="faq">
+    <div class="section-inner">
+      <div class="faq-grid">
+        <div class="faq-intro">
+          <div class="section-eyebrow">Patient Information</div>
+          <h2 class="section-title">Questions? <em>We Have Answers.</em></h2>
+          <p class="faq-intro-sub">We know oral surgery can feel intimidating. Here are answers to the questions we hear most often. If you don't see yours, our team is always a phone call away.</p>
+          <a href="tel:4809229933" class="faq-contact-link">
+            📞 Call Us Directly
+          </a>
+        </div>
+        <div class="faq-list">
+
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+              What should I expect on the day of my procedure?
+              <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+              Plan to have a driver with you — most procedures involve sedation, so you won't be able to drive afterward. Arrive 15 minutes early. You'll meet with your surgeon, review your treatment plan, and our team will walk you through every step before anything begins. Most procedures take 30–90 minutes, after which you'll recover in our comfortable suite before heading home.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+              Do you accept my dental insurance?
+              <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+              We accept Delta Dental, Aetna, Cigna, MetLife, United Healthcare, BlueCross BlueShield, Humana, Guardian, and most other major PPO plans. We also work with CareCredit for flexible 0% APR financing. Call our office and we'll verify your benefits before your appointment — no surprises.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+              Is IV sedation safe? What are my options?
+              <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+              Absolutely. We offer four levels of sedation: local anesthesia (numbing only), nitrous oxide (laughing gas), oral sedation (relaxation pill), and full IV sedation (you'll be asleep). IV sedation is administered by our in-house anesthesia team with continuous monitoring throughout. The option that's right for you depends on your procedure and anxiety level — we'll discuss it at your consultation.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+              How long is recovery after wisdom tooth removal?
+              <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+              Most patients feel well enough to return to desk work within 2–3 days. Swelling typically peaks around day 2 and subsides by day 5–7. We send every patient home with a recovery kit including gauze, ice packs, and detailed care instructions. Dr. Park's minimally-invasive extraction technique significantly shortens recovery time for most patients.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+              How much do dental implants cost?
+              <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+              Implant costs vary based on the number of implants, whether bone grafting is needed, and your specific anatomy. A single implant typically ranges from $3,500–$5,000 all-in. Many insurance plans cover a portion of implant-related procedures. We offer free consultations where we'll provide a personalized quote and review all financing options — so you know exactly what to expect.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+              Do you see children and teenagers?
+              <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+              Yes! Dr. Lim specializes in pediatric oral surgery. We see patients as young as 6 for tooth extractions and commonly treat teenagers for wisdom teeth removal and orthodontic-related procedures. We have lots of experience making young patients feel safe and comfortable.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <div class="cta-band">
+    <div class="cta-band-inner">
+      <h2>Ready to Transform Your Smile?</h2>
+      <p>Schedule your free consultation today and take the first step toward the confident, healthy smile you deserve.</p>
+      <div class="cta-band-actions">
+        <a href="contact.html" class="btn-white">
+          📅 Book My Free Consult
+        </a>
+        <a href="tel:4809229933" class="btn-outline-white">
+          📞 (480) 922-9933
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo-name">Scottsdale Surgical Arts</div>
+          <span class="footer-logo-sub">Oral &amp; Maxillofacial Surgery</span>
+          <p class="footer-bio">Serving the Scottsdale Valley since 2004. Board-certified oral surgeons committed to exceptional outcomes and an experience that leaves you smiling — literally.</p>
+          <div class="footer-socials">
+            <a href="#" class="footer-social" aria-label="Facebook">f</a>
+            <a href="#" class="footer-social" aria-label="Instagram">📷</a>
+            <a href="#" class="footer-social" aria-label="Google">G</a>
+            <a href="#" class="footer-social" aria-label="YouTube">▶</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title">Our Services</div>
+          <div class="footer-links">
+            <a href="services.html">Dental Implants</a>
+            <a href="services.html">Wisdom Teeth</a>
+            <a href="services.html">Bone Grafting</a>
+            <a href="services.html">Jaw Surgery</a>
+            <a href="services.html">Facial Trauma</a>
+            <a href="services.html">IV Sedation</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title">Quick Links</div>
+          <div class="footer-links">
+            <a href="about.html">About Us</a>
+            <a href="team.html">Our Team</a>
+            <a href="index.html#reviews">Patient Reviews</a>
+            <a href="contact.html">Patient FAQ</a>
+            <a href="contact.html">Book Appointment</a>
+            <a href="#">Patient Portal</a>
+            <a href="#">Pay My Bill</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title">Our Locations</div>
+          <div class="footer-location">
+            <div class="footer-location-name">Scottsdale</div>
+            <p>10603 North Hayden Road, Suite H-112<br>Scottsdale, AZ 85260</p>
+            <a href="tel:4809229933">(480) 922-9933</a>
+          </div>
+          <div class="footer-location">
+            <div class="footer-location-name">Sedona</div>
+            <p>2935 Southwest Drive, Suite 100<br>Sedona, AZ 86336</p>
+            <a href="tel:9282821224">(928) 282-1224</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© 2026 Scottsdale Surgical Arts. All rights reserved.</div>
+        <div style="display:flex;gap:20px;">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Use</a>
+          <a href="#">Accessibility</a>
+          <a href="#">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('open');
+    }
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('mobile-menu').classList.remove('open');
+      });
+    });
+
+    // FAQ accordion
+    function toggleFaq(btn) {
+      const item = btn.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+
+    // ── Scroll reveal animations ──
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Subtle nav shadow on scroll
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('main-nav');
+      if (window.scrollY > 20) {
+        nav.style.boxShadow = '0 4px 24px rgba(12,26,46,0.12)';
+      } else {
+        nav.style.boxShadow = '0 2px 16px rgba(12,26,46,0.06)';
+      }
+    });
+  </script>
+
+  <!-- MOBILE STICKY CTA BAR -->
+  <div class="mobile-sticky-cta" id="mobile-sticky">
+    <a href="tel:4809229933" class="mobile-sticky-call">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.38 2 2 0 0 1 3.59 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17z"/></svg>
+      Call Now
+    </a>
+    <a href="contact.html" class="mobile-sticky-book">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Book Appointment
+    </a>
+  </div>
+
+  <!--Start of Tawk.to Script-->
+  <script type="text/javascript">
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+  s1.async=true;
+  s1.src='https://embed.tawk.to/69cdbcadb8aa781c3b30ef8f/1jl5qi1c1';
+  s1.charset='UTF-8';
+  s1.setAttribute('crossorigin','*');
+  s0.parentNode.insertBefore(s1,s0);
+  })();
+  </script>
+  <!--End of Tawk.to Script-->
+
+</body>
+</html>
