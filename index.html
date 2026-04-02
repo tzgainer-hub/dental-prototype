@@ -867,6 +867,59 @@
     .float-btn.call { background: var(--navy); color: #fff; }
     .float-btn.appt { background: var(--accent); color: #fff; }
 
+    /* ── HAMBURGER MENU ── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 8px;
+      border: none;
+      background: none;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--navy);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 72px;
+      left: 0; right: 0;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      z-index: 99;
+      padding: 16px 24px 24px;
+    }
+    .mobile-nav.open { display: block; }
+    .mobile-nav a {
+      display: block;
+      padding: 14px 0;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--navy);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+    }
+    .mobile-nav a:last-child { border-bottom: none; }
+    .mobile-nav .mobile-cta {
+      display: block;
+      margin-top: 16px;
+      background: var(--accent);
+      color: #fff;
+      text-align: center;
+      padding: 14px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1rem;
+      border-bottom: none;
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       .hero-inner, .why-grid, .appt-grid, .doctors-grid { grid-template-columns: 1fr; }
@@ -876,10 +929,33 @@
       .footer-top { grid-template-columns: 1fr 1fr; }
       .why-visual { display: none; }
       .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .hero { padding: 72px 20px 56px; }
+      .hero h1 { font-size: 2rem; }
+      .hero-desc { font-size: 0.95rem; }
+      .hero-actions { flex-direction: column; }
+      .hero-actions a { text-align: center; justify-content: center; }
+      .trust-inner { gap: 20px; }
+      .schedule-banner-inner { flex-direction: column; text-align: center; }
+      .schedule-banner-actions { justify-content: center; }
+      .appt-grid { gap: 36px; }
     }
     @media (max-width: 600px) {
       .services-grid, .testimonials-grid { grid-template-columns: 1fr; }
-      section { padding: 60px 20px; }
+      .doctors-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; }
+      section { padding: 52px 18px; }
+      .form-row { grid-template-columns: 1fr; }
+      .appt-form { padding: 24px 18px; }
+      .float-cta { bottom: 16px; right: 16px; gap: 8px; }
+      .float-btn { padding: 11px 16px; font-size: 0.82rem; }
+      #chat-bubble { bottom: 16px; left: 16px; width: 48px; height: 48px; }
+      #chat-window { left: 16px; right: 16px; width: auto; bottom: 80px; }
+      .trust-item { font-size: 0.78rem; }
+      .package-grid { grid-template-columns: 1fr; }
+      .hero-stat-num { font-size: 1.3rem; }
+      .section-title { font-size: 1.6rem; }
+      .topbar-locs { display: none; }
     }
   </style>
 </head>
@@ -920,8 +996,20 @@
         <li><a href="#contact">Locations</a></li>
         <li><a href="#appointment" class="nav-cta">Request Appointment</a></li>
       </ul>
+      <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
+
+  <!-- MOBILE NAV -->
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="#services" onclick="closeMobileNav()">Services</a>
+    <a href="#doctors" onclick="closeMobileNav()">Our Doctors</a>
+    <a href="#contact" onclick="closeMobileNav()">Locations</a>
+    <a href="#appointment" class="mobile-cta" onclick="closeMobileNav()">📅 Request Appointment</a>
+    <a href="tel:4809229933" style="color:var(--accent);font-weight:600;" onclick="closeMobileNav()">📞 (480) 922-9933</a>
+  </div>
 
   <!-- HERO -->
   <section class="hero">
@@ -1672,6 +1760,15 @@
         </div>`;
       footer.parentNode.insertBefore(banner, footer);
     });
+
+    function toggleMobileNav() {
+      document.getElementById('mobile-nav').classList.toggle('open');
+    }
+    function closeMobileNav() {
+      document.getElementById('mobile-nav').classList.remove('open');
+    }
+    // Close mobile nav on scroll
+    window.addEventListener('scroll', closeMobileNav, { passive: true });
 
     function toggleChat() {
       const w = document.getElementById('chat-window');
