@@ -95,7 +95,19 @@
       align-items: center;
       gap: 24px;
     }
-    .logo { display: flex; flex-direction: column; line-height: 1.2; }
+    .logo { display: flex; align-items: center; line-height: 1.2; flex-shrink: 0; }
+
+    /* IMAGE LOGO — scales to fit nav height, preserves aspect ratio */
+    .logo-img {
+      max-height: 52px;
+      width: auto;
+      max-width: 260px;  /* prevents very wide logos from crushing nav */
+      display: block;
+      object-fit: contain;
+    }
+
+    /* TEXT FALLBACK — used when no image logo provided */
+    .logo-text { display: flex; flex-direction: column; }
     .logo-name {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.45rem;
@@ -1248,9 +1260,16 @@
   <!-- STICKY NAVIGATION -->
   <nav id="main-nav">
     <div class="nav-inner">
+      <!-- LOGO: Replace logo-img src with client's logo file. Remove logo-text block if using image logo. -->
       <a href="#" class="logo">
-        <span class="logo-name">Scottsdale Surgical Arts</span>
-        <span class="logo-sub">Oral & Maxillofacial Surgery</span>
+        <!-- IMAGE LOGO (uncomment and set src when client provides logo file) -->
+        <!-- <img src="logo.png" alt="Scottsdale Surgical Arts" class="logo-img" /> -->
+
+        <!-- TEXT FALLBACK — shown when no image logo is provided -->
+        <div class="logo-text">
+          <span class="logo-name">Scottsdale Surgical Arts</span>
+          <span class="logo-sub">Oral & Maxillofacial Surgery</span>
+        </div>
       </a>
       <ul class="nav-links">
         <li><a href="#services">Our Services</a></li>
