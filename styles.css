@@ -1617,6 +1617,10 @@ footer {
 /* ─── TAWK.TO ─── */
 #tawk-bubble-container { right: 20px !important; bottom: 20px !important; }
 div[id^="tawk"] { z-index: 150 !important; }
+@media (max-width: 768px) {
+  /* Push chat bubble above the mobile sticky CTA bar */
+  #tawk-bubble-container { bottom: 82px !important; right: 12px !important; }
+}
 
 /* ─── PAGE HERO (interior pages) ─── */
 .page-hero {
