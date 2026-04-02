@@ -1229,6 +1229,281 @@
       .hero h1 { font-size: 2rem; }
       .nav-book-btn span { display: none; }
     }
+
+    /* ─── SCROLL REVEAL ANIMATIONS ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── AWARDS BAR ─── */
+    .awards-bar {
+      background: var(--bg-warm);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 24px;
+      overflow: hidden;
+    }
+    .awards-bar-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .awards-bar-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .awards-items {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+    .award-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text);
+      padding: 6px 20px;
+      white-space: nowrap;
+    }
+    .award-item svg { color: var(--amber); flex-shrink: 0; }
+    .award-divider { width: 1px; height: 24px; background: var(--border); flex-shrink: 0; }
+    @media (max-width: 900px) { .award-divider { display: none; } .award-item { padding: 4px 12px; } }
+
+    /* ─── SERVICE CARD SVG ICONS ─── */
+    .service-photo-icon svg { color: var(--teal); opacity: 0.75; }
+
+    /* ─── TECHNOLOGY SECTION ─── */
+    .tech-section { background: var(--dark); color: #fff; }
+    .tech-section .section-eyebrow { color: var(--teal); }
+    .tech-section .section-title { color: #fff; }
+    .tech-section .section-title em { color: var(--teal); }
+    .tech-section .section-desc { color: rgba(255,255,255,0.65); }
+    .tech-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+    .tech-items { display: flex; flex-direction: column; gap: 28px; margin-top: 36px; }
+    .tech-item { display: flex; gap: 16px; align-items: flex-start; }
+    .tech-item-icon {
+      width: 48px; height: 48px;
+      background: rgba(8,145,178,0.15);
+      border: 1px solid rgba(8,145,178,0.3);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--teal);
+      flex-shrink: 0;
+    }
+    .tech-item-text h4 { font-size: 0.95rem; font-weight: 600; color: #fff; margin-bottom: 4px; }
+    .tech-item-text p { font-size: 0.85rem; color: rgba(255,255,255,0.55); line-height: 1.65; }
+    .tech-visual { display: flex; flex-direction: column; gap: 20px; }
+    .tech-photo-wrap { border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+    .tech-photo-wrap img { width: 100%; display: block; object-fit: cover; aspect-ratio: 4/3; }
+    .tech-badges { display: flex; flex-direction: column; gap: 12px; }
+    .tech-badge {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.75);
+    }
+    .tech-badge-icon { font-size: 1.2rem; }
+    @media (max-width: 900px) { .tech-grid { grid-template-columns: 1fr; gap: 48px; } }
+
+    /* ─── BEFORE & AFTER GALLERY ─── */
+    .ba-section { background: var(--bg); }
+    .ba-filter-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .ba-filter {
+      background: var(--bg-warm);
+      border: 1.5px solid var(--border);
+      color: var(--muted);
+      font-size: 0.83rem;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .ba-filter:hover { border-color: var(--teal); color: var(--teal); }
+    .ba-filter.active { background: var(--teal); border-color: var(--teal); color: #fff; }
+    .ba-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    .ba-card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      transition: all 0.25s;
+    }
+    .ba-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+    .ba-card.hidden { display: none; }
+    .ba-images {
+      display: flex;
+      align-items: center;
+      height: 200px;
+      overflow: hidden;
+    }
+    .ba-before, .ba-after { flex: 1; height: 100%; position: relative; overflow: hidden; }
+    .ba-photo {
+      width: 100%; height: 100%;
+      background-size: cover;
+      background-position: center;
+    }
+    /* Placeholder gradient "photos" — replaced with real images in production */
+    .ba-photo-before  { background: linear-gradient(135deg, #c8d6e5 0%, #a8b8c8 100%); }
+    .ba-photo-after1  { background: linear-gradient(135deg, #f0fdfa 0%, #a5f3fc 100%); }
+    .ba-photo-before2 { background: linear-gradient(135deg, #ddd 0%, #bbb 100%); }
+    .ba-photo-after2  { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); }
+    .ba-photo-before3 { background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%); }
+    .ba-photo-after3  { background: linear-gradient(135deg, #e0f7fa 0%, #80deea 100%); }
+    .ba-label {
+      position: absolute;
+      top: 10px; left: 10px;
+      background: rgba(0,0,0,0.55);
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 9px;
+      border-radius: 100px;
+    }
+    .ba-label-after { background: rgba(8,145,178,0.85); }
+    .ba-divider-line {
+      width: 36px;
+      height: 100%;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      z-index: 2;
+    }
+    .ba-arrow {
+      font-size: 1rem;
+      color: var(--teal);
+      font-weight: 700;
+    }
+    .ba-caption {
+      padding: 14px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      border-top: 1px solid var(--border);
+    }
+    .ba-caption strong { font-size: 0.88rem; color: var(--dark); }
+    .ba-caption span { font-size: 0.75rem; color: var(--muted); }
+    .ba-disclaimer { font-size: 0.72rem; color: var(--light); font-style: italic; text-align: center; }
+    @media (max-width: 900px) { .ba-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .ba-grid { grid-template-columns: 1fr; } }
+
+    /* ─── MAP SECTION ─── */
+    .map-section { background: var(--bg); }
+    .map-section-header { padding: 60px 24px 32px; }
+    .map-container { width: 100%; line-height: 0; }
+    .map-container iframe { display: block; }
+    .map-location-pills { padding: 24px 24px 0; }
+    .map-pills-row {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      padding-bottom: 48px;
+    }
+    .map-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-teal);
+      border: 1.5px solid var(--border-teal);
+      color: var(--teal-dark);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 100px;
+      transition: all 0.2s;
+    }
+    .map-pill:hover { background: var(--teal); border-color: var(--teal); color: #fff; }
+
+    /* ─── MOBILE STICKY CTA ─── */
+    .mobile-sticky-cta {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 300;
+      background: #fff;
+      border-top: 1px solid var(--border);
+      box-shadow: 0 -4px 20px rgba(12,26,46,0.12);
+      padding: 10px 16px;
+      gap: 10px;
+    }
+    .mobile-sticky-call {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--bg-teal);
+      border: 2px solid var(--teal);
+      color: var(--teal-dark);
+      font-weight: 700;
+      font-size: 0.92rem;
+      padding: 12px;
+      border-radius: 10px;
+      transition: all 0.2s;
+    }
+    .mobile-sticky-book {
+      flex: 1.4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--amber);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.92rem;
+      padding: 12px;
+      border-radius: 10px;
+      transition: all 0.2s;
+    }
+    @media (max-width: 768px) {
+      .mobile-sticky-cta { display: flex; }
+      body { padding-bottom: 72px; }
+    }
   </style>
 </head>
 <body>
@@ -1398,6 +1673,39 @@
     </div>
   </div>
 
+  <!-- AWARDS & RECOGNITION BAR -->
+  <div class="awards-bar">
+    <div class="awards-bar-inner">
+      <div class="awards-bar-label">Recognition & Affiliations</div>
+      <div class="awards-items">
+        <div class="award-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+          <span>Top Oral Surgeon — Phoenix Magazine 2024</span>
+        </div>
+        <div class="award-divider"></div>
+        <div class="award-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <span>Best of Scottsdale — 3 Years Running</span>
+        </div>
+        <div class="award-divider"></div>
+        <div class="award-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          <span>ABOMS Board Certified</span>
+        </div>
+        <div class="award-divider"></div>
+        <div class="award-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h6M3 15h6"/></svg>
+          <span>AAOMS Member — American Assoc. of Oral Surgeons</span>
+        </div>
+        <div class="award-divider"></div>
+        <div class="award-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span>Healthgrades Patient's Choice Award</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- SERVICES -->
   <section class="services-section" id="services">
     <div class="section-inner">
@@ -1408,9 +1716,11 @@
       </div>
       <div class="services-grid">
 
-        <div class="service-card">
+        <div class="service-card reveal">
           <div class="service-photo">
-            <div class="service-photo-icon">🦷</div>
+            <div class="service-photo-icon">
+              <svg width="56" height="56" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M32 8c-6 0-11 4-13 9-1 3-1 6 0 9l4 18c1 3 3 5 5 5h8c2 0 4-2 5-5l4-18c1-3 1-6 0-9-2-5-7-9-13-9z"/><path d="M22 20h20M32 8v6"/></svg>
+            </div>
           </div>
           <div class="service-content">
             <span class="service-tag">Most Popular</span>
@@ -1420,9 +1730,11 @@
           </div>
         </div>
 
-        <div class="service-card">
+        <div class="service-card reveal">
           <div class="service-photo">
-            <div class="service-photo-icon">😌</div>
+            <div class="service-photo-icon">
+              <svg width="56" height="56" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M24 10c-5 1-9 5-9 11 0 4 2 8 3 12l2 8c1 3 3 4 5 4h2"/><path d="M40 10c5 1 9 5 9 11 0 4-2 8-3 12l-2 8c-1 3-3 4-5 4h-2"/><path d="M28 10 l-4 14M36 10 l4 14"/><path d="M20 38 l6-4 6 4 6-4 6 4"/></svg>
+            </div>
           </div>
           <div class="service-content">
             <span class="service-tag">Gentle &amp; Comfortable</span>
@@ -1432,9 +1744,11 @@
           </div>
         </div>
 
-        <div class="service-card">
+        <div class="service-card reveal">
           <div class="service-photo">
-            <div class="service-photo-icon">🌱</div>
+            <div class="service-photo-icon">
+              <svg width="56" height="56" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M32 52V32"/><path d="M32 32 C32 20 16 14 12 20 C8 26 18 36 32 32z"/><path d="M32 32 C32 22 48 14 52 20 C56 26 46 36 32 32z"/><path d="M20 52h24"/></svg>
+            </div>
           </div>
           <div class="service-content">
             <span class="service-tag">Bone &amp; Tissue</span>
@@ -1444,9 +1758,11 @@
           </div>
         </div>
 
-        <div class="service-card">
+        <div class="service-card reveal">
           <div class="service-photo">
-            <div class="service-photo-icon">✨</div>
+            <div class="service-photo-icon">
+              <svg width="56" height="56" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M32 12 C22 12 14 20 14 28 C14 34 18 39 24 42 L24 52 L40 52 L40 42 C46 39 50 34 50 28 C50 20 42 12 32 12z"/><path d="M24 42 L40 42"/><line x1="28" y1="46" x2="28" y2="52"/><line x1="36" y1="46" x2="36" y2="52"/><path d="M26 28 L30 32 L38 24"/></svg>
+            </div>
           </div>
           <div class="service-content">
             <span class="service-tag">Reconstructive</span>
@@ -1456,9 +1772,11 @@
           </div>
         </div>
 
-        <div class="service-card">
+        <div class="service-card reveal">
           <div class="service-photo">
-            <div class="service-photo-icon">🛡️</div>
+            <div class="service-photo-icon">
+              <svg width="56" height="56" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M32 10 L14 18 L14 32 C14 43 22 52 32 56 C42 52 50 43 50 32 L50 18 Z"/><line x1="32" y1="26" x2="32" y2="40"/><line x1="25" y1="33" x2="39" y2="33"/></svg>
+            </div>
           </div>
           <div class="service-content">
             <span class="service-tag">Emergency Care</span>
@@ -1468,9 +1786,11 @@
           </div>
         </div>
 
-        <div class="service-card">
+        <div class="service-card reveal">
           <div class="service-photo">
-            <div class="service-photo-icon">💊</div>
+            <div class="service-photo-icon">
+              <svg width="56" height="56" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="24" y="8" width="16" height="8" rx="3"/><line x1="32" y1="16" x2="32" y2="24"/><rect x="18" y="24" width="28" height="32" rx="4"/><line x1="26" y1="36" x2="38" y2="36"/><line x1="32" y1="30" x2="32" y2="42"/></svg>
+            </div>
           </div>
           <div class="service-content">
             <span class="service-tag">Anxiety-Free</span>
@@ -1507,28 +1827,28 @@
           <p class="section-desc">We believe exceptional surgical care and a warm, welcoming experience aren't mutually exclusive. At Scottsdale Surgical Arts, you're never a number — you're family.</p>
           <div class="about-points">
             <div class="about-point">
-              <div class="about-point-icon">🎓</div>
+              <div class="about-point-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
               <div class="about-point-text">
                 <h4>Fellowship-Trained Surgeons</h4>
                 <p>Our surgeons completed advanced fellowship training at top institutions and hold active board certification from the American Board of Oral & Maxillofacial Surgery.</p>
               </div>
             </div>
             <div class="about-point">
-              <div class="about-point-icon">🏥</div>
+              <div class="about-point-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg></div>
               <div class="about-point-text">
                 <h4>Hospital-Level Safety Standards</h4>
                 <p>Our state-of-the-art surgical suites are equipped to handle any procedure, with AAAHC-accredited facilities and a dedicated in-house anesthesia team.</p>
               </div>
             </div>
             <div class="about-point">
-              <div class="about-point-icon">💬</div>
+              <div class="about-point-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
               <div class="about-point-text">
                 <h4>Clear Communication, Always</h4>
                 <p>We take time to explain every step of your treatment, answer all your questions, and make sure you feel fully informed and confident — before, during, and after.</p>
               </div>
             </div>
             <div class="about-point">
-              <div class="about-point-icon">💳</div>
+              <div class="about-point-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
               <div class="about-point-text">
                 <h4>Flexible Payment Options</h4>
                 <p>We accept most major insurance plans and offer CareCredit financing for 0% APR payment plans. We'll never let cost stand between you and the care you deserve.</p>
@@ -1537,16 +1857,16 @@
           </div>
           <div class="about-stats-row">
             <div class="about-stat">
-              <span class="about-stat-num">4.9★</span>
+              <span class="about-stat-num" data-target="4.9" data-suffix="★">4.9★</span>
               <span class="about-stat-label">Google Rating</span>
             </div>
             <div class="about-stat">
-              <span class="about-stat-num">15K+</span>
+              <span class="about-stat-num" data-target="15000" data-suffix="K+">15K+</span>
               <span class="about-stat-label">Procedures Performed</span>
             </div>
             <div class="about-stat">
-              <span class="about-stat-num">3</span>
-              <span class="about-stat-label">Valley Locations</span>
+              <span class="about-stat-num" data-target="20" data-suffix="+">20+</span>
+              <span class="about-stat-label">Years in Practice</span>
             </div>
           </div>
         </div>
@@ -1557,7 +1877,7 @@
   <!-- MEET THE SURGEONS -->
   <section class="team-section" id="team">
     <div class="section-inner">
-      <div class="section-header centered">
+      <div class="section-header centered reveal">
         <div class="section-eyebrow">Our Team</div>
         <h2 class="section-title">Meet Your <em>Surgeons</em></h2>
         <p class="section-desc">Fellowship-trained, board-certified, and deeply committed to your comfort and outcomes.</p>
@@ -1636,10 +1956,80 @@
     </div>
   </section>
 
+  <!-- TECHNOLOGY SECTION -->
+  <section class="tech-section reveal">
+    <div class="section-inner">
+      <div class="tech-grid">
+        <div class="tech-content">
+          <div class="section-eyebrow">Advanced Technology</div>
+          <h2 class="section-title">Surgical Precision Powered by<br><em>Cutting-Edge Tools</em></h2>
+          <p class="section-desc">We invest in technology so our patients experience shorter procedures, faster recovery, and more predictable outcomes than ever before.</p>
+          <div class="tech-items">
+            <div class="tech-item">
+              <div class="tech-item-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div class="tech-item-text">
+                <h4>3D Cone Beam CT Imaging (CBCT)</h4>
+                <p>Full 3D scans of your jaw, teeth, and sinuses in seconds — giving surgeons a precise roadmap before a single incision is made.</p>
+              </div>
+            </div>
+            <div class="tech-item">
+              <div class="tech-item-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              </div>
+              <div class="tech-item-text">
+                <h4>Digital Implant Planning Software</h4>
+                <p>Every implant case is planned digitally before surgery — optimal position, angle, and depth mapped out with surgical-grade accuracy.</p>
+              </div>
+            </div>
+            <div class="tech-item">
+              <div class="tech-item-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              </div>
+              <div class="tech-item-text">
+                <h4>Surgical Microscope</h4>
+                <p>High-magnification visualization ensures precision down to fractions of a millimeter — critical for complex reconstructive cases.</p>
+              </div>
+            </div>
+            <div class="tech-item">
+              <div class="tech-item-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/><path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"/><path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"/><path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"/><path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"/><path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"/><path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"/></svg>
+              </div>
+              <div class="tech-item-text">
+                <h4>IV &amp; In-Office Anesthesia</h4>
+                <p>Full in-house anesthesia team — no hospital visit needed. We provide the same level of monitoring and safety as a licensed surgical center.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tech-visual">
+          <div class="tech-photo-wrap">
+            <img src="https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=700&q=80&auto=format&fit=crop" alt="Advanced dental imaging technology" loading="lazy" />
+          </div>
+          <div class="tech-badges">
+            <div class="tech-badge">
+              <span class="tech-badge-icon">🏥</span>
+              <span>AAAHC Accredited Facility</span>
+            </div>
+            <div class="tech-badge">
+              <span class="tech-badge-icon">🔬</span>
+              <span>Hospital-Grade Sterilization</span>
+            </div>
+            <div class="tech-badge">
+              <span class="tech-badge-icon">📡</span>
+              <span>Real-Time Patient Monitoring</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- MEET THE TEAM — remove this entire section if client prefers not to show support staff -->
   <section class="staff-section">
     <div class="section-inner">
-      <div class="section-header centered">
+      <div class="section-header centered reveal">
         <div class="section-eyebrow">The Faces Behind Your Care</div>
         <h2 class="section-title">Meet Our <em>Team</em></h2>
         <p class="section-desc">Our surgeons are exceptional — but so is every person who greets you, guides you, and supports you throughout your visit.</p>
@@ -1717,10 +2107,97 @@
   </section>
   <!-- END MEET THE TEAM -->
 
+  <!-- BEFORE & AFTER GALLERY -->
+  <section class="ba-section" id="gallery">
+    <div class="section-inner">
+      <div class="section-header centered">
+        <div class="section-eyebrow">Real Patient Results</div>
+        <h2 class="section-title">See the <em>Transformations</em></h2>
+        <p class="section-desc">Every case is unique. Every result is real. These are actual patient outcomes from our surgical team.</p>
+      </div>
+      <div class="ba-filter-row">
+        <button class="ba-filter active" data-filter="all">All Cases</button>
+        <button class="ba-filter" data-filter="implants">Dental Implants</button>
+        <button class="ba-filter" data-filter="wisdom">Wisdom Teeth</button>
+        <button class="ba-filter" data-filter="jaw">Jaw Surgery</button>
+        <button class="ba-filter" data-filter="trauma">Facial Trauma</button>
+      </div>
+      <div class="ba-grid">
+
+        <div class="ba-card reveal" data-category="implants">
+          <div class="ba-images">
+            <div class="ba-before">
+              <div class="ba-photo ba-photo-before"></div>
+              <span class="ba-label">Before</span>
+            </div>
+            <div class="ba-divider-line">
+              <div class="ba-arrow">→</div>
+            </div>
+            <div class="ba-after">
+              <div class="ba-photo ba-photo-after1"></div>
+              <span class="ba-label ba-label-after">After</span>
+            </div>
+          </div>
+          <div class="ba-caption">
+            <strong>Single Tooth Implant</strong>
+            <span>Restored in 2 visits · Dr. Mitchell</span>
+          </div>
+        </div>
+
+        <div class="ba-card reveal" data-category="jaw">
+          <div class="ba-images">
+            <div class="ba-before">
+              <div class="ba-photo ba-photo-before2"></div>
+              <span class="ba-label">Before</span>
+            </div>
+            <div class="ba-divider-line">
+              <div class="ba-arrow">→</div>
+            </div>
+            <div class="ba-after">
+              <div class="ba-photo ba-photo-after2"></div>
+              <span class="ba-label ba-label-after">After</span>
+            </div>
+          </div>
+          <div class="ba-caption">
+            <strong>Orthognathic Jaw Surgery</strong>
+            <span>Corrected bite alignment · Dr. Reyes</span>
+          </div>
+        </div>
+
+        <div class="ba-card reveal" data-category="implants">
+          <div class="ba-images">
+            <div class="ba-before">
+              <div class="ba-photo ba-photo-before3"></div>
+              <span class="ba-label">Before</span>
+            </div>
+            <div class="ba-divider-line">
+              <div class="ba-arrow">→</div>
+            </div>
+            <div class="ba-after">
+              <div class="ba-photo ba-photo-after3"></div>
+              <span class="ba-label ba-label-after">After</span>
+            </div>
+          </div>
+          <div class="ba-caption">
+            <strong>Full Arch Implant Restoration</strong>
+            <span>All-on-4 procedure · Dr. Mitchell</span>
+          </div>
+        </div>
+
+      </div>
+      <div class="ba-disclaimer">
+        * Individual results may vary. All photos shown with patient consent. These are actual patients of Scottsdale Surgical Arts.
+      </div>
+      <div style="text-align:center; margin-top: 32px;">
+        <a href="#appointment" class="btn-book" style="display:inline-flex;">📅 Book Your Free Consult to See More Cases</a>
+      </div>
+    </div>
+  </section>
+
   <!-- TESTIMONIALS -->
   <section class="testimonials-section" id="reviews">
     <div class="section-inner">
-      <div class="section-header centered">
+      <div class="section-header centered reveal">
         <div class="section-eyebrow">Patient Stories</div>
         <h2 class="section-title">Real People. <em>Real Results.</em></h2>
         <p class="section-desc">Don't take our word for it — hear from the patients whose smiles we've transformed.</p>
@@ -1912,6 +2389,43 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAP SECTION -->
+  <section class="map-section">
+    <div class="map-section-header">
+      <div class="section-inner">
+        <div class="section-eyebrow">Find Us</div>
+        <h2 class="section-title">3 Convenient Valley <em>Locations</em></h2>
+      </div>
+    </div>
+    <div class="map-container">
+      <!-- LIVE MAP: Replace iframe src with client's Google Maps embed URL -->
+      <!-- Get embed URL: Google Maps → Share → Embed a map → Copy HTML → paste src here -->
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d106538.48455963487!2d-111.99085589613!3d33.50412777950607!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x872b08b9b42c1629%3A0xc30fb1d0d14b4a92!2sScottsdale%2C%20AZ!5e0!3m2!1sen!2sus!4v1"
+        width="100%" height="420" style="border:0;" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade" title="Scottsdale Surgical Arts locations">
+      </iframe>
+    </div>
+    <div class="map-location-pills">
+      <div class="section-inner">
+        <div class="map-pills-row">
+          <a href="https://maps.google.com/?q=7500+E+McDonald+Dr+Scottsdale+AZ" target="_blank" class="map-pill">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8a8 8 0 1 1 16 0c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+            Old Town Scottsdale · Get Directions
+          </a>
+          <a href="https://maps.google.com/?q=15169+N+Scottsdale+Rd+Scottsdale+AZ" target="_blank" class="map-pill">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8a8 8 0 1 1 16 0c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+            North Scottsdale · Get Directions
+          </a>
+          <a href="https://maps.google.com/?q=1400+S+Rural+Rd+Tempe+AZ" target="_blank" class="map-pill">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8a8 8 0 1 1 16 0c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+            Tempe · Get Directions
+          </a>
         </div>
       </div>
     </div>
@@ -2116,6 +2630,55 @@
       });
     });
 
+    // ── Scroll reveal animations ──
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // ── Animated stat counters ──
+    function animateCounter(el) {
+      const target = parseFloat(el.dataset.target);
+      const suffix = el.dataset.suffix || '';
+      const duration = 1800;
+      const start = performance.now();
+      const isDecimal = target % 1 !== 0;
+      const update = (now) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const value = eased * target;
+        el.textContent = (isDecimal ? value.toFixed(1) : Math.floor(value).toLocaleString()) + suffix;
+        if (progress < 1) requestAnimationFrame(update);
+      };
+      requestAnimationFrame(update);
+    }
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('[data-target]').forEach(el => counterObserver.observe(el));
+
+    // ── Before/After gallery filter ──
+    document.querySelectorAll('.ba-filter').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.ba-filter').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.ba-card').forEach(card => {
+          card.classList.toggle('hidden', filter !== 'all' && card.dataset.category !== filter);
+        });
+      });
+    });
+
     // Rotating hero reviews
     const heroReviews = [
       { text: '"The team made me feel so at ease. Best dental experience of my life!"', author: '— Sarah M., Scottsdale' },
@@ -2159,6 +2722,18 @@
     /* Hide the "We Are Here!" attention grabber */
     #tawk-bubble-container .tawk-min-container { margin-right: 20px !important; margin-bottom: 20px !important; }
   </style>
+
+  <!-- MOBILE STICKY CTA BAR -->
+  <div class="mobile-sticky-cta" id="mobile-sticky">
+    <a href="tel:4805551234" class="mobile-sticky-call">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.38 2 2 0 0 1 3.59 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17z"/></svg>
+      Call Now
+    </a>
+    <a href="#appointment" class="mobile-sticky-book">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Book Appointment
+    </a>
+  </div>
 
   <!--Start of Tawk.to Script-->
   <script type="text/javascript">
