@@ -1980,6 +1980,13 @@
     });
   </script>
 
+  <style>
+    /* Push tawk.to bubble away from screen edge */
+    .widget-visible iframe[title="chat widget"] { right: 20px !important; bottom: 20px !important; }
+    /* Hide the "We Are Here!" attention grabber */
+    #tawk-bubble-container .tawk-min-container { margin-right: 20px !important; margin-bottom: 20px !important; }
+  </style>
+
   <!--Start of Tawk.to Script-->
   <script type="text/javascript">
   var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
