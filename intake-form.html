@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New Client Intake Form — Point Zero AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --teal: #0891b2;
+      --teal-dark: #0e7490;
+      --teal-bg: #f0fdff;
+      --amber: #f59e0b;
+      --dark: #0c1a2e;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --bg: #ffffff;
+      --bg-warm: #f8fafc;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--bg-warm);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── HEADER ── */
+    .doc-header {
+      background: var(--dark);
+      color: #fff;
+      padding: 40px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .doc-brand { }
+    .doc-brand-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 0.01em;
+    }
+    .doc-brand-sub {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--teal);
+      display: block;
+      margin-top: 3px;
+    }
+    .doc-header-right { text-align: right; }
+    .doc-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.1;
+    }
+    .doc-subtitle { font-size: 0.82rem; color: rgba(255,255,255,0.55); margin-top: 6px; }
+
+    /* ── INTRO BANNER ── */
+    .doc-intro {
+      background: var(--teal-bg);
+      border-bottom: 2px solid var(--teal);
+      padding: 20px 48px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .doc-intro-icon { font-size: 1.5rem; }
+    .doc-intro p { font-size: 0.88rem; color: var(--teal-dark); line-height: 1.6; }
+    .doc-intro strong { font-weight: 600; }
+
+    /* ── BODY ── */
+    .doc-body { max-width: 860px; margin: 0 auto; padding: 48px 48px 80px; }
+
+    /* ── SECTIONS ── */
+    .form-section {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 28px;
+    }
+    .form-section-header {
+      background: var(--dark);
+      color: #fff;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-num {
+      width: 26px; height: 26px;
+      background: var(--teal);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .form-section-header h2 { font-size: 0.9rem; font-weight: 600; letter-spacing: 0.03em; }
+    .form-section-body { padding: 24px; }
+
+    /* ── FIELDS ── */
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px 24px;
+    }
+    .field-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .field-grid.cols-1 { grid-template-columns: 1fr; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field.span-2 { grid-column: span 2; }
+    .field.span-3 { grid-column: span 3; }
+    .field label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .field label .req { color: var(--amber); margin-left: 3px; }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.9rem;
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--bg-warm);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      border-color: var(--teal);
+      background: #fff;
+    }
+    .field textarea { resize: vertical; min-height: 80px; }
+    .field-note { font-size: 0.72rem; color: var(--muted); font-style: italic; margin-top: 2px; }
+
+    /* ── LOCATION BLOCK ── */
+    .location-block {
+      background: var(--bg-warm);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+    .location-block-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--teal-dark);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .location-block-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    /* ── CHECKBOX GRID ── */
+    .check-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 0.85rem;
+      color: var(--text);
+      cursor: pointer;
+      padding: 8px 10px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg-warm);
+      transition: all 0.15s;
+    }
+    .check-item:hover { border-color: var(--teal); background: var(--teal-bg); }
+    .check-item input[type="checkbox"] { accent-color: var(--teal); width: 15px; height: 15px; cursor: pointer; }
+
+    /* ── RADIO GROUP ── */
+    .radio-group { display: flex; gap: 12px; flex-wrap: wrap; }
+    .radio-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.88rem;
+      cursor: pointer;
+      padding: 9px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 100px;
+      background: var(--bg-warm);
+      transition: all 0.15s;
+    }
+    .radio-item:hover { border-color: var(--teal); }
+    .radio-item input[type="radio"] { accent-color: var(--teal); }
+
+    /* ── DIVIDER ── */
+    .form-divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+    /* ── SIGNATURE BLOCK ── */
+    .signature-section {
+      background: var(--dark);
+      color: #fff;
+      border-radius: 14px;
+      padding: 32px;
+      margin-bottom: 28px;
+    }
+    .signature-section h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .signature-section p { font-size: 0.85rem; color: rgba(255,255,255,0.65); margin-bottom: 24px; line-height: 1.65; }
+    .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .sig-field label { display: block; font-size: 0.72rem; font-weight: 600; color: rgba(255,255,255,0.5); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+    .sig-line { border: none; border-bottom: 1px solid rgba(255,255,255,0.25); height: 40px; width: 100%; background: none; display: block; }
+
+    /* ── FOOTER ── */
+    .doc-footer {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+      padding: 0 48px 48px;
+      line-height: 1.7;
+    }
+    .doc-footer strong { color: var(--text); }
+
+    /* ── PRINT ── */
+    @media print {
+      body { background: #fff; }
+      .doc-body { padding: 24px; }
+      .form-section { break-inside: avoid; }
+    }
+    @media (max-width: 640px) {
+      .doc-header { padding: 24px; }
+      .doc-body { padding: 24px 20px; }
+      .field-grid { grid-template-columns: 1fr; }
+      .field-grid.cols-3 { grid-template-columns: 1fr; }
+      .field.span-2, .field.span-3 { grid-column: span 1; }
+      .check-grid { grid-template-columns: 1fr 1fr; }
+      .sig-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="doc-header">
+    <div class="doc-brand">
+      <div class="doc-brand-name">Point Zero AI</div>
+      <span class="doc-brand-sub">Dental Website Solutions</span>
+    </div>
+    <div class="doc-header-right">
+      <div class="doc-title">New Client Intake Form</div>
+      <div class="doc-subtitle">Complete and return prior to your onboarding call · Confidential</div>
+    </div>
+  </div>
+
+  <div class="doc-intro">
+    <div class="doc-intro-icon">📋</div>
+    <p>Please complete all fields marked with <strong style="color:var(--amber)">★</strong>. The more detail you provide, the faster we build — and the better your site reflects your practice. Most sections take 2–3 minutes. Total time: approximately 20 minutes.</p>
+  </div>
+
+  <div class="doc-body">
+
+    <!-- SECTION 1 -->
+    <div class="form-section">
+      <div class="form-section-header">
+        <div class="section-num">1</div>
+        <h2>Practice Information</h2>
+      </div>
+      <div class="form-section-body">
+        <div class="field-grid">
+          <div class="field span-2">
+            <label>Practice / Business Name <span class="req">★</span></label>
+            <input type="text" placeholder="e.g. Scottsdale Surgical Arts" />
+          </div>
+          <div class="field">
+            <label>Specialty / Type <span class="req">★</span></label>
+            <select>
+              <option value="">Select...</option>
+              <option>General Dentistry</option>
+              <option>Oral & Maxillofacial Surgery</option>
+              <option>Orthodontics</option>
+              <option>Periodontics</option>
+              <option>Endodontics</option>
+              <option>Pediatric Dentistry</option>
+              <option>Prosthodontics</option>
+              <option>Cosmetic Dentistry</option>
+              <option>Multi-Specialty Group</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Year Founded</label>
+            <input type="text" placeholder="e.g. 2004" />
+          </div>
+          <div class="field">
+            <label>Primary Contact Name <span class="req">★</span></label>
+            <input type="text" placeholder="Name of person we communicate with" />
+          </div>
+          <div class="field">
+            <label>Primary Contact Title</label>
+            <input type="text" placeholder="e.g. Office Manager, Doctor" />
+          </div>
+          <div class="field">
+            <label>Primary Email <span class="req">★</span></label>
+            <input type="email" placeholder="email@practice.com" />
+          </div>
+          <div class="field">
+            <label>Best Phone to Reach You <span class="req">★</span></label>
+            <input type="tel" placeholder="(480) 000-0000" />
+          </div>
+          <div class="field">
+            <label>Current Website URL (if any)</label>
+            <input type="text" placeholder="www.yourpractice.com" />
+          </div>
+          <div class="field">
+            <label>Google Business Profile URL</label>
+            <input type="text" placeholder="maps.google.com/..." />
+            <span class="field-note">We use this to pull your live Google rating & review count</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: LOCATIONS -->
+    <div class="form-section">
+      <div class="form-section-header">
+        <div class="section-num">2</div>
+        <h2>Office Locations & Hours</h2>
+      </div>
+      <div class="form-section-body">
+        <div class="location-block">
+          <div class="location-block-title">Location 1 — Primary</div>
+          <div class="field-grid cols-1" style="margin-bottom:14px;">
+            <div class="field">
+              <label>Location Name / Nickname <span class="req">★</span></label>
+              <input type="text" placeholder="e.g. Old Town Scottsdale, Main Office" />
+            </div>
+          </div>
+          <div class="field-grid">
+            <div class="field span-2">
+              <label>Street Address <span class="req">★</span></label>
+              <input type="text" placeholder="7500 E. McDonald Dr., Suite 100" />
+            </div>
+            <div class="field">
+              <label>City, State, ZIP <span class="req">★</span></label>
+              <input type="text" placeholder="Scottsdale, AZ 85250" />
+            </div>
+            <div class="field">
+              <label>Direct Phone <span class="req">★</span></label>
+              <input type="tel" placeholder="(480) 000-0000" />
+            </div>
+          </div>
+          <hr class="form-divider" />
+          <div class="field-grid cols-3">
+            <div class="field">
+              <label>Mon–Thu Hours</label>
+              <input type="text" placeholder="7:00 AM – 5:00 PM" />
+            </div>
+            <div class="field">
+              <label>Friday Hours</label>
+              <input type="text" placeholder="7:00 AM – 3:00 PM" />
+            </div>
+            <div class="field">
+              <label>Saturday Hours</label>
+              <input type="text" placeholder="Closed or 8 AM – 12 PM" />
+            </div>
+          </div>
+        </div>
+
+        <div class="location-block">
+          <div class="location-block-title">Location 2 — If Applicable</div>
+          <div class="field-grid">
+            <div class="field">
+              <label>Location Name / Nickname</label>
+              <input type="text" placeholder="e.g. North Scottsdale" />
+            </div>
+            <div class="field">
+              <label>Direct Phone</label>
+              <input type="tel" placeholder="(480) 000-0000" />
+            </div>
+            <div class="field span-2">
+              <label>Full Address</label>
+              <input type="text" placeholder="15169 N. Scottsdale Rd., Suite 310, Scottsdale, AZ 85254" />
+            </div>
+          </div>
+        </div>
+
+        <div class="location-block">
+          <div class="location-block-title">Location 3 — If Applicable</div>
+          <div class="field-grid">
+            <div class="field">
+              <label>Location Name / Nickname</label>
+              <input type="text" placeholder="e.g. Tempe, East Valley" />
+            </div>
+            <div class="field">
+              <label>Direct Phone</label>
+              <input type="tel" placeholder="(480) 000-0000" />
+            </div>
+            <div class="field span-2">
+              <label>Full Address</label>
+              <input type="text" placeholder="1400 S. Rural Rd., Suite 200, Tempe, AZ 85281" />
+            </div>
+          </div>
+        </div>
+
+        <div class="field-grid cols-1">
+          <div class="field">
+            <label>Emergency / After-Hours Instructions</label>
+            <textarea placeholder="e.g. 'For dental emergencies after hours, call (480) 000-0000 and select option 2.' Leave blank if not applicable."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: DOCTORS -->
+    <div class="form-section">
+      <div class="form-section-header">
+        <div class="section-num">3</div>
+        <h2>Doctors / Surgeons</h2>
+      </div>
+      <div class="form-section-body">
+        <p style="font-size:0.85rem;color:var(--muted);margin-bottom:20px;">Complete one block per provider. Add additional sheets if needed.</p>
+
+        <div class="location-block">
+          <div class="location-block-title">Doctor 1</div>
+          <div class="field-grid">
+            <div class="field">
+              <label>Full Name <span class="req">★</span></label>
+              <input type="text" placeholder="Dr. James Mitchell" />
+            </div>
+            <div class="field">
+              <label>Credentials / Degrees <span class="req">★</span></label>
+              <input type="text" placeholder="DDS, MD, FACS, FAACS" />
+            </div>
+            <div class="field span-2">
+              <label>Specialty / Title</label>
+              <input type="text" placeholder="Oral & Maxillofacial Surgeon · Board Certified" />
+            </div>
+            <div class="field">
+              <label>Dental School / Medical School</label>
+              <input type="text" placeholder="University of Southern California" />
+            </div>
+            <div class="field">
+              <label>Residency / Fellowship</label>
+              <input type="text" placeholder="Mayo Clinic" />
+            </div>
+            <div class="field span-2">
+              <label>Brief Bio (2–3 sentences)</label>
+              <textarea placeholder="Tell us about this doctor's experience, philosophy, and what makes them unique..."></textarea>
+            </div>
+            <div class="field span-2">
+              <label>Areas of Specialty / Expertise</label>
+              <input type="text" placeholder="Dental Implants, Bone Grafting, Jaw Surgery, IV Sedation" />
+            </div>
+            <div class="field span-2">
+              <label>Doctor Photo Provided?</label>
+              <div class="radio-group">
+                <label class="radio-item"><input type="radio" name="doc1photo" /> Yes — will email file</label>
+                <label class="radio-item"><input type="radio" name="doc1photo" /> No — use placeholder for now</label>
+                <label class="radio-item"><input type="radio" name="doc1photo" /> No — do not show photo</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="location-block">
+          <div class="location-block-title">Doctor 2 — If Applicable</div>
+          <div class="field-grid">
+            <div class="field">
+              <label>Full Name</label>
+              <input type="text" placeholder="Dr. Sarah Reyes" />
+            </div>
+            <div class="field">
+              <label>Credentials / Degrees</label>
+              <input type="text" placeholder="DDS, ABOMS" />
+            </div>
+            <div class="field span-2">
+              <label>Brief Bio</label>
+              <textarea placeholder="2–3 sentences..."></textarea>
+            </div>
+            <div class="field span-2">
+              <label>Doctor Photo Provided?</label>
+              <div class="radio-group">
+                <label class="radio-item"><input type="radio" name="doc2photo" /> Yes — will email file</label>
+                <label class="radio-item"><input type="radio" name="doc2photo" /> No — use placeholder</label>
+                <label class="radio-item"><input type="radio" name="doc2photo" /> Do not show</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field-grid cols-1">
+          <div class="field">
+            <label>Additional Doctors (list names + credentials)</label>
+            <textarea placeholder="Add any additional providers here..."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: SERVICES -->
+    <div class="form-section">
+      <div class="form-section-header">
+        <div class="section-num">4</div>
+        <h2>Services Offered</h2>
+      </div>
+      <div class="form-section-body">
+        <p style="font-size:0.85rem;color:var(--muted);margin-bottom:18px;">Check all that apply. We will feature the top 6 on your homepage and list all others in the services section.</p>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" /> Dental Implants</label>
+          <label class="check-item"><input type="checkbox" /> Wisdom Tooth Removal</label>
+          <label class="check-item"><input type="checkbox" /> Bone Grafting</label>
+          <label class="check-item"><input type="checkbox" /> Jaw Surgery (Orthognathic)</label>
+          <label class="check-item"><input type="checkbox" /> Facial Trauma Care</label>
+          <label class="check-item"><input type="checkbox" /> IV Sedation / Anesthesia</label>
+          <label class="check-item"><input type="checkbox" /> All-on-4 / Full Arch</label>
+          <label class="check-item"><input type="checkbox" /> Sinus Lift</label>
+          <label class="check-item"><input type="checkbox" /> Tooth Extractions</label>
+          <label class="check-item"><input type="checkbox" /> Oral Pathology / Biopsies</label>
+          <label class="check-item"><input type="checkbox" /> Sleep Apnea Treatment</label>
+          <label class="check-item"><input type="checkbox" /> TMJ Treatment</label>
+          <label class="check-item"><input type="checkbox" /> Teeth Whitening</label>
+          <label class="check-item"><input type="checkbox" /> Veneers / Cosmetic</label>
+          <label class="check-item"><input type="checkbox" /> Orthodontics / Invisalign</label>
+          <label class="check-item"><input type="checkbox" /> Pediatric Dentistry</label>
+          <label class="check-item"><input type="checkbox" /> Emergency Dental</label>
+          <label class="check-item"><input type="checkbox" /> Referring Doctor Services</label>
+        </div>
+        <hr class="form-divider" />
+        <div class="field-grid cols-1">
+          <div class="field">
+            <label>Other Services Not Listed Above</label>
+            <input type="text" placeholder="List any additional services..." />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 5: INSURANCE -->
+    <div class="form-section">
+      <div class="form-section-header">
+        <div class="section-num">5</div>
+        <h2>Insurance & Payment</h2>
+      </div>
+      <div class="form-section-body">
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" /> Delta Dental</label>
+          <label class="check-item"><input type="checkbox" /> Aetna</label>
+          <label class="check-item"><input type="checkbox" /> Cigna</label>
+          <label class="check-item"><input type="checkbox" /> MetLife</label>
+          <label class="check-item"><input type="checkbox" /> United Healthcare</label>
+          <label class="check-item"><input type="checkbox" /> BlueCross BlueShield</label>
+          <label class="check-item"><input type="checkbox" /> Humana</label>
+          <label class="check-item"><input type="checkbox" /> Guardian</label>
+          <label class="check-item"><input type="checkbox" /> Principal</label>
+          <label class="check-item"><input type="checkbox" /> Ameritas</label>
+          <label class="check-item"><input type="checkbox" /> Sun Life</label>
+          <label class="check-item"><input type="checkbox" /> Medicaid / AHCCCS</label>
+          <label class="check-item"><input type="checkbox" /> CareCredit</label>
+          <label class="check-item"><input type="checkbox" /> Sunbit Financing</label>
+          <label class="check-item"><input type="checkbox" /> In-House Payment Plans</label>
+        </div>
+        <hr class="form-divider" />
+        <div class="field-grid">
+          <div class="field">
+            <label>Other Insurance Plans Accepted</label>
+            <input type="text" placeholder="List others not shown above..." />
+          </div>
+          <div class="field">
+            <label>Patient Portal System (if any)</label>
+            <input type="text" placeholder="e.g. Dentrix, Eaglesoft, Weave, Open Dental" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 6: BRANDING -->
+    <div class="form-section">
+      <div class="form-section-header">
+        <div class="section-num">6</div>
+        <h2>Branding & Visual Assets</h2>
+      </div>
+      <div class="form-section-body">
+        <div class="field-grid">
+          <div class="field span-2">
+            <label>Logo Provided? <span class="req">★</span></label>
+            <div class="radio-group">
+              <label class="radio-item"><input type="radio" name="logo" /> Yes — will email PNG/SVG file</label>
+              <label class="radio-item"><input type="radio" name="logo" /> Yes — will email JPG (please note)</label>
+              <label class="radio-item"><input type="radio" name="logo" /> No logo — use text only</label>
+            </div>
+            <span class="field-note">Preferred formats: PNG with transparent background, or SVG. Minimum 500px wide.</span>
+          </div>
+          <div class="field">
+            <label>Brand Primary Color (if known)</label>
+            <input type="text" placeholder="e.g. Teal #0891b2, Navy Blue, Gold" />
+          </div>
+          <div class="field">
+            <label>Brand Secondary Color (if known)</label>
+            <input type="text" placeholder="e.g. White, Warm Gray, Dark Charcoal" />
+          </div>
+          <div class="field span-2">
+            <label>Preferred Overall Design Feel</label>
+            <div class="radio-group">
+              <label class="radio-item"><input type="radio" name="feel" /> Warm & Welcoming</label>
+              <label class="radio-item"><input type="radio" name="feel" /> Clean & Modern</label>
+              <label class="radio-item"><input type="radio" name="feel" /> Luxury / High-End</label>
+              <label class="radio-item"><input type="radio" name="feel" /> Clinical / Professional</label>
+              <label class="radio-item"><input type="radio" name="feel" /> No preference</label>
+            </div>
+          </div>
+          <div class="field">
+            <label>Reference Websites You Like (up to 3)</label>
+            <textarea placeholder="Paste URLs of dental sites whose look/feel you admire..."></textarea>
+          </div>
+          <div class="field">
+            <label>Doctor / Staff Photos Available?</label>
+            <div class="radio-group" style="flex-direction:column;gap:8px;">
+              <label class="radio-item"><input type="radio" name="photos" /> Yes — will email professional headshots</label>
+              <label class="radio-item"><input type="radio" name="photos" /> Yes — have casual/office photos only</label>
+              <label class="radio-item"><input type="radio" name="photos" /> No — use stylized placeholders for now</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 7: AWARDS & SOCIAL -->
+    <div class="form-section">
+      <div class="form-section-header">
+        <div class="section-num">7</div>
+        <h2>Awards, Recognition & Social Media</h2>
+      </div>
+      <div class="form-section-body">
+        <div class="field-grid cols-1">
+          <div class="field">
+            <label>Awards / Recognition (list all)</label>
+            <textarea placeholder="e.g. 'Top Oral Surgeon — Phoenix Magazine 2023 & 2024', 'Best of Scottsdale — 2022, 2023, 2024', 'Healthgrades Patient's Choice Award 2023'..."></textarea>
+          </div>
+          <div class="field">
+            <label>Hospital Affiliations (if any)</label>
+            <textarea placeholder="e.g. 'Surgical privileges at Banner Good Samaritan Medical Center, HonorHealth Scottsdale Osborn'..."></textarea>
+          </div>
+        </div>
+        <hr class="form-divider" />
+        <div class="field-grid">
+          <div class="field">
+            <label>Facebook Page URL</label>
+            <input type="text" placeholder="facebook.com/yourpractice" />
+          </div>
+          <div class="field">
+            <label>Instagram Handle</label>
+            <input type="text" placeholder="@yourpractice" />
+          </div>
+          <div class="field">
+            <label>YouTube Channel (if any)</label>
+            <input type="text" placeholder="youtube.com/@yourpractice" />
+          </div>
+          <div class="field">
+            <label>Other Social / Healthgrades / Zocdoc</label>
+            <input type="text" placeholder="List any other relevant profile URLs..." />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 8: CONTENT & EXTRAS -->
+    <div class="form-section">
+      <div class="form-section-header">
+        <div class="section-num">8</div>
+        <h2>Content & Special Requests</h2>
+      </div>
+      <div class="form-section-body">
+        <div class="field-grid cols-1">
+          <div class="field">
+            <label>Practice Tagline or Mission Statement (if you have one)</label>
+            <input type="text" placeholder="e.g. 'Where Every Smile Tells a Beautiful Story'" />
+          </div>
+          <div class="field">
+            <label>What Makes Your Practice Different? (2–4 sentences)</label>
+            <textarea placeholder="Tell us what you'd want a new patient to know about why they should choose you over a competitor..."></textarea>
+          </div>
+          <div class="field">
+            <label>Before & After Cases — Do you have photos to share?</label>
+            <div class="radio-group">
+              <label class="radio-item"><input type="radio" name="ba" /> Yes — will email with patient consent forms</label>
+              <label class="radio-item"><input type="radio" name="ba" /> Not yet — use placeholder gallery for now</label>
+              <label class="radio-item"><input type="radio" name="ba" /> Do not include a gallery</label>
+            </div>
+          </div>
+          <div class="field">
+            <label>Live Chat (tawk.to) — Who manages incoming chats?</label>
+            <div class="radio-group">
+              <label class="radio-item"><input type="radio" name="chat" /> Our front desk / staff will manage</label>
+              <label class="radio-item"><input type="radio" name="chat" /> Point Zero AI team manages (add-on service)</label>
+              <label class="radio-item"><input type="radio" name="chat" /> Do not include live chat</label>
+            </div>
+          </div>
+          <div class="field">
+            <label>Anything else we should know, include, or avoid?</label>
+            <textarea placeholder="Special requests, sensitivities, competitor sites to avoid resembling, languages spoken, anything else..."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIGNATURE -->
+    <div class="signature-section">
+      <h3>Authorization & Agreement</h3>
+      <p>By signing below, you confirm that the information provided is accurate and that you authorize Point Zero AI to use the submitted content, photos, and materials to build your website. All patient before/after photos must be accompanied by signed HIPAA-compliant patient consent forms before publication.</p>
+      <div class="sig-grid">
+        <div class="sig-field">
+          <label>Authorized Signature</label>
+          <div class="sig-line"></div>
+        </div>
+        <div class="sig-field">
+          <label>Printed Name & Title</label>
+          <div class="sig-line"></div>
+        </div>
+        <div class="sig-field">
+          <label>Date</label>
+          <div class="sig-line"></div>
+        </div>
+        <div class="sig-field">
+          <label>Practice Name (confirm)</label>
+          <div class="sig-line"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end doc-body -->
+
+  <div class="doc-footer">
+    <strong>Point Zero AI · Dental Website Solutions</strong><br>
+    Return completed form to: <strong>onboarding@pointzeroai.com</strong> · Questions? Call <strong>(480) 000-0000</strong><br>
+    Your build begins within 3 business days of receiving this form plus all assets. Average delivery: 7–10 business days.
+  </div>
+
+</body>
+</html>

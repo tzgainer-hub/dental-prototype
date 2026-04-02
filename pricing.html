@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Website Investment Options — Point Zero AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --teal: #0891b2;
+      --teal-dark: #0e7490;
+      --teal-bg: #f0fdff;
+      --amber: #f59e0b;
+      --amber-dark: #d97706;
+      --dark: #0c1a2e;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --bg: #ffffff;
+      --bg-warm: #f8fafc;
+      --green: #059669;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--bg-warm);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── HEADER ── */
+    .doc-header {
+      background: var(--dark);
+      padding: 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .doc-header::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: rgba(8,145,178,0.08);
+    }
+    .doc-brand-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.05em;
+      margin-bottom: 20px;
+      display: block;
+    }
+    .doc-header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+    .doc-header h1 em { font-style: italic; color: var(--teal); }
+    .doc-header p { font-size: 1rem; color: rgba(255,255,255,0.6); max-width: 540px; margin: 0 auto; }
+
+    /* ── BODY ── */
+    .doc-body { max-width: 1000px; margin: 0 auto; padding: 56px 32px 80px; }
+
+    /* ── PRICING CARDS ── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-bottom: 48px;
+      align-items: start;
+    }
+    .pricing-card {
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+    .pricing-card.featured {
+      border-color: var(--amber);
+      box-shadow: 0 12px 48px rgba(245,158,11,0.18);
+    }
+    .featured-badge {
+      position: absolute;
+      top: 20px; right: 20px;
+      background: var(--amber);
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 100px;
+    }
+    .pricing-header {
+      padding: 36px 36px 28px;
+      border-bottom: 1px solid var(--border);
+    }
+    .pricing-card.featured .pricing-header {
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    }
+    .pricing-tier {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 8px;
+      display: block;
+    }
+    .pricing-card.featured .pricing-tier { color: var(--amber-dark); }
+    .pricing-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--dark);
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .pricing-tagline { font-size: 0.88rem; color: var(--muted); margin-bottom: 24px; }
+    .pricing-amount {
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      margin-bottom: 6px;
+    }
+    .pricing-amount .dollar {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    .pricing-amount .number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.8rem;
+      font-weight: 600;
+      color: var(--dark);
+      line-height: 1;
+    }
+    .pricing-amount .period {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 2.2;
+      padding-bottom: 4px;
+    }
+    .pricing-amount-note { font-size: 0.8rem; color: var(--muted); margin-bottom: 4px; }
+    .pricing-amount-sub {
+      font-size: 0.85rem;
+      color: var(--muted);
+      padding: 8px 0 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .pricing-amount-sub strong { color: var(--text); font-weight: 600; }
+
+    /* ── FEATURES LIST ── */
+    .pricing-features { padding: 28px 36px 36px; }
+    .features-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--bg-warm);
+      font-size: 0.88rem;
+      color: var(--text);
+      line-height: 1.45;
+    }
+    .feature-item:last-child { border-bottom: none; }
+    .feature-check {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+      font-size: 0.65rem;
+      font-weight: 700;
+    }
+    .feature-check.yes { background: rgba(5,150,105,0.12); color: var(--green); }
+    .feature-check.amber { background: rgba(245,158,11,0.12); color: var(--amber-dark); }
+    .feature-check.no { background: var(--bg-warm); color: var(--muted); }
+    .feature-highlight { font-weight: 600; color: var(--dark); }
+
+    /* ── REVISIONS BOX ── */
+    .revisions-section {
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 36px;
+    }
+    .revisions-header {
+      background: var(--teal);
+      color: #fff;
+      padding: 16px 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .revisions-header h3 { font-size: 0.95rem; font-weight: 600; }
+    .revisions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+    .revision-col {
+      padding: 28px;
+    }
+    .revision-col:first-child { border-right: 1px solid var(--border); }
+    .revision-plan-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 4px;
+    }
+    .revision-count {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--teal);
+      line-height: 1;
+      margin-bottom: 12px;
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .revision-col.amber-col .revision-count { color: var(--amber-dark); }
+    .revision-rules { display: flex; flex-direction: column; gap: 8px; }
+    .revision-rule {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 0.84rem;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .revision-rule::before { content: '→'; color: var(--teal); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .revision-col.amber-col .revision-rule::before { color: var(--amber-dark); }
+    .revision-note {
+      background: var(--bg-warm);
+      border-top: 1px solid var(--border);
+      padding: 14px 28px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    /* ── WHAT'S INCLUDED TABLE ── */
+    .compare-section {
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 36px;
+    }
+    .compare-header {
+      background: var(--dark);
+      color: #fff;
+      padding: 16px 28px;
+    }
+    .compare-header h3 { font-size: 0.95rem; font-weight: 600; }
+    .compare-table { width: 100%; border-collapse: collapse; }
+    .compare-table th {
+      background: var(--bg-warm);
+      padding: 12px 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .compare-table th:not(:first-child) { text-align: center; }
+    .compare-table td {
+      padding: 12px 20px;
+      font-size: 0.86rem;
+      color: var(--text);
+      border-bottom: 1px solid var(--bg-warm);
+      vertical-align: middle;
+    }
+    .compare-table td:not(:first-child) { text-align: center; font-size: 1.1rem; }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .compare-table tr:hover td { background: var(--bg-warm); }
+    .cat-row td {
+      background: var(--bg-warm) !important;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 8px 20px;
+    }
+    .check-yes { color: var(--green); }
+    .check-no { color: #cbd5e1; }
+    .check-add { color: var(--amber-dark); font-size: 0.8rem; font-weight: 600; }
+
+    /* ── ADD-ONS ── */
+    .addons-section {
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 36px;
+    }
+    .addons-header {
+      background: var(--bg-warm);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 28px;
+    }
+    .addons-header h3 { font-size: 0.9rem; font-weight: 700; color: var(--dark); }
+    .addons-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+    }
+    .addon-item {
+      padding: 20px 24px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .addon-item:nth-child(3n) { border-right: none; }
+    .addon-item:nth-last-child(-n+3) { border-bottom: none; }
+    .addon-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--teal);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .addon-name { font-size: 0.88rem; font-weight: 600; color: var(--dark); margin-bottom: 4px; }
+    .addon-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+
+    /* ── GUARANTEE ── */
+    .guarantee-band {
+      background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+      border-radius: 16px;
+      padding: 36px 40px;
+      display: flex;
+      gap: 28px;
+      align-items: center;
+      margin-bottom: 36px;
+      color: #fff;
+    }
+    .guarantee-icon { font-size: 3rem; flex-shrink: 0; }
+    .guarantee-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .guarantee-text { font-size: 0.88rem; color: rgba(255,255,255,0.8); line-height: 1.65; }
+
+    /* ── FINE PRINT ── */
+    .fine-print {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 28px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 36px;
+    }
+    .fine-print h4 { font-size: 0.78rem; font-weight: 700; color: var(--text); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+    /* ── FOOTER ── */
+    .doc-footer {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    @media (max-width: 700px) {
+      .pricing-grid { grid-template-columns: 1fr; }
+      .revisions-grid { grid-template-columns: 1fr; }
+      .revision-col:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+      .addons-grid { grid-template-columns: 1fr 1fr; }
+      .doc-header { padding: 32px 24px; }
+      .doc-body { padding: 32px 20px 60px; }
+    }
+    @media print {
+      body { background: #fff; }
+      .pricing-card.featured { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="doc-header">
+    <span class="doc-brand-name">Point Zero AI · Dental Website Solutions</span>
+    <h1>Your Website Investment<br><em>Options</em></h1>
+    <p>Two clear paths to a premium dental website. No surprises, no nickel-and-diming — everything your practice needs to win online.</p>
+  </div>
+
+  <div class="doc-body">
+
+    <!-- PRICING CARDS -->
+    <div class="pricing-grid">
+
+      <!-- OPTION 1: BUILD + HOST -->
+      <div class="pricing-card">
+        <div class="pricing-header">
+          <span class="pricing-tier">Option A</span>
+          <div class="pricing-name">Build + Host</div>
+          <p class="pricing-tagline">Own your site. Pay once, keep forever.</p>
+          <div class="pricing-amount">
+            <span class="dollar">$</span>
+            <span class="number">2,497</span>
+          </div>
+          <div class="pricing-amount-note">one-time setup fee</div>
+          <div class="pricing-amount-sub">
+            + <strong>$179 / month</strong> &nbsp;hosting, maintenance & support
+          </div>
+        </div>
+        <div class="pricing-features">
+          <div class="features-label">What's Included</div>
+          <div class="feature-item">
+            <div class="feature-check yes">✓</div>
+            <span>Custom-designed premium dental website</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check yes">✓</div>
+            <span>Up to 3 practice locations configured</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check yes">✓</div>
+            <span>All doctors, staff & services populated</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check yes">✓</div>
+            <span>Live chat (tawk.to) set up & configured</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check yes">✓</div>
+            <span>Google Maps embed for all locations</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check yes">✓</div>
+            <span>Mobile-optimized, fast-loading</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check yes">✓</div>
+            <span>SSL certificate included</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check yes">✓</div>
+            <span><span class="feature-highlight">1 round of revisions</span> included at launch</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check yes">✓</div>
+            <span>Monthly hosting, backups & updates</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check no">—</div>
+            <span style="color:var(--muted)">Ongoing content updates (add-on)</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check no">—</div>
+            <span style="color:var(--muted)">Chat white-label / branding removal (add-on)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- OPTION 2: ALL-IN MONTHLY -->
+      <div class="pricing-card featured">
+        <div class="featured-badge">Most Popular</div>
+        <div class="pricing-header">
+          <span class="pricing-tier">Option B</span>
+          <div class="pricing-name">All-Inclusive Monthly</div>
+          <p class="pricing-tagline">Zero upfront. Everything included. Cancel anytime after 12 months.</p>
+          <div class="pricing-amount">
+            <span class="dollar">$</span>
+            <span class="number">397</span>
+            <span class="period">/mo</span>
+          </div>
+          <div class="pricing-amount-note">12-month minimum · no setup fee</div>
+          <div class="pricing-amount-sub">
+            Equivalent to <strong>$4,764/yr</strong> · includes all updates
+          </div>
+        </div>
+        <div class="pricing-features">
+          <div class="features-label">Everything in Option A, Plus</div>
+          <div class="feature-item">
+            <div class="feature-check amber">✓</div>
+            <span>No upfront setup cost</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check amber">✓</div>
+            <span>Up to 3 practice locations configured</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check amber">✓</div>
+            <span>All doctors, staff & services populated</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check amber">✓</div>
+            <span>Live chat setup & configured</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check amber">✓</div>
+            <span><span class="feature-highlight">3 rounds of revisions per year</span> included</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check amber">✓</div>
+            <span>Monthly content updates (hours, staff, services)</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check amber">✓</div>
+            <span>Priority support — 24hr response time</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check amber">✓</div>
+            <span>tawk.to white-label (removes "Powered by" branding)</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check amber">✓</div>
+            <span>Annual design refresh (keep site looking current)</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check amber">✓</div>
+            <span>Cancel anytime after 12 months — no penalty</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- REVISIONS POLICY -->
+    <div class="revisions-section">
+      <div class="revisions-header">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.51"/></svg>
+        <h3>Revision Policy — How It Works</h3>
+      </div>
+      <div class="revisions-grid">
+        <div class="revision-col">
+          <div class="revision-plan-name">Option A · Build + Host</div>
+          <div class="revision-count">1 Round</div>
+          <div class="revision-rules">
+            <div class="revision-rule">Submit all change requests together in one list — this counts as your 1 round</div>
+            <div class="revision-rule">Up to 15 line-item changes per round (text, colors, layout, photos)</div>
+            <div class="revision-rule">Revisions delivered within 5 business days</div>
+            <div class="revision-rule">Additional revision rounds available at <strong>$297 per round</strong></div>
+            <div class="revision-rule">Major redesigns (new layout, new sections) quoted separately</div>
+          </div>
+        </div>
+        <div class="revision-col amber-col">
+          <div class="revision-plan-name">Option B · All-Inclusive</div>
+          <div class="revision-count">3 Rounds / Year</div>
+          <div class="revision-rules">
+            <div class="revision-rule">3 full revision rounds per 12-month period — use whenever needed</div>
+            <div class="revision-rule">Up to 15 line-item changes per round</div>
+            <div class="revision-rule">Revisions delivered within 3 business days (priority)</div>
+            <div class="revision-rule">Unused rounds do not roll over to the following year</div>
+            <div class="revision-rule">Includes monthly minor updates (hours, phone, staff names) free</div>
+          </div>
+        </div>
+      </div>
+      <div class="revision-note">
+        A "revision round" = one consolidated list of changes submitted at one time. Submitting changes in multiple separate emails counts as multiple rounds. We recommend collecting all feedback before submitting.
+      </div>
+    </div>
+
+    <!-- COMPARISON TABLE -->
+    <div class="compare-section">
+      <div class="compare-header">
+        <h3>Side-by-Side Comparison</h3>
+      </div>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th style="width:55%">Feature</th>
+            <th>Option A<br><span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:0.8rem;">$2,497 + $179/mo</span></th>
+            <th>Option B<br><span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:0.8rem;">$397/mo</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="cat-row"><td colspan="3">Setup & Design</td></tr>
+          <tr><td>Custom premium dental website design</td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td></tr>
+          <tr><td>Up to 3 office locations</td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td></tr>
+          <tr><td>All doctors, staff & services populated</td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td></tr>
+          <tr><td>Before & After gallery framework</td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td></tr>
+          <tr><td>Google Maps embed (all locations)</td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td></tr>
+          <tr><td>Mobile-optimized, fast loading</td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td></tr>
+          <tr><td>SSL Certificate</td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td></tr>
+          <tr class="cat-row"><td colspan="3">Ongoing Support</td></tr>
+          <tr><td>Monthly hosting & backups</td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td></tr>
+          <tr><td>Security updates & maintenance</td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td></tr>
+          <tr><td>Support response time</td><td>48 hours</td><td>24 hours</td></tr>
+          <tr><td>Monthly content updates (hours, staff, etc.)</td><td><span class="check-no">—</span></td><td><span class="check-yes">✓</span></td></tr>
+          <tr><td>Annual design refresh</td><td><span class="check-no">—</span></td><td><span class="check-yes">✓</span></td></tr>
+          <tr class="cat-row"><td colspan="3">Revisions</td></tr>
+          <tr><td>Revision rounds included</td><td><strong>1 round</strong> at launch</td><td><strong>3 rounds</strong> per year</td></tr>
+          <tr><td>Changes per round</td><td>Up to 15 items</td><td>Up to 15 items</td></tr>
+          <tr><td>Additional rounds</td><td>$297 per round</td><td>Included (3/yr)</td></tr>
+          <tr class="cat-row"><td colspan="3">Live Chat & Extras</td></tr>
+          <tr><td>Live chat setup (tawk.to)</td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td></tr>
+          <tr><td>Chat white-label (removes branding)</td><td><span class="check-add">+$19/mo</span></td><td><span class="check-yes">✓ Included</span></td></tr>
+          <tr><td>Upfront cost</td><td><strong>$2,497</strong></td><td><strong>$0</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ADD-ONS -->
+    <div class="addons-section">
+      <div class="addons-header">
+        <h3>Available Add-Ons — Available on Either Plan</h3>
+      </div>
+      <div class="addons-grid">
+        <div class="addon-item">
+          <div class="addon-price">$297</div>
+          <div class="addon-name">Extra Revision Round</div>
+          <div class="addon-desc">Additional 15-item revision round, delivered within 5 business days.</div>
+        </div>
+        <div class="addon-item">
+          <div class="addon-price">$19<span style="font-size:1rem;">/mo</span></div>
+          <div class="addon-name">Chat White-Label</div>
+          <div class="addon-desc">Removes "Powered by tawk.to" from the chat widget. Included in Option B.</div>
+        </div>
+        <div class="addon-item">
+          <div class="addon-price">$197</div>
+          <div class="addon-name">Before & After Gallery Setup</div>
+          <div class="addon-desc">We upload, format, and label up to 20 patient case photos you provide.</div>
+        </div>
+        <div class="addon-item">
+          <div class="addon-price">$297</div>
+          <div class="addon-name">Additional Service Page</div>
+          <div class="addon-desc">Full dedicated page for one specific service (Implants, Sedation, etc.).</div>
+        </div>
+        <div class="addon-item">
+          <div class="addon-price">$147<span style="font-size:1rem;">/mo</span></div>
+          <div class="addon-name">Managed Live Chat</div>
+          <div class="addon-desc">Our team monitors and responds to incoming chats during business hours.</div>
+        </div>
+        <div class="addon-item">
+          <div class="addon-price">$497</div>
+          <div class="addon-name">Rush Delivery</div>
+          <div class="addon-desc">Site delivered in 3 business days instead of 7–10. Subject to availability.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GUARANTEE -->
+    <div class="guarantee-band">
+      <div class="guarantee-icon">🛡️</div>
+      <div>
+        <div class="guarantee-title">Our Satisfaction Promise</div>
+        <p class="guarantee-text">If your website isn't live and exactly as agreed within 14 business days of receiving your completed intake form and all assets, we'll issue a full refund — no questions asked. We stand behind our work and our timeline.</p>
+      </div>
+    </div>
+
+    <!-- FINE PRINT -->
+    <div class="fine-print">
+      <h4>Terms & Notes</h4>
+      Monthly hosting fees begin on the date your site goes live. Option B requires a 12-month minimum commitment; cancellation after the initial period requires 30 days written notice. Revision rounds expire at the end of each 12-month period and do not roll over. A revision round is defined as one consolidated list of up to 15 distinct change items submitted in a single communication. Domain registration is not included (client provides or we can register at cost + $25 setup). Patient before/after photos require signed HIPAA-compliant consent forms before publication — client is responsible for obtaining and retaining these. Point Zero AI is not responsible for delays caused by late delivery of assets (logo, photos, content). All prices in USD.
+    </div>
+
+    <div class="doc-footer">
+      <strong>Point Zero AI · Dental Website Solutions</strong><br>
+      Questions? Contact us at <strong>sales@pointzeroai.com</strong> · <strong>(480) 000-0000</strong><br>
+      Pricing valid through December 31, 2026 · Subject to change with 30 days notice for existing clients
+    </div>
+
+  </div>
+
+</body>
+</html>
