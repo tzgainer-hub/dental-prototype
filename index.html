@@ -1514,7 +1514,7 @@
       <div class="topbar-left">
         <div class="topbar-item">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8a8 8 0 1 1 16 0c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
-          Old Town Scottsdale · North Scottsdale · Tempe
+          Scottsdale · Sedona
         </div>
         <div class="topbar-item">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -2717,10 +2717,10 @@
   </script>
 
   <style>
-    /* Push tawk.to bubble away from screen edge */
-    .widget-visible iframe[title="chat widget"] { right: 20px !important; bottom: 20px !important; }
-    /* Hide the "We Are Here!" attention grabber */
-    #tawk-bubble-container .tawk-min-container { margin-right: 20px !important; margin-bottom: 20px !important; }
+    /* tawk.to — keep bubble in corner, prevent it from overlapping page content */
+    #tawk-bubble-container { right: 20px !important; bottom: 20px !important; }
+    /* Ensure tawk popup/chat window never covers hero content */
+    div[id^="tawk"] { z-index: 150 !important; }
   </style>
 
   <!-- MOBILE STICKY CTA BAR -->
