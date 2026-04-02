@@ -140,13 +140,25 @@
       transition: all 0.2s;
     }
     .nav-links a:hover { color: var(--navy); background: var(--off-white); }
+    .nav-phone {
+      color: var(--navy) !important;
+      font-weight: 600 !important;
+      font-size: 0.85rem !important;
+      padding: 8px 12px !important;
+      border: 1.5px solid var(--border) !important;
+      border-radius: 8px !important;
+      white-space: nowrap;
+    }
+    .nav-phone:hover { background: var(--off-white) !important; border-color: var(--accent) !important; }
     .nav-cta {
       background: var(--accent) !important;
       color: #fff !important;
-      padding: 10px 20px !important;
+      padding: 10px 22px !important;
       border-radius: 8px !important;
-      font-weight: 600 !important;
+      font-weight: 700 !important;
+      font-size: 0.9rem !important;
       transition: background 0.2s !important;
+      white-space: nowrap;
     }
     .nav-cta:hover { background: var(--accent-light) !important; }
 
@@ -994,7 +1006,8 @@
         <li><a href="#doctors">Our Doctors</a></li>
         <li><a href="#patients">Patient Info</a></li>
         <li><a href="#contact">Locations</a></li>
-        <li><a href="#appointment" class="nav-cta">Request Appointment</a></li>
+        <li><a href="tel:4809229933" class="nav-phone">📞 (480) 922-9933</a></li>
+        <li><a href="#appointment" class="nav-cta">Book Online</a></li>
       </ul>
       <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Menu">
         <span></span><span></span><span></span>
@@ -1485,17 +1498,6 @@
     </div>
   </footer>
 
-  <!-- FLOATING CTA -->
-  <div class="float-cta">
-    <a href="tel:4809229933" class="float-btn call">
-      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-      Call Now
-    </a>
-    <a href="#schedule" class="float-btn appt">
-      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-      Book Online
-    </a>
-  </div>
 
   <!-- LIVE CHAT: tawk.to -->
   <div id="chat-window" style="display:none;">
