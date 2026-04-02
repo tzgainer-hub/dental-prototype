@@ -706,11 +706,19 @@
             </div>
           </div>
           <div class="field">
-            <label>Live Chat (tawk.to) — Who manages incoming chats?</label>
+            <label>Would you like a live chat box to appear on your website?</label>
             <div class="radio-group">
-              <label class="radio-item"><input type="radio" name="chat" /> Our front desk / staff will manage</label>
-              <label class="radio-item"><input type="radio" name="chat" /> Point Zero AI team manages (add-on service)</label>
-              <label class="radio-item"><input type="radio" name="chat" /> Do not include live chat</label>
+              <label class="radio-item"><input type="radio" name="chat_include" /> Yes — include live chat</label>
+              <label class="radio-item"><input type="radio" name="chat_include" /> No — do not include live chat</label>
+            </div>
+          </div>
+          <div class="field">
+            <label>If yes — will your staff be available to respond to incoming chats?</label>
+            <span class="field-note">Live chat only converts when someone is answering. Unanswered chats frustrate patients.</span>
+            <div class="radio-group">
+              <label class="radio-item"><input type="radio" name="chat_staffed" /> Yes — our front desk / staff will manage incoming chats</label>
+              <label class="radio-item"><input type="radio" name="chat_staffed" /> No — we'd like Point Zero AI to manage it for us (add-on: $147/month)</label>
+              <label class="radio-item"><input type="radio" name="chat_staffed" /> Not sure yet — we'll decide after launch</label>
             </div>
           </div>
           <div class="field">
