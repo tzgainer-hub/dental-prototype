@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Point Zero AI — Sales Hub</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --teal: #0891b2;
+    --dark: #0c1a2e;
+    --amber: #f59e0b;
+    --light: #f0f9ff;
+    --border: #e2e8f0;
+    --green: #16a34a;
+  }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    min-height: 100vh;
+  }
+
+  /* ---- header ---- */
+  .site-header {
+    background: var(--dark);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--teal);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .logo-icon svg { width: 18px; height: 18px; fill: #fff; }
+  .logo-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.01em;
+  }
+  .logo-sub {
+    font-size: 0.7rem;
+    color: #64748b;
+    font-weight: 400;
+  }
+  .header-badge {
+    background: rgba(255,255,255,0.08);
+    color: #94a3b8;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ---- hero ---- */
+  .hero {
+    background: linear-gradient(135deg, var(--dark) 0%, #0e2340 60%, #0c3a5e 100%);
+    padding: 64px 32px 56px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 60% 50%, rgba(8,145,178,0.15) 0%, transparent 70%);
+  }
+  .hero-content { position: relative; }
+  .hero-eyebrow {
+    display: inline-block;
+    background: rgba(8,145,178,0.2);
+    color: #67e8f9;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(103,232,249,0.2);
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 14px;
+    letter-spacing: -0.02em;
+  }
+  .hero h1 span { color: #67e8f9; }
+  .hero p {
+    color: #94a3b8;
+    font-size: 1rem;
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* ---- main grid ---- */
+  .main {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ---- demo card (featured) ---- */
+  .demo-card {
+    background: var(--dark);
+    border-radius: 16px;
+    padding: 32px 36px;
+    margin-bottom: 40px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: center;
+    box-shadow: 0 8px 32px rgba(8,145,178,0.15);
+    border: 1px solid rgba(8,145,178,0.2);
+    position: relative;
+    overflow: hidden;
+  }
+  .demo-card::before {
+    content: '';
+    position: absolute;
+    right: -60px;
+    top: -60px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(8,145,178,0.15) 0%, transparent 70%);
+  }
+  @media (max-width: 600px) {
+    .demo-card { grid-template-columns: 1fr; }
+  }
+  .demo-card-text {}
+  .demo-live-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(22,163,74,0.15);
+    color: #4ade80;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+  .demo-live-dot::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #4ade80;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .demo-card h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .demo-card p {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 6px;
+  }
+  .demo-url {
+    font-size: 0.8rem;
+    color: #38bdf8;
+    font-family: monospace;
+    margin-top: 4px;
+  }
+  .demo-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--teal);
+    color: #fff;
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    transition: background 0.2s;
+    box-shadow: 0 4px 16px rgba(8,145,178,0.3);
+  }
+  .demo-btn:hover { background: #0e7490; }
+  .demo-btn svg { width: 16px; height: 16px; }
+
+  /* ---- card grid ---- */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    padding: 24px;
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .card:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+    border-color: var(--teal);
+  }
+  .card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .card-icon svg { width: 22px; height: 22px; }
+  .icon-teal { background: #e0f2fe; }
+  .icon-teal svg { stroke: var(--teal); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .icon-amber { background: #fef9c3; }
+  .icon-amber svg { stroke: #d97706; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .icon-green { background: #dcfce7; }
+  .icon-green svg { stroke: var(--green); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .icon-purple { background: #f3e8ff; }
+  .icon-purple svg { stroke: #7c3aed; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .icon-rose { background: #ffe4e6; }
+  .icon-rose svg { stroke: #e11d48; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+  .card-body {}
+  .card-tag {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    margin-bottom: 4px;
+  }
+  .card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 6px;
+  }
+  .card p {
+    font-size: 0.83rem;
+    color: #64748b;
+    line-height: 1.6;
+  }
+  .card-footer {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+  .card-footer svg {
+    width: 14px;
+    height: 14px;
+    stroke: var(--teal);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* download cards */
+  .download-card {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .download-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+    border-color: var(--teal);
+  }
+  .dl-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1.4rem;
+  }
+  .dl-icon-docx { background: #dbeafe; }
+  .dl-icon-pdf { background: #fee2e2; }
+  .dl-text { flex: 1; }
+  .dl-text strong { display: block; font-size: 0.9rem; color: var(--dark); margin-bottom: 2px; }
+  .dl-text span { font-size: 0.78rem; color: #64748b; }
+  .dl-arrow {
+    width: 32px;
+    height: 32px;
+    background: var(--light);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .dl-arrow svg {
+    width: 14px;
+    height: 14px;
+    stroke: var(--teal);
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* ---- quick-send box ---- */
+  .quick-send {
+    background: linear-gradient(135deg, #0c3a5e, var(--dark));
+    border-radius: 14px;
+    padding: 28px 32px;
+    margin-bottom: 40px;
+    border: 1px solid rgba(8,145,178,0.2);
+  }
+  .quick-send h3 {
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .quick-send p {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    margin-bottom: 18px;
+  }
+  .copy-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin-bottom: 10px;
+  }
+  .copy-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #67e8f9;
+    white-space: nowrap;
+    min-width: 60px;
+  }
+  .copy-text {
+    font-size: 0.85rem;
+    color: #e2e8f0;
+    flex: 1;
+    font-family: monospace;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .copy-btn {
+    background: rgba(8,145,178,0.3);
+    border: none;
+    color: #67e8f9;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s;
+    letter-spacing: 0.04em;
+  }
+  .copy-btn:hover { background: rgba(8,145,178,0.5); }
+  .copy-btn.copied { background: rgba(22,163,74,0.3); color: #4ade80; }
+
+  /* ---- footer ---- */
+  .site-footer {
+    background: var(--dark);
+    color: #475569;
+    text-align: center;
+    padding: 24px;
+    font-size: 0.8rem;
+  }
+  .site-footer a { color: var(--teal); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="#" class="logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+    </div>
+    <div>
+      <div class="logo-name">Point Zero AI</div>
+      <div class="logo-sub">Dental Websites</div>
+    </div>
+  </a>
+  <div class="header-badge">Internal Sales Hub</div>
+</header>
+
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Closer Resources</div>
+    <h1>Everything you need to<br><span>close the deal.</span></h1>
+    <p>Demo link, email templates, SMS scripts, pricing, and the intake form — all in one place.</p>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- DEMO -->
+  <div class="section-label">The Product</div>
+  <div class="demo-card">
+    <div class="demo-card-text">
+      <div class="demo-live-dot">Live Demo</div>
+      <h2>Scottsdale Surgical Arts — Demo Site</h2>
+      <p>This is your primary selling tool. Send this link first — before you explain anything. The site sells itself.</p>
+      <div class="demo-url">dental-prototype-production.up.railway.app</div>
+    </div>
+    <a href="https://dental-prototype-production.up.railway.app" target="_blank" class="demo-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      Open Demo
+    </a>
+  </div>
+
+  <!-- QUICK SEND -->
+  <div class="section-label">Quick Copy — Send to a Prospect Right Now</div>
+  <div class="quick-send">
+    <h3>Drop-in links for texts, emails, and DMs</h3>
+    <p>Copy and paste directly — no editing needed.</p>
+
+    <div class="copy-row">
+      <span class="copy-label">Demo</span>
+      <span class="copy-text" id="copy-demo">https://dental-prototype-production.up.railway.app</span>
+      <button class="copy-btn" onclick="copyText('copy-demo', this)">Copy</button>
+    </div>
+    <div class="copy-row">
+      <span class="copy-label">Pricing</span>
+      <span class="copy-text" id="copy-pricing">https://dental-prototype-production.up.railway.app/pricing.html</span>
+      <button class="copy-btn" onclick="copyText('copy-pricing', this)">Copy</button>
+    </div>
+    <div class="copy-row">
+      <span class="copy-label">Intake</span>
+      <span class="copy-text" id="copy-intake">https://dental-prototype-production.up.railway.app/intake-form.html</span>
+      <button class="copy-btn" onclick="copyText('copy-intake', this)">Copy</button>
+    </div>
+  </div>
+
+  <!-- SALES TOOLS -->
+  <div class="section-label">Sales Tools</div>
+  <div class="card-grid">
+
+    <a href="outreach-emails.html" class="card" target="_blank">
+      <div class="card-icon icon-teal">
+        <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Email Sequence</div>
+        <h3>3-Touch Email Templates</h3>
+        <p>Copy-paste email templates for the full 14-day sequence. Subject line options, objection rebuttals, and next-steps checklist included.</p>
+      </div>
+      <div class="card-footer">
+        Open templates
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+    </a>
+
+    <a href="sms-sequence.html" class="card" target="_blank">
+      <div class="card-icon icon-green">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">SMS Sequence</div>
+        <h3>Text Message Scripts</h3>
+        <p>5-text sequence with phone mockups. Includes the high-converting "permission text," post-demo follow-up, and close text with intake form link.</p>
+      </div>
+      <div class="card-footer">
+        Open SMS guide
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+    </a>
+
+    <a href="pricing.html" class="card" target="_blank">
+      <div class="card-icon icon-amber">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Pricing Page</div>
+        <h3>Fee Schedule — Options A &amp; B</h3>
+        <p>Send this to prospects who want pricing in writing. Option A ($1,599 + $149/mo) vs Option B ($2,500 flat). Add-ons and comparison table included.</p>
+      </div>
+      <div class="card-footer">
+        Open pricing page
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+    </a>
+
+    <a href="intake-form.html" class="card" target="_blank">
+      <div class="card-icon icon-purple">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Onboarding</div>
+        <h3>Client Intake Form</h3>
+        <p>Send this immediately after they say yes. Covers all 8 sections: practice info, locations, doctors, services, insurance, branding, awards, and content.</p>
+      </div>
+      <div class="card-footer">
+        Open intake form
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- DOWNLOADS -->
+  <div class="section-label">Downloads — Print &amp; Keep</div>
+  <div class="card-grid" style="grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); margin-bottom: 48px;">
+
+    <a href="closer-email-templates.docx" class="download-card" download>
+      <div class="dl-icon dl-icon-docx">📄</div>
+      <div class="dl-text">
+        <strong>Email Templates — Word Doc</strong>
+        <span>Open in Google Docs or Word · Copy/paste while working the list</span>
+      </div>
+      <div class="dl-arrow">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      </div>
+    </a>
+
+    <a href="sms-text-sequence.pdf" class="download-card" download>
+      <div class="dl-icon dl-icon-pdf">📋</div>
+      <div class="dl-text">
+        <strong>SMS Sequence — PDF Printout</strong>
+        <span>Print and keep next to your phone · All 5 texts + response scripts</span>
+      </div>
+      <div class="dl-arrow">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- CADENCE CHEAT SHEET -->
+  <div class="section-label">14-Day Cadence — At a Glance</div>
+  <div style="background:#fff; border-radius:12px; border:1px solid var(--border); overflow:hidden; margin-bottom:40px; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+    <table style="width:100%; border-collapse:collapse; font-size:0.85rem;">
+      <thead>
+        <tr style="background:var(--light);">
+          <th style="padding:10px 16px; text-align:left; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.07em; color:#475569; border-bottom:1px solid var(--border);">Day</th>
+          <th style="padding:10px 16px; text-align:left; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.07em; color:#475569; border-bottom:1px solid var(--border);">Channel</th>
+          <th style="padding:10px 16px; text-align:left; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.07em; color:#475569; border-bottom:1px solid var(--border);">Action</th>
+          <th style="padding:10px 16px; text-align:left; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.07em; color:#475569; border-bottom:1px solid var(--border);">Goal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:11px 16px; border-bottom:1px solid var(--border); font-weight:700;">Day 1</td><td style="padding:11px 16px; border-bottom:1px solid var(--border); color:var(--teal); font-weight:700;">Email</td><td style="padding:11px 16px; border-bottom:1px solid var(--border); color:#334155;">Touch 1 — warm intro, demo link</td><td style="padding:11px 16px; border-bottom:1px solid var(--border); color:#64748b;">Get eyes on the demo</td></tr>
+        <tr style="background:#fafafa;"><td style="padding:11px 16px; border-bottom:1px solid var(--border); font-weight:700; color:#94a3b8; font-size:0.8rem;">Day 1 +2hrs</td><td style="padding:11px 16px; border-bottom:1px solid var(--border); color:var(--green); font-weight:700;">SMS</td><td style="padding:11px 16px; border-bottom:1px solid var(--border); color:#334155;">Text 1 — Tom's name, demo link</td><td style="padding:11px 16px; border-bottom:1px solid var(--border); color:#64748b;">Confirm email, get a click</td></tr>
+        <tr><td style="padding:11px 16px; border-bottom:1px solid var(--border); font-weight:700;">Day 4</td><td style="padding:11px 16px; border-bottom:1px solid var(--border); color:var(--green); font-weight:700;">SMS</td><td style="padding:11px 16px; border-bottom:1px solid var(--border); color:#334155;">Text 2 — "does your site make patients want to call?"</td><td style="padding:11px 16px; border-bottom:1px solid var(--border); color:#64748b;">Surface pain, get response</td></tr>
+        <tr style="background:#fafafa;"><td style="padding:11px 16px; border-bottom:1px solid var(--border); font-weight:700;">Day 6</td><td style="padding:11px 16px; border-bottom:1px solid var(--border); color:var(--teal); font-weight:700;">Email</td><td style="padding:11px 16px; border-bottom:1px solid var(--border); color:#334155;">Touch 2 — pricing specifics, what's included</td><td style="padding:11px 16px; border-bottom:1px solid var(--border); color:#64748b;">Give info to forward internally</td></tr>
+        <tr><td style="padding:11px 16px; border-bottom:1px solid var(--border); font-weight:700;">Day 9</td><td style="padding:11px 16px; border-bottom:1px solid var(--border); color:var(--amber); font-weight:700;">Call</td><td style="padding:11px 16px; border-bottom:1px solid var(--border); color:#334155;">Live call attempt</td><td style="padding:11px 16px; border-bottom:1px solid var(--border); color:#64748b;">Book 15-min demo call</td></tr>
+        <tr style="background:#fafafa;"><td style="padding:11px 16px; border-bottom:1px solid var(--border); font-weight:700;">Day 11</td><td style="padding:11px 16px; border-bottom:1px solid var(--border); color:var(--green); font-weight:700;">SMS</td><td style="padding:11px 16px; border-bottom:1px solid var(--border); color:#334155;">Text 3 — "last text, reply not now if off"</td><td style="padding:11px 16px; border-bottom:1px solid var(--border); color:#64748b;">Get a reply either way</td></tr>
+        <tr><td style="padding:11px 16px; font-weight:700;">Day 14</td><td style="padding:11px 16px; color:var(--teal); font-weight:700;">Email</td><td style="padding:11px 16px; color:#334155;">Touch 3 — soft close, leave door open</td><td style="padding:11px 16px; color:#64748b;">Final impression, future touchpoint</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  Point Zero AI · Internal Sales Hub · Not for client distribution · <a href="mailto:onboarding@pointzeroai.com">onboarding@pointzeroai.com</a>
+</footer>
+
+<script>
+  function copyText(id, btn) {
+    const text = document.getElementById(id).textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const orig = btn.textContent;
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = orig;
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+</script>
+</body>
+</html>
