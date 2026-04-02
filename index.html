@@ -162,6 +162,15 @@
     }
     .nav-cta:hover { background: var(--accent-light) !important; }
 
+    /* HERO PHOTO */
+    .hero-photo-col { display: flex; flex-direction: column; gap: 16px; }
+    .hero-photo-wrap { position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+    .hero-photo { width: 100%; height: 320px; object-fit: cover; object-position: center top; display: block; }
+    .hero-photo-badge { position: absolute; bottom: 16px; left: 16px; background: rgba(255,255,255,0.96); border-radius: 12px; padding: 10px 16px; display: flex; align-items: center; gap: 10px; color: var(--navy); box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+    .hero-photo-badge-emoji { font-size: 1.6rem; }
+    .hero-photo-badge-text { font-size: 0.82rem; font-weight: 700; color: var(--navy); line-height: 1.3; }
+    .hero-photo-badge-sub { font-size: 0.7rem; color: var(--text-light); font-weight: 400; }
+
     /* ── HERO ── */
     .hero {
       background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 60%, #1e4060 100%);
@@ -1047,38 +1056,25 @@
           </a>
         </div>
       </div>
-      <div class="hero-card">
-        <div class="hero-card-title">Our Specialties</div>
-        <div class="hero-services-grid">
-          <div class="hero-service-item">
-            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-            Dental Implants
-          </div>
-          <div class="hero-service-item">
-            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-            Wisdom Teeth
-          </div>
-          <div class="hero-service-item">
-            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-            Jaw Surgery
-          </div>
-          <div class="hero-service-item">
-            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-            Bone Grafting
-          </div>
-          <div class="hero-service-item">
-            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-            TMJ Disorders
-          </div>
-          <div class="hero-service-item">
-            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-            IV Sedation
+      <div class="hero-photo-col">
+        <div class="hero-photo-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=700&q=80"
+            alt="Happy patient with a beautiful smile"
+            class="hero-photo"
+          />
+          <div class="hero-photo-badge">
+            <span class="hero-photo-badge-emoji">😊</span>
+            <div>
+              <div class="hero-photo-badge-text">5-Star Patient Care</div>
+              <div class="hero-photo-badge-sub">Hundreds of smiles restored</div>
+            </div>
           </div>
         </div>
         <div class="hero-stats">
           <div class="hero-stat">
             <span class="hero-stat-num">25+</span>
-            <span class="hero-stat-label">Years Combined Experience</span>
+            <span class="hero-stat-label">Years Experience</span>
           </div>
           <div class="hero-stat">
             <span class="hero-stat-num">2</span>
@@ -1292,6 +1288,22 @@
       <div class="section-header center">
         <div class="section-label">Patient Reviews</div>
         <h2 class="section-title">What Our Patients Say</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 2fr;gap:24px;align-items:center;margin-bottom:40px;">
+        <div style="border-radius:16px;overflow:hidden;box-shadow:var(--shadow-lg);height:200px;">
+          <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=500&q=80" alt="Patient smiling after treatment" style="width:100%;height:100%;object-fit:cover;object-position:center;" />
+        </div>
+        <div style="background:#fff;border-radius:16px;padding:24px 28px;box-shadow:var(--shadow);">
+          <div style="font-size:2.5rem;color:var(--gold);letter-spacing:2px;margin-bottom:10px;">★★★★★</div>
+          <p style="font-size:1rem;color:var(--text);line-height:1.7;font-style:italic;margin-bottom:16px;">"From the moment I walked in, the team at Scottsdale Surgical Arts made me feel at ease. My implants are perfect — I smile more now than I have in years."</p>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--accent));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:0.8rem;">JL</div>
+            <div>
+              <div style="font-weight:600;font-size:0.88rem;color:var(--navy);">Jennifer L.</div>
+              <div style="font-size:0.75rem;color:var(--text-light);">Full Mouth Restoration · Scottsdale</div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="testimonials-grid">
         <div class="testimonial-card">
