@@ -1421,33 +1421,152 @@ footer {
 @media (max-width: 560px) { .ba-grid { grid-template-columns: 1fr; } }
 
 /* ─── MAP SECTION ─── */
-.map-section { background: var(--bg); }
-.map-section-header { padding: 60px 24px 32px; }
-.map-container { width: 100%; line-height: 0; }
-.map-container iframe { display: block; }
-.map-location-pills { padding: 24px 24px 0; }
-.map-pills-row {
-  max-width: 1280px;
-  margin: 0 auto;
+.map-section { background: var(--bg); padding: 72px 0 80px; }
+
+/* Location tab buttons */
+.loc-tabs {
   display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  padding-bottom: 48px;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 32px;
 }
-.map-pill {
+.loc-tab {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--bg-teal);
-  border: 1.5px solid var(--border-teal);
-  color: var(--teal-dark);
-  font-size: 0.85rem;
+  background: var(--bg-warm);
+  border: 1.5px solid var(--border);
+  color: var(--muted);
+  font-size: 0.9rem;
   font-weight: 600;
-  padding: 10px 20px;
+  font-family: 'Inter', sans-serif;
+  padding: 11px 28px;
   border-radius: 100px;
+  cursor: pointer;
   transition: all 0.2s;
 }
-.map-pill:hover { background: var(--teal); border-color: var(--teal); color: #fff; }
+.loc-tab:hover { border-color: var(--teal); color: var(--teal); }
+.loc-tab.active {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(8,145,178,0.3);
+}
+
+/* Location panels */
+.loc-panel {
+  display: none;
+  grid-template-columns: 1fr 420px;
+  gap: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+.loc-panel.active { display: grid; }
+@media (max-width: 900px) {
+  .loc-panel.active { grid-template-columns: 1fr; }
+}
+
+/* Map iframe wrapper */
+.loc-map-wrap {
+  position: relative;
+  height: 480px;
+  background: #e2e8f0;
+}
+.loc-map-wrap iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+@media (max-width: 900px) {
+  .loc-map-wrap { height: 300px; }
+}
+
+/* Location details panel */
+.loc-details {
+  background: #fff;
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-left: 1px solid var(--border);
+}
+.loc-badge {
+  display: inline-block;
+  background: var(--teal-bg);
+  color: var(--teal-dark);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border-teal);
+  width: fit-content;
+}
+.loc-badge-sedona {
+  background: #fef3c7;
+  color: #92400e;
+  border-color: #fde68a;
+}
+.loc-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--dark);
+  line-height: 1.2;
+  margin-top: -4px;
+}
+.loc-info-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: var(--text);
+  line-height: 1.5;
+}
+.loc-info-row svg { color: var(--teal); flex-shrink: 0; margin-top: 2px; }
+.loc-info-row a { color: var(--teal); font-weight: 600; }
+.loc-info-row strong { display: block; }
+.loc-hours {
+  background: var(--bg-warm);
+  border-radius: 10px;
+  padding: 16px 18px;
+}
+.loc-hours-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.loc-hours-title svg { color: var(--teal); }
+.loc-hours-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+.loc-hours-table td { padding: 4px 0; color: var(--text); }
+.loc-hours-table td:first-child { color: var(--muted); padding-right: 16px; }
+.loc-directions-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--teal);
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 13px 24px;
+  border-radius: 10px;
+  transition: all 0.2s;
+  box-shadow: 0 4px 14px rgba(8,145,178,0.3);
+  margin-top: auto;
+  width: fit-content;
+}
+.loc-directions-btn:hover { background: var(--teal-dark); transform: translateY(-1px); }
 
 /* ─── MOBILE STICKY CTA ─── */
 .mobile-sticky-cta {
