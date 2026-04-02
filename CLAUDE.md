@@ -30,7 +30,7 @@ Point Zero AI builds **premium, custom websites for healthcare professionals** (
 
 **To deploy any change:**
 ```bash
-cd /Users/thomaszgainer/dental-prototype
+cd "/Users/thomaszgainer/Desktop/ClaudeWork /dental-prototype"
 git add [files]
 git commit -m "description"
 git push
@@ -195,14 +195,18 @@ White background, box shadow, `position: sticky; top: 0; z-index: 200`.
 - Mobile hamburger (hidden on desktop, JS toggle)
 
 ### 3. tawk.to Live Chat
-**Required on every page.** This is the live chat widget. Free unlimited.
+**Optional per client** (intake form asks if they want it and who will staff it).
 - Point Zero AI account: property_id `69cdbcadb8aa781c3b30ef8f`, widget_id `1jl5qi1c1`
-- For client's own tawk.to: swap these IDs in per client
-- Place the script just before `</body>`
+- For client's own tawk.to: swap these IDs per client
+- **On mobile: hide the floating bubble via JS API** — the Chat button in the sticky bar opens it instead
+- Place the script just before `</body>`:
 ```html
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+Tawk_API.onLoad = function() {
+  if (window.innerWidth <= 768) { Tawk_API.hideWidget(); }
+};
 (function(){
 var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
 s1.async=true;
@@ -214,23 +218,28 @@ s0.parentNode.insertBefore(s1,s0);
 </script>
 <!--End of Tawk.to Script-->
 ```
-CSS fix (prevents chat bubble from overlaying content):
-```css
-#tawk-bubble-container { right: 20px !important; bottom: 20px !important; }
-```
+**Do NOT use CSS to reposition tawk.to** — it renders in an iframe and ignores external CSS.
+Desktop: bubble shows bottom-right as normal. Mobile: hidden, opened via Chat button in sticky bar.
 
 ### 4. Mobile Sticky CTA Bar
-Fixed bottom bar, shows only on mobile (≤768px). Two buttons: Call Now + Book Appointment.
+Fixed bottom bar, shows only on mobile (≤768px). **Three equal buttons: Call | Book | Chat.**
+- Call → `tel:` link to primary phone
+- Book → `contact.html`
+- Chat → opens tawk.to via `Tawk_API.toggle()` (JS, not a link)
 ```html
 <div class="mobile-sticky-cta" id="mobile-sticky">
   <a href="tel:[PHONE]" class="mobile-sticky-call">
-    <svg>...</svg> Call Now
+    <svg>...</svg> Call
   </a>
   <a href="contact.html" class="mobile-sticky-book">
-    <svg>...</svg> Book Appointment
+    <svg>...</svg> Book
   </a>
+  <button class="mobile-sticky-chat" onclick="if(window.Tawk_API){Tawk_API.toggle();}">
+    <svg>...</svg> Chat
+  </button>
 </div>
 ```
+If client opted out of chat on intake form: remove the Chat button and make Call + Book split the full width.
 
 ### 5. Footer
 Three-column layout:
