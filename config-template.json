@@ -85,6 +85,12 @@
     "label_secondary": null
   },
 
+  "tawkto": {
+    "_note": "Get these from tawk.to dashboard → Administration → Chat Widget. Leave null to use built-in placeholder widget.",
+    "property_id": null,
+    "widget_id": null
+  },
+
   "patient_portal_url": null,
   "social": {
     "instagram": null,

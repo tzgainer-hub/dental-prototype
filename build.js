@@ -37,6 +37,106 @@ const PALETTES = {
 
 const pal = PALETTES[config.palette] || PALETTES['navy-teal'];
 
+// ── TAWK.TO / CHAT WIDGET ────────────────────────────────────────────────────
+const hasTawkto = !!(config.tawkto && config.tawkto.property_id && config.tawkto.widget_id);
+const _phone = config.contact.phone_primary;
+const _initials3 = config.practice.name.split(' ').map(w=>w[0]).join('').slice(0,3);
+
+const chatCSS = hasTawkto ? '' : `
+    #chat-bubble { position: fixed; bottom: 28px; left: 28px; width: 52px; height: 52px; background: var(--navy); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.25); transition: all 0.2s; z-index: 200; }
+    #chat-bubble:hover { transform: scale(1.08); }
+    .chat-badge { position: absolute; top: -2px; right: -2px; background: #e53e3e; color: #fff; font-size: 0.62rem; font-weight: 700; width: 17px; height: 17px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid #fff; }
+    #chat-window { position: fixed; bottom: 92px; left: 28px; width: 310px; background: #fff; border-radius: 14px; box-shadow: 0 8px 40px rgba(0,0,0,0.16); z-index: 200; display: none; flex-direction: column; overflow: hidden; font-family: 'Inter', sans-serif; }
+    #chat-window.open { display: flex; }
+    .chat-header { background: var(--navy); color: #fff; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; }
+    .chat-header-left { display: flex; gap: 10px; align-items: center; }
+    .chat-avatar { width: 36px; height: 36px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.62rem; font-weight: 700; }
+    .chat-name { font-size: 0.85rem; font-weight: 600; }
+    .chat-status { font-size: 0.7rem; color: rgba(255,255,255,0.6); display: flex; align-items: center; gap: 5px; margin-top: 2px; }
+    .chat-dot { width: 6px; height: 6px; background: #48bb78; border-radius: 50%; display: inline-block; }
+    .chat-close { background: none; border: none; color: rgba(255,255,255,0.6); font-size: 1rem; cursor: pointer; }
+    .chat-body { padding: 14px; min-height: 130px; background: #f7f8fa; }
+    .chat-msg-bubble { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px 10px 10px 0; padding: 9px 12px; font-size: 0.85rem; color: var(--text); display: inline-block; max-width: 90%; }
+    .chat-msg-time { font-size: 0.66rem; color: var(--text-light); margin-top: 3px; padding-left: 3px; }
+    .chat-quick-replies { display: flex; flex-direction: column; gap: 6px; margin-top: 9px; }
+    .chat-quick-replies button { background: #fff; border: 1.5px solid var(--border); border-radius: 18px; padding: 7px 12px; font-size: 0.78rem; color: var(--navy); cursor: pointer; text-align: left; font-family: 'Inter', sans-serif; transition: all 0.15s; }
+    .chat-quick-replies button:hover { border-color: var(--accent); color: var(--accent); }
+    .chat-input-row { display: flex; border-top: 1px solid var(--border); background: #fff; }
+    .chat-input-row input { flex: 1; border: none; padding: 11px 14px; font-size: 0.85rem; font-family: 'Inter', sans-serif; outline: none; }
+    .chat-input-row button { background: var(--accent); border: none; color: #fff; padding: 0 14px; cursor: pointer; }
+    .chat-footer { font-size: 0.66rem; color: var(--text-light); text-align: center; padding: 7px; background: #fff; border-top: 1px solid var(--border); }`;
+
+const chatHTML = hasTawkto ? '' : `
+  <div id="chat-bubble" onclick="toggleChat()">
+    <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+    <span class="chat-badge">1</span>
+  </div>
+  <div id="chat-window">
+    <div class="chat-header">
+      <div class="chat-header-left">
+        <div class="chat-avatar">${_initials3}</div>
+        <div><div class="chat-name">${config.practice.name}</div><div class="chat-status"><span class="chat-dot"></span> We're online</div></div>
+      </div>
+      <button onclick="toggleChat()" class="chat-close" style="background:none;border:none;color:rgba(255,255,255,0.7);cursor:pointer;font-size:1rem;">✕</button>
+    </div>
+    <div class="chat-body">
+      <div><div class="chat-msg-bubble">👋 Hi! How can we help you today?</div><div class="chat-msg-time">Just now</div></div>
+      <div class="chat-quick-replies">
+        <button onclick="quickReply('I\\'d like to book an appointment')">📅 Book an appointment</button>
+        <button onclick="quickReply('I have a question about a procedure')">❓ Procedure question</button>
+        <button onclick="quickReply('What insurance do you accept?')">🏥 Insurance questions</button>
+      </div>
+    </div>
+    <div class="chat-input-row">
+      <input type="text" id="chat-input" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendChat()" />
+      <button onclick="sendChat()"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg></button>
+    </div>
+    <div class="chat-footer">🔒 Secure · Typically reply within minutes</div>
+  </div>`;
+
+const chatScript = hasTawkto
+  ? `<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/${config.tawkto.property_id}/${config.tawkto.widget_id}';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script><!--End of Tawk.to Script-->`
+  : `<script>
+    function toggleChat() {
+      const w = document.getElementById('chat-window');
+      const b = document.querySelector('.chat-badge');
+      w.classList.toggle('open');
+      if (w.classList.contains('open') && b) b.style.display = 'none';
+    }
+    function quickReply(text) { document.getElementById('chat-input').value = text; sendChat(); }
+    function sendChat() {
+      const input = document.getElementById('chat-input');
+      const body = document.querySelector('.chat-body');
+      const text = input.value.trim();
+      if (!text) return;
+      const userMsg = document.createElement('div');
+      userMsg.style.cssText = 'text-align:right;margin:8px 0;';
+      userMsg.innerHTML = '<div style="background:var(--accent);color:#fff;border-radius:10px 10px 0 10px;padding:8px 12px;font-size:.83rem;display:inline-block;max-width:90%;">' + text + '</div>';
+      body.appendChild(userMsg);
+      input.value = '';
+      const qr = body.querySelector('.chat-quick-replies');
+      if (qr) qr.remove();
+      setTimeout(() => {
+        const bot = document.createElement('div');
+        bot.innerHTML = '<div class="chat-msg-bubble">Thanks! Someone from our team will follow up shortly. For urgent matters, call <strong>${_phone}</strong>.</div><div class="chat-msg-time">Just now</div>';
+        body.appendChild(bot);
+        body.scrollTop = body.scrollHeight;
+      }, 700);
+      body.scrollTop = body.scrollHeight;
+    }
+  </script>`;
+
 // ── HELPERS ──────────────────────────────────────────────────────────────────
 const doctorInitials = name => name.replace('Dr. ', '').split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
 
@@ -296,28 +396,7 @@ const html = `<!DOCTYPE html>
     .float-btn.call { background: var(--navy); color: #fff; }
     .float-btn.appt { background: var(--accent); color: #fff; }
 
-    #chat-bubble { position: fixed; bottom: 28px; left: 28px; width: 52px; height: 52px; background: var(--navy); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.25); transition: all 0.2s; z-index: 200; }
-    #chat-bubble:hover { transform: scale(1.08); }
-    .chat-badge { position: absolute; top: -2px; right: -2px; background: #e53e3e; color: #fff; font-size: 0.62rem; font-weight: 700; width: 17px; height: 17px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid #fff; }
-    #chat-window { position: fixed; bottom: 92px; left: 28px; width: 310px; background: #fff; border-radius: 14px; box-shadow: 0 8px 40px rgba(0,0,0,0.16); z-index: 200; display: none; flex-direction: column; overflow: hidden; font-family: 'Inter', sans-serif; }
-    #chat-window.open { display: flex; }
-    .chat-header { background: var(--navy); color: #fff; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; }
-    .chat-header-left { display: flex; gap: 10px; align-items: center; }
-    .chat-avatar { width: 36px; height: 36px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.62rem; font-weight: 700; }
-    .chat-name { font-size: 0.85rem; font-weight: 600; }
-    .chat-status { font-size: 0.7rem; color: rgba(255,255,255,0.6); display: flex; align-items: center; gap: 5px; margin-top: 2px; }
-    .chat-dot { width: 6px; height: 6px; background: #48bb78; border-radius: 50%; display: inline-block; }
-    .chat-close { background: none; border: none; color: rgba(255,255,255,0.6); font-size: 1rem; cursor: pointer; }
-    .chat-body { padding: 14px; min-height: 130px; background: #f7f8fa; }
-    .chat-msg-bubble { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px 10px 10px 0; padding: 9px 12px; font-size: 0.85rem; color: var(--text); display: inline-block; max-width: 90%; }
-    .chat-msg-time { font-size: 0.66rem; color: var(--text-light); margin-top: 3px; padding-left: 3px; }
-    .chat-quick-replies { display: flex; flex-direction: column; gap: 6px; margin-top: 9px; }
-    .chat-quick-replies button { background: #fff; border: 1.5px solid var(--border); border-radius: 18px; padding: 7px 12px; font-size: 0.78rem; color: var(--navy); cursor: pointer; text-align: left; font-family: 'Inter', sans-serif; transition: all 0.15s; }
-    .chat-quick-replies button:hover { border-color: var(--accent); color: var(--accent); }
-    .chat-input-row { display: flex; border-top: 1px solid var(--border); background: #fff; }
-    .chat-input-row input { flex: 1; border: none; padding: 11px 14px; font-size: 0.85rem; font-family: 'Inter', sans-serif; outline: none; }
-    .chat-input-row button { background: var(--accent); border: none; color: #fff; padding: 0 14px; cursor: pointer; }
-    .chat-footer { font-size: 0.66rem; color: var(--text-light); text-align: center; padding: 7px; background: #fff; border-top: 1px solid var(--border); }
+    ${chatCSS}
 
     @media (max-width: 900px) {
       .hero-inner, .appt-grid { grid-template-columns: 1fr; }
@@ -499,62 +578,9 @@ const html = `<!DOCTYPE html>
     </a>
   </div>
 
-  <div id="chat-bubble" onclick="toggleChat()">
-    <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
-    <span class="chat-badge">1</span>
-  </div>
-  <div id="chat-window">
-    <div class="chat-header">
-      <div class="chat-header-left">
-        <div class="chat-avatar">${config.practice.name.split(' ').map(w=>w[0]).join('').slice(0,3)}</div>
-        <div><div class="chat-name">${config.practice.name}</div><div class="chat-status"><span class="chat-dot"></span> We're online</div></div>
-      </div>
-      <button onclick="toggleChat()" class="chat-close" style="background:none;border:none;color:rgba(255,255,255,0.7);cursor:pointer;font-size:1rem;">✕</button>
-    </div>
-    <div class="chat-body">
-      <div><div class="chat-msg-bubble">👋 Hi! How can we help you today?</div><div class="chat-msg-time">Just now</div></div>
-      <div class="chat-quick-replies">
-        <button onclick="quickReply('I\\'d like to book an appointment')">📅 Book an appointment</button>
-        <button onclick="quickReply('I have a question about a procedure')">❓ Procedure question</button>
-        <button onclick="quickReply('What insurance do you accept?')">🏥 Insurance questions</button>
-      </div>
-    </div>
-    <div class="chat-input-row">
-      <input type="text" id="chat-input" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendChat()" />
-      <button onclick="sendChat()"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg></button>
-    </div>
-    <div class="chat-footer">🔒 Secure · Typically reply within minutes</div>
-  </div>
+  ${chatHTML}
 
-  <script>
-    function toggleChat() {
-      const w = document.getElementById('chat-window');
-      const b = document.querySelector('.chat-badge');
-      w.classList.toggle('open');
-      if (w.classList.contains('open') && b) b.style.display = 'none';
-    }
-    function quickReply(text) { document.getElementById('chat-input').value = text; sendChat(); }
-    function sendChat() {
-      const input = document.getElementById('chat-input');
-      const body = document.querySelector('.chat-body');
-      const text = input.value.trim();
-      if (!text) return;
-      const userMsg = document.createElement('div');
-      userMsg.style.cssText = 'text-align:right;margin:8px 0;';
-      userMsg.innerHTML = '<div style="background:var(--accent);color:#fff;border-radius:10px 10px 0 10px;padding:8px 12px;font-size:.83rem;display:inline-block;max-width:90%;">' + text + '</div>';
-      body.appendChild(userMsg);
-      input.value = '';
-      const qr = body.querySelector('.chat-quick-replies');
-      if (qr) qr.remove();
-      setTimeout(() => {
-        const bot = document.createElement('div');
-        bot.innerHTML = '<div class="chat-msg-bubble">Thanks! Someone from our team will follow up shortly. For urgent matters, call <strong>${config.contact.phone_primary}</strong>.</div><div class="chat-msg-time">Just now</div>';
-        body.appendChild(bot);
-        body.scrollTop = body.scrollHeight;
-      }, 700);
-      body.scrollTop = body.scrollHeight;
-    }
-  </script>
+  ${chatScript}
 </body>
 </html>`;
 
