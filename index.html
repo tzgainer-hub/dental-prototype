@@ -1497,12 +1497,8 @@
     </a>
   </div>
 
-  <!-- LIVE CHAT WIDGET -->
-  <div id="chat-bubble" onclick="toggleChat()" title="Chat with us">
-    <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
-    <span class="chat-badge">1</span>
-  </div>
-  <div id="chat-window">
+  <!-- LIVE CHAT: tawk.to -->
+  <div id="chat-window" style="display:none;">
     <div class="chat-header">
       <div class="chat-header-left">
         <div class="chat-avatar">SSA</div>
@@ -1770,47 +1766,21 @@
     // Close mobile nav on scroll
     window.addEventListener('scroll', closeMobileNav, { passive: true });
 
-    function toggleChat() {
-      const w = document.getElementById('chat-window');
-      const b = document.querySelector('.chat-badge');
-      w.classList.toggle('open');
-      if (w.classList.contains('open') && b) b.style.display = 'none';
-    }
-
-    function quickReply(text) {
-      const input = document.getElementById('chat-input');
-      input.value = text;
-      sendChat();
-    }
-
-    function sendChat() {
-      const input = document.getElementById('chat-input');
-      const body = document.querySelector('.chat-body');
-      const text = input.value.trim();
-      if (!text) return;
-
-      // User message
-      const userMsg = document.createElement('div');
-      userMsg.style.cssText = 'text-align:right;margin-bottom:10px;';
-      userMsg.innerHTML = `<div style="background:var(--accent);color:#fff;border-radius:12px 12px 0 12px;padding:10px 14px;font-size:.88rem;display:inline-block;max-width:90%;">${text}</div><div style="font-size:.68rem;color:#718096;margin-top:4px;">Just now</div>`;
-      body.appendChild(userMsg);
-
-      input.value = '';
-      const qr = body.querySelector('.chat-quick-replies');
-      if (qr) qr.remove();
-
-      // Auto-reply
-      setTimeout(() => {
-        const botMsg = document.createElement('div');
-        botMsg.className = 'chat-msg bot';
-        botMsg.innerHTML = `<div class="chat-msg-bubble">Thanks for reaching out! A member of our team will follow up shortly. For urgent matters, please call <strong>(480) 922-9933</strong>.</div><div class="chat-msg-time">Just now</div>`;
-        body.appendChild(botMsg);
-        body.scrollTop = body.scrollHeight;
-      }, 800);
-
-      body.scrollTop = body.scrollHeight;
-    }
   </script>
+
+  <!--Start of Tawk.to Script-->
+  <script type="text/javascript">
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+  s1.async=true;
+  s1.src='https://embed.tawk.to/69cdbcadb8aa781c3b30ef8f/1jl5qi1c1';
+  s1.charset='UTF-8';
+  s1.setAttribute('crossorigin','*');
+  s0.parentNode.insertBefore(s1,s0);
+  })();
+  </script>
+  <!--End of Tawk.to Script-->
 
 </body>
 </html>
