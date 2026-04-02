@@ -1,0 +1,1719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scottsdale Surgical Arts | Oral & Maxillofacial Surgery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0f2240;
+      --navy-light: #1a3560;
+      --slate: #4a5568;
+      --accent: #2a7d6f;
+      --accent-light: #38a697;
+      --gold: #c9a84c;
+      --white: #ffffff;
+      --off-white: #f8f9fb;
+      --light-gray: #eef0f4;
+      --text: #2d3748;
+      --text-light: #718096;
+      --border: #e2e8f0;
+      --radius: 12px;
+      --shadow: 0 4px 24px rgba(15,34,64,0.10);
+      --shadow-lg: 0 12px 48px rgba(15,34,64,0.16);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      background: var(--navy);
+      color: rgba(255,255,255,0.75);
+      font-size: 0.8rem;
+      padding: 8px 0;
+    }
+    .topbar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .topbar-locs {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+    .topbar-loc {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .topbar-loc svg { opacity: 0.6; flex-shrink: 0; }
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .topbar-phone {
+      color: var(--gold);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+    .topbar-link {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 0.78rem;
+      transition: color 0.2s;
+    }
+    .topbar-link:hover { color: #fff; }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(15,34,64,0.07);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 72px;
+    }
+    .logo {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+      text-decoration: none;
+    }
+    .logo-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--navy);
+      letter-spacing: 0.01em;
+    }
+    .logo-sub {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--slate);
+      font-size: 0.88rem;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover { color: var(--navy); background: var(--off-white); }
+    .nav-cta {
+      background: var(--accent) !important;
+      color: #fff !important;
+      padding: 10px 20px !important;
+      border-radius: 8px !important;
+      font-weight: 600 !important;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--accent-light) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 60%, #1e4060 100%);
+      color: #fff;
+      padding: 100px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.025'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(42,125,111,0.25);
+      border: 1px solid rgba(42,125,111,0.5);
+      color: #7ddfd2;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 600;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      letter-spacing: -0.01em;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--gold);
+    }
+    .hero-desc {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.78);
+      line-height: 1.7;
+      margin-bottom: 36px;
+      max-width: 480px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      box-shadow: 0 4px 16px rgba(42,125,111,0.35);
+    }
+    .btn-primary:hover { background: var(--accent-light); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(42,125,111,0.45); }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      backdrop-filter: blur(8px);
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.18); }
+
+    .hero-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 20px;
+      padding: 40px;
+      backdrop-filter: blur(12px);
+    }
+    .hero-card-title {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+    }
+    .hero-services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .hero-service-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.88);
+      font-weight: 500;
+    }
+    .hero-service-item svg { color: var(--accent-light); flex-shrink: 0; }
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 14px;
+    }
+    .hero-stat {
+      background: rgba(255,255,255,0.06);
+      padding: 16px 12px;
+      text-align: center;
+    }
+    .hero-stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--gold);
+      display: block;
+    }
+    .hero-stat-label {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.6);
+      display: block;
+      margin-top: 2px;
+    }
+
+    /* ── TRUST BAR ── */
+    .trust-bar {
+      background: var(--off-white);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 24px;
+    }
+    .trust-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--slate);
+    }
+    .trust-item svg { color: var(--accent); }
+
+    /* ── SECTION COMMONS ── */
+    section { padding: 80px 24px; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      font-size: 1rem;
+      color: var(--text-light);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+    .section-header {
+      margin-bottom: 56px;
+    }
+    .section-header.center {
+      text-align: center;
+    }
+    .section-header.center .section-desc {
+      margin: 0 auto;
+    }
+
+    /* ── SERVICES ── */
+    .services-section { background: var(--white); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .service-card {
+      background: var(--off-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transition: transform 0.25s;
+      transform-origin: left;
+    }
+    .service-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: transparent; }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-icon {
+      width: 48px; height: 48px;
+      background: rgba(42,125,111,0.1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      color: var(--accent);
+    }
+    .service-card h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+    .service-card p {
+      font-size: 0.88rem;
+      color: var(--text-light);
+      line-height: 1.65;
+    }
+
+    /* ── WHY US ── */
+    .why-section { background: var(--navy); color: #fff; }
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .why-section .section-title { color: #fff; }
+    .why-section .section-desc { color: rgba(255,255,255,0.7); }
+    .why-points {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin-top: 36px;
+    }
+    .why-point {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .why-point-icon {
+      width: 44px; height: 44px;
+      background: rgba(42,125,111,0.2);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-light);
+      flex-shrink: 0;
+    }
+    .why-point-text h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .why-point-text p {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.62);
+      line-height: 1.6;
+    }
+    .why-visual {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .why-stat-card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius);
+      padding: 28px 20px;
+      text-align: center;
+    }
+    .why-stat-card:first-child {
+      grid-column: span 2;
+    }
+    .why-stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 600;
+      color: var(--gold);
+      display: block;
+      line-height: 1;
+    }
+    .why-stat-label {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.6);
+      margin-top: 6px;
+      display: block;
+    }
+
+    /* ── DOCTORS ── */
+    .doctors-section { background: var(--off-white); }
+    .doctors-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+    .doctor-card {
+      background: var(--white);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: all 0.25s;
+    }
+    .doctor-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .doctor-photo {
+      height: 220px;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .doctor-initials {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.15);
+    }
+    .doctor-photo-label {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 100px;
+    }
+    .doctor-info { padding: 28px; }
+    .doctor-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+    .doctor-title {
+      font-size: 0.82rem;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .doctor-bio {
+      font-size: 0.88rem;
+      color: var(--text-light);
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+    .doctor-creds {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .cred-tag {
+      background: var(--light-gray);
+      color: var(--navy);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── APPOINTMENT ── */
+    .appt-section { background: var(--white); }
+    .appt-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+    .appt-form {
+      background: var(--off-white);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px;
+    }
+    .form-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .form-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-light);
+      margin-bottom: 28px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--slate);
+      margin-bottom: 6px;
+      letter-spacing: 0.03em;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(42,125,111,0.1); }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+    .form-submit {
+      width: 100%;
+      padding: 14px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .form-submit:hover { background: var(--accent-light); transform: translateY(-1px); }
+    .form-hipaa-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    .form-hipaa-badge svg { flex-shrink: 0; }
+    .hipaa-notice {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-top: 14px;
+      padding: 12px 14px;
+      background: rgba(42,125,111,0.07);
+      border: 1px solid rgba(42,125,111,0.2);
+      border-radius: 8px;
+      font-size: 0.76rem;
+      color: var(--text-light);
+      line-height: 1.5;
+    }
+    .hipaa-notice svg { color: var(--accent); flex-shrink: 0; margin-top: 1px; }
+
+    .appt-info { padding-top: 8px; }
+    .appt-info .section-label { margin-bottom: 8px; }
+    .appt-info .section-title { margin-bottom: 14px; }
+    .appt-info .section-desc { margin-bottom: 36px; }
+    .contact-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .contact-card {
+      background: var(--off-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .contact-card-icon {
+      width: 42px; height: 42px;
+      background: rgba(42,125,111,0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .contact-card-body h4 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+    }
+    .contact-card-body p {
+      font-size: 0.9rem;
+      color: var(--text);
+      font-weight: 500;
+    }
+    .contact-card-body span {
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-section { background: var(--light-gray); }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .testimonial-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+    .stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 16px;
+    }
+    .star { color: var(--gold); font-size: 1rem; }
+    .testimonial-text {
+      font-size: 0.9rem;
+      color: var(--text);
+      line-height: 1.68;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .author-avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--navy), var(--accent));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: #fff;
+    }
+    .author-name {
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: var(--navy);
+    }
+    .author-tag {
+      font-size: 0.75rem;
+      color: var(--text-light);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.7);
+      padding: 60px 24px 32px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 48px;
+    }
+    .footer-logo-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .footer-logo-sub {
+      font-size: 0.7rem;
+      color: var(--accent-light);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+    }
+    .footer-desc {
+      font-size: 0.84rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.55);
+      max-width: 280px;
+    }
+    .footer-col h4 {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-links a {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: #fff; }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.38);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .footer-bottom a { color: rgba(255,255,255,0.38); text-decoration: none; }
+    .footer-bottom a:hover { color: rgba(255,255,255,0.7); }
+
+    /* ── FLOATING CTA ── */
+    .float-cta {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+    .float-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 22px;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      transition: all 0.2s;
+    }
+    .float-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.25); }
+    .float-btn.call { background: var(--navy); color: #fff; }
+    .float-btn.appt { background: var(--accent); color: #fff; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero-inner, .why-grid, .appt-grid, .doctors-grid { grid-template-columns: 1fr; }
+      .hero-card { display: none; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .why-visual { display: none; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 600px) {
+      .services-grid, .testimonials-grid { grid-template-columns: 1fr; }
+      section { padding: 60px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-locs">
+        <div class="topbar-loc">
+          <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          10603 N. Hayden Rd, Suite H-112, Scottsdale AZ
+        </div>
+        <div class="topbar-loc">
+          <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          2935 Southwest Drive, Suite 100, Sedona AZ
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <a href="tel:4809229933" class="topbar-phone">📞 (480) 922-9933</a>
+        <a href="#" class="topbar-link">Patient Portal</a>
+        <a href="#" class="topbar-link">Referring Doctors</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="logo">
+        <span class="logo-name">Scottsdale Surgical Arts</span>
+        <span class="logo-sub">Oral & Maxillofacial Surgery</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#doctors">Our Doctors</a></li>
+        <li><a href="#patients">Patient Info</a></li>
+        <li><a href="#contact">Locations</a></li>
+        <li><a href="#appointment" class="nav-cta">Request Appointment</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><circle cx="5" cy="5" r="5"/></svg>
+          Board-Certified Oral & Maxillofacial Surgeons
+        </div>
+        <h1>Expert Oral Surgery<br/>in <em>Scottsdale</em> &amp; Sedona</h1>
+        <p class="hero-desc">
+          From wisdom teeth removal to complex corrective jaw surgery and dental implants — Drs. Gassmann and Wahlstrom deliver precision surgical care in a comfortable, state-of-the-art environment.
+        </p>
+        <div class="hero-actions">
+          <a href="#appointment" class="btn-primary">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            Request Appointment
+          </a>
+          <a href="tel:4809229933" class="btn-secondary">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+            Call (480) 922-9933
+          </a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-title">Our Specialties</div>
+        <div class="hero-services-grid">
+          <div class="hero-service-item">
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            Dental Implants
+          </div>
+          <div class="hero-service-item">
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            Wisdom Teeth
+          </div>
+          <div class="hero-service-item">
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            Jaw Surgery
+          </div>
+          <div class="hero-service-item">
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            Bone Grafting
+          </div>
+          <div class="hero-service-item">
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            TMJ Disorders
+          </div>
+          <div class="hero-service-item">
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            IV Sedation
+          </div>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="hero-stat-num">25+</span>
+            <span class="hero-stat-label">Years Combined Experience</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-num">2</span>
+            <span class="hero-stat-label">Locations</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-num">5★</span>
+            <span class="hero-stat-label">Patient Rated</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="trust-inner">
+      <div class="trust-item">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        Board-Certified Surgeons
+      </div>
+      <div class="trust-item">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+        State-of-the-Art Facility
+      </div>
+      <div class="trust-item">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        IV Sedation Available
+      </div>
+      <div class="trust-item">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Scottsdale & Sedona Locations
+      </div>
+      <div class="trust-item">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+        Most Insurance Accepted
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="services-section" id="services">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-label">What We Treat</div>
+        <h2 class="section-title">Comprehensive Oral &amp;<br/>Maxillofacial Surgical Care</h2>
+        <p class="section-desc">From routine extractions to complex reconstructive procedures, our surgeons offer the full scope of oral and maxillofacial surgery.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+          </div>
+          <h3>Dental Implants</h3>
+          <p>Permanent, natural-looking tooth replacement that restores function and confidence. Single implants, full arch, and implant-supported bridges.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <h3>Wisdom Teeth Removal</h3>
+          <p>Comfortable, safe extraction of impacted and erupted wisdom teeth with IV sedation options for a relaxed, pain-free experience.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+          </div>
+          <h3>Corrective Jaw Surgery</h3>
+          <p>Orthognathic surgery to correct jaw misalignment, improving bite, facial appearance, and long-term oral health.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
+          </div>
+          <h3>Bone Grafting</h3>
+          <p>Jaw bone regeneration and augmentation to prepare the foundation for implants or restore bone lost to disease or injury.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          </div>
+          <h3>TMJ &amp; Facial Pain</h3>
+          <p>Diagnosis and treatment of temporomandibular joint disorders, facial pain, and related conditions causing chronic discomfort.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <h3>IV Sedation &amp; Anesthesia</h3>
+          <p>Full IV sedation and general anesthesia services for a completely comfortable, anxiety-free surgical experience.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="why-section">
+    <div class="section-inner">
+      <div class="why-grid">
+        <div>
+          <div class="section-label">Why Choose Us</div>
+          <h2 class="section-title">Surgical Precision.<br/>Compassionate Care.</h2>
+          <p class="section-desc">We combine the highest level of surgical training with a patient-first approach — so you feel informed, comfortable, and confident every step of the way.</p>
+          <div class="why-points">
+            <div class="why-point">
+              <div class="why-point-icon">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+              </div>
+              <div class="why-point-text">
+                <h4>Dual-Trained Specialists</h4>
+                <p>Both surgeons hold MD and DDS/DMD degrees — one of the highest levels of surgical training in dentistry.</p>
+              </div>
+            </div>
+            <div class="why-point">
+              <div class="why-point-icon">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+              </div>
+              <div class="why-point-text">
+                <h4>State-of-the-Art Facilities</h4>
+                <p>Modern surgical suites equipped for IV sedation and general anesthesia — right in our comfortable office setting.</p>
+              </div>
+            </div>
+            <div class="why-point">
+              <div class="why-point-icon">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              </div>
+              <div class="why-point-text">
+                <h4>Two Convenient Locations</h4>
+                <p>Scottsdale and Sedona offices to serve patients across the Phoenix metro and northern Arizona.</p>
+              </div>
+            </div>
+            <div class="why-point">
+              <div class="why-point-icon">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+              </div>
+              <div class="why-point-text">
+                <h4>Insurance-Friendly</h4>
+                <p>We work with most major dental and medical insurance plans, and offer flexible financing options.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="why-visual">
+          <div class="why-stat-card">
+            <span class="why-stat-num">2,000+</span>
+            <span class="why-stat-label">Implants Placed</span>
+          </div>
+          <div class="why-stat-card">
+            <span class="why-stat-num">MD &amp; DDS</span>
+            <span class="why-stat-label">Dual Credentials</span>
+          </div>
+          <div class="why-stat-card">
+            <span class="why-stat-num">5★</span>
+            <span class="why-stat-label">Patient Reviews</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOCTORS -->
+  <section class="doctors-section" id="doctors">
+    <div class="section-inner">
+      <div class="section-header center">
+        <div class="section-label">Meet Our Surgeons</div>
+        <h2 class="section-title">Expert Care, Trusted Hands</h2>
+        <p class="section-desc">Our surgeons bring exceptional training, board certification, and a genuine commitment to patient outcomes.</p>
+      </div>
+      <div class="doctors-grid">
+        <div class="doctor-card">
+          <div class="doctor-photo">
+            <span class="doctor-initials">CG</span>
+            <span class="doctor-photo-label">Oral & Maxillofacial Surgeon</span>
+          </div>
+          <div class="doctor-info">
+            <div class="doctor-name">Dr. Carl J. Gassmann</div>
+            <div class="doctor-title">MD, DDS — Oral & Maxillofacial Surgeon</div>
+            <p class="doctor-bio">Dr. Gassmann brings decades of surgical expertise in the full scope of oral and maxillofacial surgery. His dual training as both a physician and dentist allows him to manage complex cases with the highest standard of care.</p>
+            <div class="doctor-creds">
+              <span class="cred-tag">MD</span>
+              <span class="cred-tag">DDS</span>
+              <span class="cred-tag">Board Certified</span>
+              <span class="cred-tag">IV Sedation</span>
+            </div>
+          </div>
+        </div>
+        <div class="doctor-card">
+          <div class="doctor-photo" style="background: linear-gradient(135deg, #1a3560, #2a7d6f);">
+            <span class="doctor-initials">DW</span>
+            <span class="doctor-photo-label">Oral & Maxillofacial Surgeon</span>
+          </div>
+          <div class="doctor-info">
+            <div class="doctor-name">Dr. Devin Wahlstrom</div>
+            <div class="doctor-title">DMD, FACS, FAACS — Oral & Maxillofacial Surgeon</div>
+            <p class="doctor-bio">Dr. Wahlstrom is a Fellow of the American College of Surgeons and the American Association of Cosmetic Surgeons. He specializes in implants, corrective jaw surgery, and reconstructive procedures with a focus on exceptional outcomes.</p>
+            <div class="doctor-creds">
+              <span class="cred-tag">DMD</span>
+              <span class="cred-tag">FACS</span>
+              <span class="cred-tag">FAACS</span>
+              <span class="cred-tag">Board Certified</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials-section">
+    <div class="section-inner">
+      <div class="section-header center">
+        <div class="section-label">Patient Reviews</div>
+        <h2 class="section-title">What Our Patients Say</h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"I was terrified of oral surgery. Dr. Wahlstrom and his team made the entire experience calm and professional. My implants look and feel completely natural."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">MR</div>
+            <div>
+              <div class="author-name">Michelle R.</div>
+              <div class="author-tag">Dental Implants · Scottsdale</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"Had all four wisdom teeth out under IV sedation. Woke up and it was done. Zero pain during, minimal recovery. Couldn't recommend Dr. Gassmann enough."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">TK</div>
+            <div>
+              <div class="author-name">Tyler K.</div>
+              <div class="author-tag">Wisdom Teeth · Scottsdale</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"The Sedona office is so convenient for us. Staff is incredibly kind and the doctors are clearly top-tier. My jaw surgery changed my life."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">SL</div>
+            <div>
+              <div class="author-name">Sandra L.</div>
+              <div class="author-tag">Corrective Jaw Surgery · Sedona</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPOINTMENT -->
+  <section class="appt-section" id="appointment">
+    <div class="section-inner">
+      <div class="appt-grid">
+        <div class="appt-form">
+          <div class="form-hipaa-badge">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            HIPAA-Aware &nbsp;·&nbsp;
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            SSL Encrypted &nbsp;·&nbsp;
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            Your privacy is protected
+          </div>
+          <div class="form-title">Request an Appointment</div>
+          <div class="form-subtitle">We'll confirm your appointment within one business day.</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>First Name</label>
+              <input type="text" placeholder="Jane" />
+            </div>
+            <div class="form-group">
+              <label>Last Name</label>
+              <input type="text" placeholder="Smith" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Phone</label>
+              <input type="tel" placeholder="(480) 555-0100" />
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" placeholder="jane@email.com" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Preferred Location</label>
+            <select>
+              <option value="">Select a location</option>
+              <option>Scottsdale — 10603 N. Hayden Rd</option>
+              <option>Sedona — 2935 Southwest Drive</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Reason for Visit</label>
+            <select>
+              <option value="">Select a service</option>
+              <option>Dental Implants</option>
+              <option>Wisdom Teeth Removal</option>
+              <option>Corrective Jaw Surgery</option>
+              <option>Bone Grafting</option>
+              <option>TMJ / Facial Pain</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Additional Notes (optional)</label>
+            <textarea placeholder="Any details about your situation or special requests..."></textarea>
+          </div>
+          <button class="form-submit">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            Submit Appointment Request
+          </button>
+          <div class="hipaa-notice">
+            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            This form is transmitted securely via SSL encryption. <strong>Please do not include sensitive medical records, Social Security numbers, or insurance details.</strong> For urgent matters, call us directly. By submitting, you acknowledge our <a href="#" style="color:var(--accent)">Notice of Privacy Practices</a>.
+          </div>
+        </div>
+
+        <div class="appt-info" id="contact">
+          <div class="section-label">Get In Touch</div>
+          <h2 class="section-title">Two Locations<br/>to Serve You</h2>
+          <p class="section-desc">Call us directly or use the form to request an appointment at either location. We're here to help.</p>
+          <div class="contact-cards">
+            <div class="contact-card">
+              <div class="contact-card-icon">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              </div>
+              <div class="contact-card-body">
+                <h4>Scottsdale Office</h4>
+                <p>10603 N. Hayden Road, Suite H-112</p>
+                <span>Scottsdale, AZ 85260 · (480) 922-9933</span>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-card-icon">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              </div>
+              <div class="contact-card-body">
+                <h4>Sedona Office</h4>
+                <p>2935 Southwest Drive, Suite 100</p>
+                <span>Sedona, AZ 86336 · (928) 282-1224</span>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-card-icon">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <div class="contact-card-body">
+                <h4>Office Hours</h4>
+                <p>Monday – Friday: 8:00 AM – 5:00 PM</p>
+                <span>Closed weekends &amp; major holidays</span>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-card-icon">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+              </div>
+              <div class="contact-card-body">
+                <h4>Call Direct</h4>
+                <p>(480) 922-9933 — Scottsdale</p>
+                <span>(928) 282-1224 — Sedona</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <div class="footer-logo-name">Scottsdale Surgical Arts</div>
+          <div class="footer-logo-sub">Oral & Maxillofacial Surgery</div>
+          <p class="footer-desc">Board-certified oral and maxillofacial surgeons serving Scottsdale and Sedona, AZ. Expertise in implants, wisdom teeth, jaw surgery, and more.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul class="footer-links">
+            <li><a href="#services">Dental Implants</a></li>
+            <li><a href="#services">Wisdom Teeth</a></li>
+            <li><a href="#services">Jaw Surgery</a></li>
+            <li><a href="#services">Bone Grafting</a></li>
+            <li><a href="#services">TMJ Treatment</a></li>
+            <li><a href="#services">IV Sedation</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Patient Info</h4>
+          <ul class="footer-links">
+            <li><a href="#">New Patients</a></li>
+            <li><a href="#">Insurance</a></li>
+            <li><a href="#">Patient Forms</a></li>
+            <li><a href="#">Surgical Instructions</a></li>
+            <li><a href="#">Patient Portal</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul class="footer-links">
+            <li><a href="tel:4809229933">(480) 922-9933 · Scottsdale</a></li>
+            <li><a href="tel:9282821224">(928) 282-1224 · Sedona</a></li>
+            <li><a href="#appointment">Request Appointment</a></li>
+            <li><a href="#">Referring Doctors</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 Scottsdale Surgical Arts. All rights reserved.</span>
+        <span><a href="#">Privacy Policy</a> · <a href="#">Notice of Privacy Practices (HIPAA)</a> · <a href="#">Accessibility</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FLOATING CTA -->
+  <div class="float-cta">
+    <a href="tel:4809229933" class="float-btn call">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+      Call Now
+    </a>
+    <a href="#schedule" class="float-btn appt">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+      Book Online
+    </a>
+  </div>
+
+  <!-- LIVE CHAT WIDGET -->
+  <div id="chat-bubble" onclick="toggleChat()" title="Chat with us">
+    <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+    <span class="chat-badge">1</span>
+  </div>
+  <div id="chat-window">
+    <div class="chat-header">
+      <div class="chat-header-left">
+        <div class="chat-avatar">SSA</div>
+        <div>
+          <div class="chat-name">Scottsdale Surgical Arts</div>
+          <div class="chat-status"><span class="chat-dot"></span> We're online</div>
+        </div>
+      </div>
+      <button onclick="toggleChat()" class="chat-close">✕</button>
+    </div>
+    <div class="chat-body">
+      <div class="chat-msg bot">
+        <div class="chat-msg-bubble">👋 Hi! How can we help you today?</div>
+        <div class="chat-msg-time">Just now</div>
+      </div>
+      <div class="chat-quick-replies">
+        <button onclick="quickReply('I'd like to book an appointment')">📅 Book an appointment</button>
+        <button onclick="quickReply('I have a question about a procedure')">❓ Procedure question</button>
+        <button onclick="quickReply('What insurance do you accept?')">🏥 Insurance questions</button>
+      </div>
+    </div>
+    <div class="chat-input-row">
+      <input type="text" id="chat-input" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendChat()" />
+      <button onclick="sendChat()">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+      </button>
+    </div>
+    <div class="chat-footer">🔒 Secure · We typically reply within minutes</div>
+  </div>
+
+  <style>
+    /* CHAT BUBBLE */
+    #chat-bubble {
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      width: 56px;
+      height: 56px;
+      background: var(--navy);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(15,34,64,0.35);
+      transition: all 0.2s;
+      z-index: 200;
+    }
+    #chat-bubble:hover { transform: scale(1.08); background: var(--navy-light); }
+    .chat-badge {
+      position: absolute;
+      top: -2px; right: -2px;
+      background: #e53e3e;
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 700;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #fff;
+    }
+
+    /* CHAT WINDOW */
+    #chat-window {
+      position: fixed;
+      bottom: 96px;
+      left: 28px;
+      width: 320px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+      z-index: 200;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+    #chat-window.open { display: flex; }
+    .chat-header {
+      background: var(--navy);
+      color: #fff;
+      padding: 16px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .chat-header-left { display: flex; gap: 12px; align-items: center; }
+    .chat-avatar {
+      width: 38px; height: 38px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .chat-name { font-size: 0.88rem; font-weight: 600; }
+    .chat-status { font-size: 0.72rem; color: rgba(255,255,255,0.65); display: flex; align-items: center; gap: 5px; margin-top: 2px; }
+    .chat-dot { width: 7px; height: 7px; background: #48bb78; border-radius: 50%; display: inline-block; }
+    .chat-close { background: none; border: none; color: rgba(255,255,255,0.7); font-size: 1rem; cursor: pointer; padding: 4px; line-height: 1; }
+    .chat-close:hover { color: #fff; }
+    .chat-body { padding: 16px; min-height: 140px; background: #f7f8fa; }
+    .chat-msg { margin-bottom: 10px; }
+    .chat-msg-bubble {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px 12px 12px 0;
+      padding: 10px 14px;
+      font-size: 0.88rem;
+      color: var(--text);
+      display: inline-block;
+      max-width: 90%;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .chat-msg-time { font-size: 0.68rem; color: var(--text-light); margin-top: 4px; padding-left: 4px; }
+    .chat-quick-replies { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; }
+    .chat-quick-replies button {
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 8px 14px;
+      font-size: 0.8rem;
+      color: var(--navy);
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s;
+      font-family: 'Inter', sans-serif;
+    }
+    .chat-quick-replies button:hover { background: var(--off-white); border-color: var(--accent); color: var(--accent); }
+    .chat-input-row {
+      display: flex;
+      border-top: 1px solid var(--border);
+      background: #fff;
+    }
+    .chat-input-row input {
+      flex: 1;
+      border: none;
+      padding: 13px 16px;
+      font-size: 0.88rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      color: var(--text);
+    }
+    .chat-input-row button {
+      background: var(--accent);
+      border: none;
+      color: #fff;
+      padding: 0 16px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .chat-input-row button:hover { background: var(--accent-light); }
+    .chat-footer {
+      font-size: 0.68rem;
+      color: var(--text-light);
+      text-align: center;
+      padding: 8px;
+      background: #fff;
+      border-top: 1px solid var(--border);
+    }
+
+    /* SCHEDULING BANNER */
+    .schedule-banner {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+      color: #fff;
+      padding: 28px 24px;
+      text-align: center;
+    }
+    .schedule-banner-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .schedule-banner-text h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .schedule-banner-text p {
+      font-size: 0.88rem;
+      opacity: 0.88;
+    }
+    .schedule-banner-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+    .btn-schedule {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      color: var(--accent);
+      padding: 13px 26px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    }
+    .btn-schedule:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.18); }
+    .btn-schedule-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      border: 2px solid rgba(255,255,255,0.6);
+      color: #fff;
+      padding: 11px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.92rem;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-schedule-outline:hover { background: rgba(255,255,255,0.15); border-color: #fff; }
+  </style>
+
+  <!-- SCHEDULING BANNER (inserted before footer) -->
+  <script>
+    // Insert scheduling banner before footer
+    document.addEventListener('DOMContentLoaded', function() {
+      const footer = document.querySelector('footer');
+      const banner = document.createElement('div');
+      banner.id = 'schedule';
+      banner.className = 'schedule-banner';
+      banner.innerHTML = `
+        <div class="schedule-banner-inner">
+          <div class="schedule-banner-text">
+            <h3>Ready to Schedule? Book Online in 60 Seconds.</h3>
+            <p>Choose your preferred location and pick a time that works for you — no phone tag required.</p>
+          </div>
+          <div class="schedule-banner-actions">
+            <a href="#" class="btn-schedule">
+              <svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              Book Online — Scottsdale
+            </a>
+            <a href="#" class="btn-schedule-outline">
+              <svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              Book Online — Sedona
+            </a>
+          </div>
+        </div>`;
+      footer.parentNode.insertBefore(banner, footer);
+    });
+
+    function toggleChat() {
+      const w = document.getElementById('chat-window');
+      const b = document.querySelector('.chat-badge');
+      w.classList.toggle('open');
+      if (w.classList.contains('open') && b) b.style.display = 'none';
+    }
+
+    function quickReply(text) {
+      const input = document.getElementById('chat-input');
+      input.value = text;
+      sendChat();
+    }
+
+    function sendChat() {
+      const input = document.getElementById('chat-input');
+      const body = document.querySelector('.chat-body');
+      const text = input.value.trim();
+      if (!text) return;
+
+      // User message
+      const userMsg = document.createElement('div');
+      userMsg.style.cssText = 'text-align:right;margin-bottom:10px;';
+      userMsg.innerHTML = `<div style="background:var(--accent);color:#fff;border-radius:12px 12px 0 12px;padding:10px 14px;font-size:.88rem;display:inline-block;max-width:90%;">${text}</div><div style="font-size:.68rem;color:#718096;margin-top:4px;">Just now</div>`;
+      body.appendChild(userMsg);
+
+      input.value = '';
+      const qr = body.querySelector('.chat-quick-replies');
+      if (qr) qr.remove();
+
+      // Auto-reply
+      setTimeout(() => {
+        const botMsg = document.createElement('div');
+        botMsg.className = 'chat-msg bot';
+        botMsg.innerHTML = `<div class="chat-msg-bubble">Thanks for reaching out! A member of our team will follow up shortly. For urgent matters, please call <strong>(480) 922-9933</strong>.</div><div class="chat-msg-time">Just now</div>`;
+        body.appendChild(botMsg);
+        body.scrollTop = body.scrollHeight;
+      }, 800);
+
+      body.scrollTop = body.scrollHeight;
+    }
+  </script>
+
+</body>
+</html>

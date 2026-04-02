@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New Website Intake Form — Point Zero AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0f2240; --accent: #2a7d6f; --accent-light: #38a697;
+      --gold: #c9a84c; --white: #fff; --off-white: #f8f9fb;
+      --border: #e2e8f0; --text: #2d3748; --text-light: #718096;
+      --radius: 10px;
+    }
+    body { font-family: 'Inter', sans-serif; background: var(--off-white); color: var(--text); -webkit-font-smoothing: antialiased; }
+
+    .header {
+      background: var(--navy);
+      padding: 32px 24px;
+      text-align: center;
+      color: #fff;
+    }
+    .header-logo { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+    .header h1 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 8px; }
+    .header p { font-size: 0.9rem; color: rgba(255,255,255,0.65); max-width: 480px; margin: 0 auto; }
+
+    .progress-bar { background: rgba(255,255,255,0.1); height: 4px; }
+    .progress-fill { height: 4px; background: var(--accent); width: 0%; transition: width 0.4s ease; }
+
+    .form-container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+
+    .section-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px;
+      margin-bottom: 24px;
+      display: none;
+    }
+    .section-card.active { display: block; }
+
+    .section-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--navy); margin-bottom: 6px; }
+    .section-desc { font-size: 0.88rem; color: var(--text-light); margin-bottom: 28px; line-height: 1.6; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { margin-bottom: 18px; }
+    .form-group.full { grid-column: span 2; }
+    label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--text); margin-bottom: 6px; letter-spacing: 0.02em; }
+    label .req { color: #e53e3e; margin-left: 2px; }
+    label .hint { font-weight: 400; color: var(--text-light); margin-left: 6px; }
+    input[type=text], input[type=tel], input[type=email], input[type=url], select, textarea {
+      width: 100%; padding: 11px 14px; border: 1.5px solid var(--border);
+      border-radius: 8px; font-size: 0.9rem; font-family: 'Inter', sans-serif;
+      color: var(--text); background: #fff; transition: border-color 0.2s; outline: none;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(42,125,111,0.1); }
+    textarea { resize: vertical; min-height: 90px; }
+
+    /* PALETTE PICKER */
+    .palette-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+    .palette-option { cursor: pointer; border-radius: 10px; overflow: hidden; border: 2.5px solid transparent; transition: all 0.2s; }
+    .palette-option:hover { transform: translateY(-2px); }
+    .palette-option.selected { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(42,125,111,0.2); }
+    .palette-swatch { height: 48px; display: flex; }
+    .palette-swatch span { flex: 1; }
+    .palette-name { font-size: 0.72rem; font-weight: 600; text-align: center; padding: 7px 4px; background: var(--off-white); color: var(--text); }
+
+    /* VIBE TAGS */
+    .tag-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag-option { cursor: pointer; padding: 8px 16px; border-radius: 100px; border: 1.5px solid var(--border); font-size: 0.82rem; font-weight: 500; color: var(--text-light); transition: all 0.2s; user-select: none; }
+    .tag-option:hover { border-color: var(--accent); color: var(--accent); }
+    .tag-option.selected { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    /* SERVICE CHECKBOXES */
+    .service-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .service-check { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.15s; }
+    .service-check:hover { border-color: var(--accent); background: rgba(42,125,111,0.04); }
+    .service-check input { width: 16px; height: 16px; accent-color: var(--accent); flex-shrink: 0; }
+    .service-check span { font-size: 0.85rem; font-weight: 500; }
+
+    /* PACKAGE PICKER */
+    .package-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .package-card { border: 2px solid var(--border); border-radius: 12px; padding: 24px; cursor: pointer; transition: all 0.2s; position: relative; }
+    .package-card:hover { border-color: var(--accent); }
+    .package-card.selected { border-color: var(--accent); background: rgba(42,125,111,0.04); }
+    .package-badge { position: absolute; top: -10px; right: 16px; background: var(--gold); color: #fff; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; }
+    .package-price { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--navy); font-weight: 600; margin-bottom: 4px; }
+    .package-name { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+    .package-features { list-style: none; }
+    .package-features li { font-size: 0.82rem; color: var(--text-light); padding: 4px 0; display: flex; align-items: flex-start; gap: 8px; line-height: 1.4; }
+    .package-features li::before { content: '✓'; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+
+    /* DOCTOR ENTRY */
+    .doctor-entry { border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 14px; background: var(--off-white); }
+    .doctor-entry-title { font-size: 0.8rem; font-weight: 700; color: var(--navy); margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+    /* NAV BUTTONS */
+    .form-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; }
+    .btn-back { padding: 12px 24px; background: transparent; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.9rem; font-weight: 500; color: var(--text-light); cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s; }
+    .btn-back:hover { border-color: var(--text-light); color: var(--text); }
+    .btn-next { padding: 12px 28px; background: var(--accent); border: none; border-radius: 8px; font-size: 0.9rem; font-weight: 600; color: #fff; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s; display: flex; align-items: center; gap: 8px; }
+    .btn-next:hover { background: var(--accent-light); }
+    .step-indicator { font-size: 0.8rem; color: var(--text-light); font-weight: 500; }
+
+    /* SUCCESS */
+    .success-screen { display: none; text-align: center; padding: 60px 24px; background: #fff; border-radius: 16px; }
+    .success-icon { width: 72px; height: 72px; background: rgba(42,125,111,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+    .success-screen h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--navy); margin-bottom: 10px; }
+    .success-screen p { color: var(--text-light); font-size: 0.95rem; line-height: 1.7; max-width: 440px; margin: 0 auto 28px; }
+    .summary-box { background: var(--off-white); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; text-align: left; max-width: 480px; margin: 0 auto; }
+    .summary-row { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 6px 0; border-bottom: 1px solid var(--border); }
+    .summary-row:last-child { border-bottom: none; }
+    .summary-row span:first-child { color: var(--text-light); }
+    .summary-row span:last-child { font-weight: 600; color: var(--navy); }
+
+    @media (max-width: 600px) {
+      .form-row, .palette-grid, .service-grid, .package-grid { grid-template-columns: 1fr; }
+      .form-group.full { grid-column: span 1; }
+      .palette-grid { grid-template-columns: repeat(3, 1fr); }
+      .section-card { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">Point Zero AI · Dental Website Program</div>
+  <h1>New Site Intake Form</h1>
+  <p>Takes about 10 minutes. This tells us everything we need to build or revise your site.</p>
+</div>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="form-container">
+
+  <!-- SECTION 1: PRACTICE INFO -->
+  <div class="section-card active" id="section-1">
+    <div class="section-label">Step 1 of 6</div>
+    <div class="section-title">Practice Information</div>
+    <div class="section-desc">Basic details about your practice. This is what appears on the site.</div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Practice Name <span class="req">*</span></label>
+        <input type="text" id="practice_name" placeholder="e.g. Scottsdale Surgical Arts" />
+      </div>
+      <div class="form-group">
+        <label>Specialty / Practice Type <span class="req">*</span></label>
+        <select id="specialty">
+          <option value="">Select type</option>
+          <option>General / Family Dentistry</option>
+          <option>Cosmetic Dentistry</option>
+          <option>Oral & Maxillofacial Surgery</option>
+          <option>Pediatric Dentistry</option>
+          <option>Orthodontics</option>
+          <option>Periodontics</option>
+          <option>Endodontics</option>
+          <option>Implant Specialist</option>
+          <option>Multi-Specialty Group</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Main Phone <span class="req">*</span></label>
+        <input type="tel" id="phone" placeholder="(480) 555-0100" />
+      </div>
+      <div class="form-group">
+        <label>Practice Email <span class="req">*</span></label>
+        <input type="email" id="email" placeholder="office@yourpractice.com" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Current Website URL <span class="hint">(if any)</span></label>
+      <input type="url" id="current_website" placeholder="https://www.yourpractice.com" />
+    </div>
+
+    <div class="form-group">
+      <label>Primary Office Address <span class="req">*</span></label>
+      <input type="text" id="address1" placeholder="10603 N. Hayden Road, Suite H-112, Scottsdale, AZ 85260" />
+    </div>
+
+    <div class="form-group">
+      <label>Second Location <span class="hint">(if applicable)</span></label>
+      <input type="text" id="address2" placeholder="2935 Southwest Drive, Suite 100, Sedona, AZ 86336" />
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Second Location Phone</label>
+        <input type="tel" id="phone2" placeholder="(928) 555-0100" />
+      </div>
+      <div class="form-group">
+        <label>Office Hours</label>
+        <input type="text" id="hours" placeholder="Mon–Fri 8:00 AM – 5:00 PM" />
+      </div>
+    </div>
+
+    <div class="form-nav">
+      <span class="step-indicator">Step 1 of 6</span>
+      <button class="btn-next" onclick="nextSection(1)">Next: Your Doctors <span>→</span></button>
+    </div>
+  </div>
+
+  <!-- SECTION 2: DOCTORS -->
+  <div class="section-card" id="section-2">
+    <div class="section-label">Step 2 of 6</div>
+    <div class="section-title">Your Doctors</div>
+    <div class="section-desc">We'll feature each doctor with their credentials and bio. Add up to 4 doctors.</div>
+
+    <div id="doctors-container">
+      <div class="doctor-entry">
+        <div class="doctor-entry-title">Doctor 1</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Full Name <span class="req">*</span></label>
+            <input type="text" class="doc-name" placeholder="Dr. Jane Smith" />
+          </div>
+          <div class="form-group">
+            <label>Credentials <span class="req">*</span></label>
+            <input type="text" class="doc-creds" placeholder="DDS, FAGD" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Bio / Background <span class="hint">(2–4 sentences)</span></label>
+          <textarea class="doc-bio" placeholder="Dr. Smith has been serving the Scottsdale community for 15 years, specializing in..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Photo Link <span class="hint">(Google Drive, Dropbox, or note "will provide")</span></label>
+          <input type="text" class="doc-photo" placeholder="https://drive.google.com/... or 'Will email separately'" />
+        </div>
+      </div>
+    </div>
+
+    <button onclick="addDoctor()" style="background:none;border:1.5px dashed var(--border);border-radius:8px;padding:12px 20px;width:100%;cursor:pointer;font-size:0.85rem;color:var(--text-light);font-family:'Inter',sans-serif;transition:all 0.2s;margin-bottom:4px;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-light)'">
+      + Add Another Doctor
+    </button>
+
+    <div class="form-nav">
+      <button class="btn-back" onclick="prevSection(2)">← Back</button>
+      <span class="step-indicator">Step 2 of 6</span>
+      <button class="btn-next" onclick="nextSection(2)">Next: Services →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 3: SERVICES -->
+  <div class="section-card" id="section-3">
+    <div class="section-label">Step 3 of 6</div>
+    <div class="section-title">Services You Offer</div>
+    <div class="section-desc">Check everything that applies. We'll feature up to 6 on the homepage and can list more on a services page.</div>
+
+    <div class="service-grid" id="services-grid">
+      <!-- populated by JS -->
+    </div>
+
+    <div class="form-group" style="margin-top:16px;">
+      <label>Additional Services <span class="hint">(not listed above)</span></label>
+      <input type="text" id="custom_services" placeholder="e.g. Laser whitening, Sleep apnea treatment, Botox..." />
+    </div>
+
+    <div class="form-group">
+      <label>Online Scheduling System <span class="hint">(what do you currently use?)</span></label>
+      <select id="scheduling_system">
+        <option value="">Select system</option>
+        <option>Dentrix</option>
+        <option>Eaglesoft</option>
+        <option>Weave</option>
+        <option>NexHealth</option>
+        <option>Calendly</option>
+        <option>Zocdoc</option>
+        <option>Open Dental</option>
+        <option>Curve Dental</option>
+        <option>None — we take calls only</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Online Scheduling URL <span class="hint">(if you have one)</span></label>
+      <input type="url" id="scheduling_url" placeholder="https://nexhealth.com/yourpractice" />
+    </div>
+
+    <div class="form-nav">
+      <button class="btn-back" onclick="prevSection(3)">← Back</button>
+      <span class="step-indicator">Step 3 of 6</span>
+      <button class="btn-next" onclick="nextSection(3)">Next: Look & Feel →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 4: DESIGN -->
+  <div class="section-card" id="section-4">
+    <div class="section-label">Step 4 of 6</div>
+    <div class="section-title">Look & Feel</div>
+    <div class="section-desc">Choose a color palette and the vibe you want your patients to feel.</div>
+
+    <div class="form-group">
+      <label>Color Palette <span class="req">*</span> <span class="hint">— click to select</span></label>
+      <div class="palette-grid">
+        <div class="palette-option" onclick="selectPalette(this,'navy-teal')">
+          <div class="palette-swatch"><span style="background:#0f2240"></span><span style="background:#2a7d6f"></span><span style="background:#c9a84c"></span></div>
+          <div class="palette-name">Executive</div>
+        </div>
+        <div class="palette-option" onclick="selectPalette(this,'warm')">
+          <div class="palette-swatch"><span style="background:#1a4a7a"></span><span style="background:#e07b2a"></span><span style="background:#f5f0ea"></span></div>
+          <div class="palette-name">Warm Family</div>
+        </div>
+        <div class="palette-option" onclick="selectPalette(this,'luxury')">
+          <div class="palette-swatch"><span style="background:#1a1a2e"></span><span style="background:#c9a84c"></span><span style="background:#f8f5f0"></span></div>
+          <div class="palette-name">Luxury</div>
+        </div>
+        <div class="palette-option" onclick="selectPalette(this,'fresh')">
+          <div class="palette-swatch"><span style="background:#1b6b45"></span><span style="background:#48b480"></span><span style="background:#f0f9f4"></span></div>
+          <div class="palette-name">Fresh & Clean</div>
+        </div>
+        <div class="palette-option" onclick="selectPalette(this,'modern')">
+          <div class="palette-swatch"><span style="background:#4a1d96"></span><span style="background:#7c3aed"></span><span style="background:#faf5ff"></span></div>
+          <div class="palette-name">Modern Bold</div>
+        </div>
+      </div>
+      <input type="hidden" id="palette" />
+    </div>
+
+    <div class="form-group" style="margin-top:24px;">
+      <label>Practice Vibe <span class="hint">— select up to 3</span></label>
+      <div class="tag-grid" id="vibe-tags">
+        <!-- populated by JS -->
+      </div>
+      <input type="hidden" id="vibes" />
+    </div>
+
+    <div class="form-row" style="margin-top:20px;">
+      <div class="form-group">
+        <label>A website you like the look of</label>
+        <input type="url" id="inspo_like" placeholder="https://..." />
+      </div>
+      <div class="form-group">
+        <label>Colors to avoid</label>
+        <input type="text" id="colors_avoid" placeholder="e.g. Red, bright yellow, orange" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Logo File <span class="hint">(link or note "will provide")</span></label>
+      <input type="text" id="logo_url" placeholder="https://drive.google.com/... or 'Will email separately'" />
+    </div>
+
+    <div class="form-nav">
+      <button class="btn-back" onclick="prevSection(4)">← Back</button>
+      <span class="step-indicator">Step 4 of 6</span>
+      <button class="btn-next" onclick="nextSection(4)">Next: Content →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 5: CONTENT -->
+  <div class="section-card" id="section-5">
+    <div class="section-label">Step 5 of 6</div>
+    <div class="section-title">Your Content</div>
+    <div class="section-desc">The words and stories that make your site feel like <em>your</em> practice.</div>
+
+    <div class="form-group">
+      <label>Practice Tagline <span class="hint">(optional — we'll write one if blank)</span></label>
+      <input type="text" id="tagline" placeholder="e.g. 'Where Scottsdale Families Come to Smile'" />
+    </div>
+
+    <div class="form-group">
+      <label>About Your Practice <span class="hint">(2–5 sentences — what makes you different?)</span></label>
+      <textarea id="about" placeholder="We've been serving the Phoenix metro for over 20 years with a focus on..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Patient Testimonials <span class="hint">(paste up to 3, one per line with patient name)</span></label>
+      <textarea id="testimonials" style="min-height:120px" placeholder="'Dr. Smith changed my life!' — Sarah M., Scottsdale&#10;'Best dental experience I've ever had.' — John K., Phoenix"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Awards, Certifications, or Notable Credentials to Highlight</label>
+      <input type="text" id="awards" placeholder="e.g. Top Dentist Phoenix Magazine 2023, AAOMS Member, Fellow AGD" />
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Patient Portal URL <span class="hint">(if you have one)</span></label>
+        <input type="url" id="portal_url" placeholder="https://..." />
+      </div>
+      <div class="form-group">
+        <label>Instagram or Facebook URL</label>
+        <input type="url" id="social_url" placeholder="https://instagram.com/yourpractice" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Anything else we should know?</label>
+      <textarea id="notes" placeholder="Special requests, things to avoid, content from your old site you want to keep..."></textarea>
+    </div>
+
+    <div class="form-nav">
+      <button class="btn-back" onclick="prevSection(5)">← Back</button>
+      <span class="step-indicator">Step 5 of 6</span>
+      <button class="btn-next" onclick="nextSection(5)">Next: Choose Package →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 6: PACKAGE -->
+  <div class="section-card" id="section-6">
+    <div class="section-label">Step 6 of 6</div>
+    <div class="section-title">Choose Your Package</div>
+    <div class="section-desc">Both include a fully custom-built site using your intake information. Live within 5–7 business days.</div>
+
+    <div class="package-grid">
+      <div class="package-card" onclick="selectPackage(this,'standard')" id="pkg-standard">
+        <div class="package-price">$1,599</div>
+        <div class="package-name">Standard</div>
+        <ul class="package-features">
+          <li>Full custom site build</li>
+          <li>1 round of revisions</li>
+          <li>Mobile-responsive design</li>
+          <li>Live chat widget</li>
+          <li>Online booking integration</li>
+          <li>SSL + hosting: $149/mo</li>
+          <li>Live in 5 business days</li>
+        </ul>
+      </div>
+      <div class="package-card" onclick="selectPackage(this,'complete')" id="pkg-complete">
+        <div class="package-badge">Most Popular</div>
+        <div class="package-price">$2,500</div>
+        <div class="package-name">Complete</div>
+        <ul class="package-features">
+          <li>Full custom site build</li>
+          <li>3 rounds of revisions</li>
+          <li>Mobile-responsive design</li>
+          <li>Live chat widget</li>
+          <li>Online booking integration</li>
+          <li>First 3 months hosting included</li>
+          <li>Then $149/mo — cancel anytime</li>
+          <li>Live in 7 business days</li>
+        </ul>
+      </div>
+    </div>
+
+    <input type="hidden" id="package" />
+
+    <div class="form-group" style="margin-top:24px;">
+      <label>What's most important to change first? <span class="hint">(for your first revision)</span></label>
+      <select id="revision_priority">
+        <option value="">Select priority</option>
+        <option>Color scheme / overall look</option>
+        <option>Doctor photos and bios</option>
+        <option>Services and content</option>
+        <option>Contact info and hours</option>
+        <option>Homepage headline and messaging</option>
+        <option>Everything looks great — minor tweaks only</option>
+      </select>
+    </div>
+
+    <div class="form-nav">
+      <button class="btn-back" onclick="prevSection(6)">← Back</button>
+      <span class="step-indicator">Step 6 of 6</span>
+      <button class="btn-next" onclick="submitForm()" style="background:var(--navy);">Submit Intake ✓</button>
+    </div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="success-screen" id="success">
+    <div class="success-icon">
+      <svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="#2a7d6f"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+    </div>
+    <h2>You're all set!</h2>
+    <p>We've received your intake form and will have a preview ready within <strong>5–7 business days</strong>. We'll email you a link to review it.</p>
+    <div class="summary-box" id="summary-box"></div>
+  </div>
+
+</div>
+
+<script>
+  const SERVICES = [
+    'General Checkups & Cleanings','Dental Implants','Wisdom Teeth Removal',
+    'Teeth Whitening','Invisalign / Clear Aligners','Veneers','Crowns & Bridges',
+    'Root Canal Therapy','Dentures & Partials','Corrective Jaw Surgery',
+    'Bone Grafting','TMJ Treatment','Pediatric Dentistry','Orthodontics / Braces',
+    'Emergency Dentistry','Sedation / Anesthesia','Sleep Apnea Treatment',
+    'Gum Disease Treatment','Tooth Extractions','Digital X-Rays'
+  ];
+
+  const VIBES = [
+    'Professional & Clinical','Warm & Welcoming','Modern & High-Tech',
+    'Friendly & Approachable','Luxurious & Premium','Family-Oriented',
+    'Efficient & No-Nonsense','Calming & Spa-Like','Bold & Confident','Community-Focused'
+  ];
+
+  // Build service grid
+  const sg = document.getElementById('services-grid');
+  SERVICES.forEach(s => {
+    sg.innerHTML += `<label class="service-check"><input type="checkbox" value="${s}" /><span>${s}</span></label>`;
+  });
+
+  // Build vibe tags
+  const vt = document.getElementById('vibe-tags');
+  let selectedVibes = [];
+  VIBES.forEach(v => {
+    const el = document.createElement('div');
+    el.className = 'tag-option';
+    el.textContent = v;
+    el.onclick = () => {
+      if (el.classList.contains('selected')) {
+        el.classList.remove('selected');
+        selectedVibes = selectedVibes.filter(x => x !== v);
+      } else if (selectedVibes.length < 3) {
+        el.classList.add('selected');
+        selectedVibes.push(v);
+      }
+      document.getElementById('vibes').value = selectedVibes.join(', ');
+    };
+    vt.appendChild(el);
+  });
+
+  let currentSection = 1;
+  const totalSections = 6;
+
+  function updateProgress() {
+    document.getElementById('progress').style.width = ((currentSection / totalSections) * 100) + '%';
+  }
+
+  function nextSection(from) {
+    document.getElementById('section-' + from).classList.remove('active');
+    currentSection = from + 1;
+    if (currentSection <= totalSections) {
+      document.getElementById('section-' + currentSection).classList.add('active');
+    }
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function prevSection(from) {
+    document.getElementById('section-' + from).classList.remove('active');
+    currentSection = from - 1;
+    document.getElementById('section-' + currentSection).classList.add('active');
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  let doctorCount = 1;
+  function addDoctor() {
+    if (doctorCount >= 4) return;
+    doctorCount++;
+    const d = document.createElement('div');
+    d.className = 'doctor-entry';
+    d.innerHTML = `<div class="doctor-entry-title">Doctor ${doctorCount}</div>
+      <div class="form-row">
+        <div class="form-group"><label>Full Name</label><input type="text" class="doc-name" placeholder="Dr. Jane Smith" /></div>
+        <div class="form-group"><label>Credentials</label><input type="text" class="doc-creds" placeholder="DMD, FACS" /></div>
+      </div>
+      <div class="form-group"><label>Bio</label><textarea class="doc-bio" placeholder="Brief background..."></textarea></div>
+      <div class="form-group"><label>Photo Link</label><input type="text" class="doc-photo" placeholder="https://... or 'Will email'" /></div>`;
+    document.getElementById('doctors-container').appendChild(d);
+  }
+
+  function selectPalette(el, val) {
+    document.querySelectorAll('.palette-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    document.getElementById('palette').value = val;
+  }
+
+  function selectPackage(el, val) {
+    document.querySelectorAll('.package-card').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    document.getElementById('package').value = val;
+  }
+
+  function submitForm() {
+    const pkg = document.getElementById('package').value;
+    const name = document.getElementById('practice_name').value;
+    if (!name || !pkg) { alert('Please fill in the practice name and choose a package.'); return; }
+
+    document.getElementById('section-6').classList.remove('active');
+    document.getElementById('success').style.display = 'block';
+
+    const pkgLabel = pkg === 'complete' ? 'Complete — $2,500' : 'Standard — $1,599';
+    document.getElementById('summary-box').innerHTML = `
+      <div class="summary-row"><span>Practice</span><span>${name}</span></div>
+      <div class="summary-row"><span>Package</span><span>${pkgLabel}</span></div>
+      <div class="summary-row"><span>Palette</span><span>${document.getElementById('palette').value || 'TBD'}</span></div>
+      <div class="summary-row"><span>Vibes</span><span>${document.getElementById('vibes').value || 'TBD'}</span></div>
+      <div class="summary-row"><span>First Revision Priority</span><span>${document.getElementById('revision_priority').value || 'TBD'}</span></div>
+      <div class="summary-row"><span>Next Step</span><span>Preview in 5–7 days</span></div>`;
+
+    document.getElementById('progress').style.width = '100%';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  updateProgress();
+</script>
+</body>
+</html>

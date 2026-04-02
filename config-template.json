@@ -1,0 +1,113 @@
+{
+  "_notes": "Fill this out per client. Run: node build.js to generate index.html. Leave any optional field blank or null.",
+
+  "practice": {
+    "name": "Paradise Valley Family Dental",
+    "specialty": "Family & Cosmetic Dentistry",
+    "tagline": "Where Phoenix Families Come to Smile",
+    "about": "Paradise Valley Family Dental has proudly served the Phoenix community for over 20 years. Drs. Elrod, Provenzale, and Klein provide comprehensive care in a warm, welcoming environment — from routine cleanings to advanced restorative treatments.",
+    "awards": ["Top Dentist Phoenix Magazine 2023", "ADA Member Practice"]
+  },
+
+  "palette": "warm",
+
+  "contact": {
+    "phone_primary": "(602) 992-5600",
+    "phone_secondary": null,
+    "email": "pvfd@amdentinc.com",
+    "hours": "Monday – Friday: 8:00 AM – 5:00 PM"
+  },
+
+  "locations": [
+    {
+      "label": "Paradise Valley",
+      "address": "5410 N. 44th Street, Suite 110",
+      "city_state_zip": "Phoenix, AZ 85018",
+      "phone": "(602) 992-5600"
+    }
+  ],
+
+  "doctors": [
+    {
+      "name": "Dr. Gina M. Elrod",
+      "credentials": "D.D.S.",
+      "bio": "Dr. Elrod has over 20 years of experience providing comprehensive family dental care. A Phoenix native, she is committed to building lasting relationships with her patients through gentle, personalized treatment.",
+      "photo_url": null,
+      "specialties": ["General Dentistry", "Cosmetic Dentistry", "Implants"]
+    },
+    {
+      "name": "Dr. Donald Provenzale, Jr.",
+      "credentials": "D.D.S.",
+      "bio": "Dr. Provenzale brings a meticulous approach to every procedure, with a focus on patient comfort and long-term oral health outcomes.",
+      "photo_url": null,
+      "specialties": ["Restorative Dentistry", "Crowns & Bridges"]
+    },
+    {
+      "name": "Dr. Emmanuel Klein",
+      "credentials": "D.D.S.",
+      "bio": "Dr. Klein is dedicated to staying at the forefront of dental technology, offering patients the latest in digital imaging, same-day crowns, and minimally invasive techniques.",
+      "photo_url": null,
+      "specialties": ["Digital Dentistry", "Orthodontics", "TMJ Treatment"]
+    }
+  ],
+
+  "services": [
+    { "name": "General Checkups & Cleanings", "description": "Comprehensive exams and professional cleanings to keep your smile healthy and catch issues early." },
+    { "name": "Dental Implants", "description": "Permanent tooth replacement that looks, feels, and functions like your natural teeth." },
+    { "name": "Teeth Whitening", "description": "Professional-grade whitening treatments that deliver dramatically brighter results safely and quickly." },
+    { "name": "Invisalign & Clear Aligners", "description": "Straighten your smile discreetly with custom clear aligners — no metal wires or brackets." },
+    { "name": "Crowns & Bridges", "description": "Custom-crafted restorations that protect damaged teeth and replace missing ones with precision." },
+    { "name": "Emergency Dentistry", "description": "Same-day appointments for dental emergencies — cracked teeth, knocked-out teeth, severe pain." }
+  ],
+
+  "testimonials": [
+    {
+      "text": "I've been coming to Paradise Valley Family Dental for 12 years. Dr. Elrod is the best dentist I've ever had. My whole family loves this practice.",
+      "author": "Karen M.",
+      "detail": "Patient since 2011 · Paradise Valley"
+    },
+    {
+      "text": "My kids actually look forward to going to the dentist. The team here is so warm and patient with children. I can't recommend them enough.",
+      "author": "David R.",
+      "detail": "Pediatric Patient Family · Phoenix"
+    },
+    {
+      "text": "Got my implants done here — painless procedure, beautiful result. Dr. Provenzale walked me through every step. Couldn't be happier.",
+      "author": "Sandra L.",
+      "detail": "Dental Implants · Scottsdale"
+    }
+  ],
+
+  "scheduling": {
+    "system": "Dentrix",
+    "url": null,
+    "label_scottsdale": "Book Online",
+    "label_secondary": null
+  },
+
+  "patient_portal_url": null,
+  "social": {
+    "instagram": null,
+    "facebook": null
+  },
+
+  "stats": [
+    { "number": "20+", "label": "Years Serving Phoenix" },
+    { "number": "3", "label": "Expert Doctors" },
+    { "number": "5★", "label": "Patient Rated" }
+  ],
+
+  "trust_bar": [
+    "ADA Member Practice",
+    "Accepting New Patients",
+    "Most Insurance Accepted",
+    "Same-Day Emergency Appointments",
+    "Flexible Financing Available"
+  ],
+
+  "meta": {
+    "page_title": "Paradise Valley Family Dental | Phoenix, AZ",
+    "description": "Family dentistry in Phoenix, AZ. Serving the community for 20+ years with gentle, comprehensive care for all ages.",
+    "client_slug": "paradise-valley-family-dental"
+  }
+}

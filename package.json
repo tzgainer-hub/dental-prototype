@@ -1,0 +1,13 @@
+{
+  "name": "dental-prototype",
+  "version": "1.0.0",
+  "description": "Point Zero AI — Dental Website Generator",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "build": "node build.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
