@@ -87,8 +87,8 @@
 
   "tawkto": {
     "_note": "Get these from tawk.to dashboard → Administration → Chat Widget. Leave null to use built-in placeholder widget.",
-    "property_id": null,
-    "widget_id": null
+    "property_id": "69cdbcadb8aa781c3b30ef8f",
+    "widget_id": "1jl5qi1c1"
   },
 
   "patient_portal_url": null,
