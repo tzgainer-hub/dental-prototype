@@ -350,6 +350,12 @@
     .hero-review-stars { color: #f59e0b; font-size: 1.1rem; letter-spacing: 2px; margin-bottom: 6px; }
     .hero-review-text { font-size: 0.82rem; color: var(--muted); line-height: 1.45; }
     .hero-review-author { font-size: 0.78rem; font-weight: 600; color: var(--dark); margin-top: 8px; }
+    .hero-review-text, .hero-review-author { transition: opacity 0.4s ease; }
+    .hero-review-float.fading .hero-review-text,
+    .hero-review-float.fading .hero-review-author { opacity: 0; }
+    .hero-review-dots { display: flex; gap: 6px; margin-top: 12px; }
+    .rdot { width: 6px; height: 6px; border-radius: 50%; background: var(--border); transition: background 0.3s; cursor: pointer; }
+    .rdot.active { background: var(--teal); width: 18px; border-radius: 3px; }
     .hero-stat-float {
       position: absolute;
       top: 24px;
@@ -1287,10 +1293,16 @@
             loading="eager"
           />
         </div>
-        <div class="hero-review-float">
+        <div class="hero-review-float" id="hero-review-float">
           <div class="hero-review-stars">★★★★★</div>
-          <div class="hero-review-text">"The team made me feel so at ease. Best dental experience of my life!"</div>
-          <div class="hero-review-author">— Sarah M., Scottsdale</div>
+          <div class="hero-review-text" id="hero-review-text">"The team made me feel so at ease. Best dental experience of my life!"</div>
+          <div class="hero-review-author" id="hero-review-author">— Sarah M., Scottsdale</div>
+          <div class="hero-review-dots" id="hero-review-dots">
+            <span class="rdot active"></span>
+            <span class="rdot"></span>
+            <span class="rdot"></span>
+            <span class="rdot"></span>
+          </div>
         </div>
         <div class="hero-stat-float">
           <span class="hero-stat-num">15K+</span>
@@ -1968,6 +1980,32 @@
         }
       });
     });
+
+    // Rotating hero reviews
+    const heroReviews = [
+      { text: '"The team made me feel so at ease. Best dental experience of my life!"', author: '— Sarah M., Scottsdale' },
+      { text: '"My implants look and feel completely natural. Absolute life-changing results."', author: '— Patricia L., Paradise Valley' },
+      { text: '"Painless wisdom teeth removal. I was back to work the next day — incredible."', author: '— Marcus T., Tempe' },
+      { text: '"Dr. Mitchell is a true artist. I finally have the smile I always wanted."', author: '— Jennifer K., North Scottsdale' },
+    ];
+    let reviewIdx = 0;
+    const reviewText = document.getElementById('hero-review-text');
+    const reviewAuthor = document.getElementById('hero-review-author');
+    const reviewFloat = document.getElementById('hero-review-float');
+    const reviewDots = document.querySelectorAll('.rdot');
+
+    function showReview(idx) {
+      reviewFloat.classList.add('fading');
+      setTimeout(() => {
+        reviewText.textContent = heroReviews[idx].text;
+        reviewAuthor.textContent = heroReviews[idx].author;
+        reviewDots.forEach((d, i) => d.classList.toggle('active', i === idx));
+        reviewFloat.classList.remove('fading');
+      }, 400);
+    }
+
+    reviewDots.forEach((dot, i) => dot.addEventListener('click', () => { reviewIdx = i; showReview(i); }));
+    setInterval(() => { reviewIdx = (reviewIdx + 1) % heroReviews.length; showReview(reviewIdx); }, 4500);
 
     // Subtle nav shadow on scroll
     window.addEventListener('scroll', () => {
