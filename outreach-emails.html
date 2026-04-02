@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Closer Outreach Emails — Point Zero AI Dental Websites</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --teal: #0891b2;
+    --dark: #0c1a2e;
+    --amber: #f59e0b;
+    --light: #f0f9ff;
+    --border: #e2e8f0;
+  }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    padding: 40px 20px;
+  }
+  .page-header {
+    max-width: 860px;
+    margin: 0 auto 48px;
+    text-align: center;
+  }
+  .page-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+  .page-header p {
+    color: #64748b;
+    font-size: 1rem;
+  }
+  .badge {
+    display: inline-block;
+    background: var(--teal);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+
+  .email-card {
+    max-width: 860px;
+    margin: 0 auto 40px;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .email-card-header {
+    background: var(--dark);
+    color: #fff;
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .touch-label {
+    background: var(--amber);
+    color: var(--dark);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .email-card-header h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    flex: 1;
+  }
+  .email-card-header .timing {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    white-space: nowrap;
+  }
+
+  .email-meta {
+    background: var(--light);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 28px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 12px;
+    font-size: 0.875rem;
+  }
+  .email-meta .label {
+    font-weight: 700;
+    color: #64748b;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding-top: 2px;
+  }
+  .email-meta .value {
+    color: var(--dark);
+  }
+  .email-meta .subject-line {
+    font-weight: 600;
+    color: var(--dark);
+  }
+
+  .email-body {
+    padding: 28px 32px;
+    line-height: 1.8;
+    font-size: 0.95rem;
+    color: #334155;
+  }
+  .email-body p {
+    margin-bottom: 16px;
+  }
+  .email-body p:last-child {
+    margin-bottom: 0;
+  }
+  .email-body .link-block {
+    margin: 20px 0;
+    background: var(--light);
+    border-left: 4px solid var(--teal);
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.9rem;
+  }
+  .email-body .link-block strong {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--dark);
+  }
+  .email-body .link-block a {
+    color: var(--teal);
+    text-decoration: none;
+    font-weight: 600;
+    word-break: break-all;
+  }
+  .email-body .cta-btn {
+    display: inline-block;
+    background: var(--teal);
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin: 8px 0;
+  }
+  .sig {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 0.875rem;
+    color: #475569;
+    line-height: 1.6;
+  }
+  .sig strong {
+    display: block;
+    color: var(--dark);
+    font-size: 1rem;
+    margin-bottom: 2px;
+  }
+
+  .tips-card {
+    max-width: 860px;
+    margin: 0 auto 40px;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    padding: 28px 32px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .tips-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .tips-card h3::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 20px;
+    background: var(--amber);
+    border-radius: 2px;
+  }
+  .tips-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 600px) { .tips-grid { grid-template-columns: 1fr; } }
+  .tip-item {
+    background: var(--light);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .tip-item strong {
+    display: block;
+    color: var(--dark);
+    font-size: 0.875rem;
+    margin-bottom: 6px;
+  }
+  .tip-item p {
+    color: #475569;
+    font-size: 0.825rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .objection-card {
+    max-width: 860px;
+    margin: 0 auto 40px;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    padding: 28px 32px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .objection-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .objection-card h3::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 20px;
+    background: var(--teal);
+    border-radius: 2px;
+  }
+  .objection-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .objection-row:last-child { margin-bottom: 0; }
+  .objection {
+    background: #fff1f2;
+    padding: 14px 16px;
+    font-size: 0.875rem;
+    color: #7f1d1d;
+    font-style: italic;
+    border-right: 1px solid var(--border);
+  }
+  .rebuttal {
+    background: #f0fdf4;
+    padding: 14px 16px;
+    font-size: 0.875rem;
+    color: #14532d;
+  }
+  .objection strong, .rebuttal strong {
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    opacity: 0.6;
+  }
+
+  .print-note {
+    max-width: 860px;
+    margin: 0 auto 0;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #94a3b8;
+    padding-bottom: 40px;
+  }
+  @media print {
+    body { background: #fff; padding: 20px; }
+    .email-card, .tips-card, .objection-card { box-shadow: none; page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">Point Zero AI — Internal Sales Tool</div>
+  <h1>Dental Website Closer Outreach</h1>
+  <p>3-touch email sequence + objection rebuttals for the 900-client dental outreach campaign</p>
+</div>
+
+<!-- ==================== TOUCH 1 ==================== -->
+<div class="email-card">
+  <div class="email-card-header">
+    <span class="touch-label">Touch 1</span>
+    <h2>Initial Outreach — The Warm Intro</h2>
+    <span class="timing">Day 1</span>
+  </div>
+  <div class="email-meta">
+    <span class="label">From</span>
+    <span class="value">[Your First Name] at Point Zero AI &lt;[your@pointzeroai.com]&gt;</span>
+    <span class="label">Subject</span>
+    <span class="value subject-line">Your practice deserves a better website — take a look at what we built</span>
+    <span class="label">Alt Subject</span>
+    <span class="value subject-line">We built something for dental practices like yours — want to see it?</span>
+  </div>
+  <div class="email-body">
+    <p>Hi [First Name],</p>
+
+    <p>I'm reaching out on behalf of Tom Zgainer and the team at Point Zero AI. You may know Tom from his work helping dental practices — he's spent years in this industry and recently turned his attention to something that's been a long time coming: <strong>premium websites built specifically for dental and oral surgery practices.</strong></p>
+
+    <p>Most dental websites are either embarrassingly outdated or built by generic agencies that have no idea what patients actually look for. We changed that. We built a fully custom site — live right now — for a high-end oral surgery practice in Scottsdale, and we wanted to share it with a select group of practices we already know and respect.</p>
+
+    <div class="link-block">
+      <strong>See the live demo:</strong>
+      <a href="https://dental-prototype-production.up.railway.app" target="_blank">https://dental-prototype-production.up.railway.app</a>
+    </div>
+
+    <p>What you're looking at is what we'd build for your practice — tailored to your doctors, your locations, your services, your brand. Rotating patient reviews. Meet the Team. Before & After gallery. Live chat. Insurance accepted. Online appointment booking. Everything a new patient needs to say yes before they ever pick up the phone.</p>
+
+    <p>We're launching this to a small group of practices this month. One price, done in two weeks, no agency run-around.</p>
+
+    <p>Worth a quick 15-minute call to see if it's a fit?</p>
+
+    <p><a href="mailto:[your@pointzeroai.com]" class="cta-btn">Reply to Schedule a Call</a></p>
+
+    <div class="sig">
+      <strong>[Your Full Name]</strong>
+      Client Success · Point Zero AI<br>
+      [your phone number]<br>
+      pointzeroai.com
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TOUCH 2 ==================== -->
+<div class="email-card">
+  <div class="email-card-header">
+    <span class="touch-label">Touch 2</span>
+    <h2>Follow-Up — The Proof &amp; Specifics</h2>
+    <span class="timing">Day 5–7 (no response)</span>
+  </div>
+  <div class="email-meta">
+    <span class="label">From</span>
+    <span class="value">[Your First Name] at Point Zero AI &lt;[your@pointzeroai.com]&gt;</span>
+    <span class="label">Subject</span>
+    <span class="value subject-line">RE: Your practice deserves a better website — quick note</span>
+    <span class="label">Alt Subject</span>
+    <span class="value subject-line">$1,599 for a website patients actually love (details inside)</span>
+  </div>
+  <div class="email-body">
+    <p>Hi [First Name],</p>
+
+    <p>Following up on my note from earlier this week — wanted to share a few specifics since I know your time is short.</p>
+
+    <p>Here's how this works:</p>
+
+    <p>
+      &nbsp;&nbsp;<strong>Option A — $1,599 one-time + $149/month hosting.</strong> We build your site, you own it, we host it. One round of revisions included.<br><br>
+      &nbsp;&nbsp;<strong>Option B — $2,500 flat (most popular).</strong> Same premium build, three rounds of revisions, and your first 12 months of hosting is included. After year one: $149/month.
+    </p>
+
+    <p>What's included in both: custom design matched to your brand and specialty, all your doctors and services, patient reviews, before &amp; after gallery, live chat, online appointment request, insurance section, Google Maps integration, and mobile optimization. Done and live in approximately two weeks from when we receive your info.</p>
+
+    <p>No monthly retainer. No agency overhead. No waiting six months for a web designer to "get to you."</p>
+
+    <div class="link-block">
+      <strong>Live demo (oral surgery practice):</strong>
+      <a href="https://dental-prototype-production.up.railway.app" target="_blank">https://dental-prototype-production.up.railway.app</a>
+    </div>
+
+    <p>If you're open to a 15-minute call, I can show you the exact intake process and walk you through what we'd build for [Practice Name] specifically. No hard sell — if it's not a fit, I'll tell you.</p>
+
+    <p>What does your schedule look like this week?</p>
+
+    <div class="sig">
+      <strong>[Your Full Name]</strong>
+      Client Success · Point Zero AI<br>
+      [your phone number]<br>
+      pointzeroai.com
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TOUCH 3 ==================== -->
+<div class="email-card">
+  <div class="email-card-header">
+    <span class="touch-label">Touch 3</span>
+    <h2>Last Touch — The Soft Close</h2>
+    <span class="timing">Day 12–14 (still no response)</span>
+  </div>
+  <div class="email-meta">
+    <span class="label">From</span>
+    <span class="value">[Your First Name] at Point Zero AI &lt;[your@pointzeroai.com]&gt;</span>
+    <span class="label">Subject</span>
+    <span class="value subject-line">Closing the loop — [Practice Name]</span>
+    <span class="label">Alt Subject</span>
+    <span class="value subject-line">Last note from us — wanted to leave the door open</span>
+  </div>
+  <div class="email-body">
+    <p>Hi [First Name],</p>
+
+    <p>I'll keep this short — I know you're busy running a practice.</p>
+
+    <p>I've reached out a couple of times about the dental website we've built at Point Zero AI. I'm not going to keep following up, but I did want to leave the door open.</p>
+
+    <p>If and when your current site starts costing you patients — slow load times, outdated design, can't be found on Google, no online booking — we're here. The demo is always live at the link below, and we can turn a new site around in two weeks once we have your information.</p>
+
+    <div class="link-block">
+      <strong>Demo site (always available):</strong>
+      <a href="https://dental-prototype-production.up.railway.app" target="_blank">https://dental-prototype-production.up.railway.app</a>
+    </div>
+
+    <p>One thing I'll mention: Tom built this specifically because he knows how hard practices work for every new patient — and how much a bad first impression online costs you. This isn't a template. It's a real, custom-built site for practices that take their reputation seriously.</p>
+
+    <p>If timing changes, just reply to this email or call me directly. Happy to help whenever it makes sense for you.</p>
+
+    <p>Thanks for your time, [First Name]. Wishing [Practice Name] a great rest of the year.</p>
+
+    <div class="sig">
+      <strong>[Your Full Name]</strong>
+      Client Success · Point Zero AI<br>
+      [your phone number]<br>
+      pointzeroai.com
+    </div>
+  </div>
+</div>
+
+<!-- ==================== CALL SCRIPT ==================== -->
+<div class="email-card">
+  <div class="email-card-header">
+    <span class="touch-label">Phone Script</span>
+    <h2>When They Call Back / You Reach Them Live</h2>
+    <span class="timing">For Closers</span>
+  </div>
+  <div class="email-body">
+    <p><strong style="color:var(--dark);">Opening (after hello / confirming it's the right person):</strong></p>
+    <p>"Hey [First Name], thanks for taking my call — I'll be quick. I'm with Point Zero AI, reaching out on behalf of Tom Zgainer. We built a premium website product specifically for dental and oral surgery practices, and we're rolling it out to a select group of practices this month. I wanted to see if you'd be open to taking a look at what we've done and whether it might be a fit for [Practice Name]."</p>
+
+    <p><strong style="color:var(--dark);">If they say "send me something":</strong></p>
+    <p>"Absolutely — I'll send you the live demo link right now. It's an actual working site, not a mockup — you can scroll through the whole thing. Once you've had a chance to look, I'd love 10 minutes to walk you through what we'd customize for your practice specifically. Does [day/time] work for a quick follow-up call?"</p>
+
+    <p><strong style="color:var(--dark);">If they say "who are you again / how do you have my contact?":</strong></p>
+    <p>"Tom Zgainer has worked with practices in your area — you may know him from his work in the dental industry. He built Point Zero AI specifically to help practices like yours upgrade their online presence without the agency run-around. He asked us to reach out to a small group of practices he knows personally."</p>
+
+    <p><strong style="color:var(--dark);">Closing a demo call:</strong></p>
+    <p>"Here's the bottom line — we can build your practice a site that looks like it cost $20,000 for $1,599, done in two weeks, and we handle everything. All you do is fill out a form and send us your assets. Do you want to move forward, or is there something specific holding you back that I can address?"</p>
+  </div>
+</div>
+
+<!-- ==================== TIPS ==================== -->
+<div class="tips-card">
+  <h3>Closer Notes &amp; Best Practices</h3>
+  <div class="tips-grid">
+    <div class="tip-item">
+      <strong>Lead with the demo link, always</strong>
+      <p>The site sells itself. Get eyes on it before you try to explain anything. "Just take 2 minutes and look at this link" is your best opener.</p>
+    </div>
+    <div class="tip-item">
+      <strong>Who you're talking to matters</strong>
+      <p>In small practices: reach the doctor directly. In larger practices: start with the office manager or practice administrator — they often control vendor decisions.</p>
+    </div>
+    <div class="tip-item">
+      <strong>Push Option B ($2,500)</strong>
+      <p>It's the better value and higher ticket. Lead with it. Only offer Option A if they push back on price. The extra $900 covers hosting year one + 2 more revision rounds.</p>
+    </div>
+    <div class="tip-item">
+      <strong>Dentist egos are a feature, not a bug</strong>
+      <p>Use words like: "premium," "custom," "your brand," "your reputation," "practices that take their online presence seriously." Avoid: "template," "basic," "affordable."</p>
+    </div>
+    <div class="tip-item">
+      <strong>Two-week turnaround is a close</strong>
+      <p>"Most agencies take 3–6 months. We're done in two weeks from the day we get your intake form." This is a real differentiator — use it.</p>
+    </div>
+    <div class="tip-item">
+      <strong>Send the intake form on close</strong>
+      <p>When they say yes, immediately send them the intake form link: <strong>/intake-form.html</strong> on the demo site. Build starts when they return it with their assets.</p>
+    </div>
+    <div class="tip-item">
+      <strong>The "Google" angle always lands</strong>
+      <p>"A new patient searches your practice name. What do they see? If your site looks like it was built in 2012, you just lost them." Most dentists feel this pain immediately.</p>
+    </div>
+    <div class="tip-item">
+      <strong>No custom quotes, no negotiations</strong>
+      <p>The price is the price. $1,599 or $2,500. Add-ons are listed separately. Holding the line makes the product feel premium and protects margins.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== OBJECTIONS ==================== -->
+<div class="objection-card">
+  <h3>Common Objections &amp; Rebuttals</h3>
+
+  <div class="objection-row">
+    <div class="objection">
+      <strong>They Say</strong>
+      "We already have a website."
+    </div>
+    <div class="rebuttal">
+      <strong>You Say</strong>
+      "Most practices do — and most of them are costing the practice patients every month without the doctor even knowing. When's the last time someone updated it? Pull it up right now — does it look like <em>this</em>?" [reference the demo]
+    </div>
+  </div>
+
+  <div class="objection-row">
+    <div class="objection">
+      <strong>They Say</strong>
+      "We're happy with what we have / our current vendor."
+    </div>
+    <div class="rebuttal">
+      <strong>You Say</strong>
+      "That's great — and I'm not here to bad-mouth anyone. I just want 60 seconds to show you what premium looks like right now for $2,500 all-in, because once you see it, you'll know whether it's worth a conversation. Fair?"
+    </div>
+  </div>
+
+  <div class="objection-row">
+    <div class="objection">
+      <strong>They Say</strong>
+      "How is this different from Wix/Squarespace/WordPress?"
+    </div>
+    <div class="rebuttal">
+      <strong>You Say</strong>
+      "Those are DIY tools. This is done for you, built by people who know the dental industry — what patients look for, how to position implants vs. cosmetic vs. surgical, how to display before &amp; afters, how to handle two locations. It's not a template. It's a custom site we build, host, and maintain."
+    </div>
+  </div>
+
+  <div class="objection-row">
+    <div class="objection">
+      <strong>They Say</strong>
+      "$1,599 / $2,500 is a lot for a website."
+    </div>
+    <div class="rebuttal">
+      <strong>You Say</strong>
+      "One new patient pays for this. If one person finds you online instead of your competitor next month, this site paid for itself. Custom dental sites from agencies run $10,000–$25,000. We're at $2,500 all-in for the same result."
+    </div>
+  </div>
+
+  <div class="objection-row">
+    <div class="objection">
+      <strong>They Say</strong>
+      "Can I pay monthly?"
+    </div>
+    <div class="rebuttal">
+      <strong>You Say</strong>
+      "We keep pricing simple — one price, no payment plans, no hidden fees. That's actually part of what makes this so clean. Option B is $2,500 flat, which includes your first year of hosting, and then just $149 a month after that."
+    </div>
+  </div>
+
+  <div class="objection-row">
+    <div class="objection">
+      <strong>They Say</strong>
+      "I need to talk to my office manager / spouse / partner."
+    </div>
+    <div class="rebuttal">
+      <strong>You Say</strong>
+      "Of course — happy to loop them in. Can I set up a 15-minute call with both of you later this week? I want to make sure all your questions get answered at once so you don't have to play phone tag."
+    </div>
+  </div>
+
+  <div class="objection-row">
+    <div class="objection">
+      <strong>They Say</strong>
+      "How long does it take?"
+    </div>
+    <div class="rebuttal">
+      <strong>You Say</strong>
+      "Two weeks from the day we receive your completed intake form and your assets. That's it. Most agencies quote 3–6 months. We've built the process to move fast without cutting corners."
+    </div>
+  </div>
+
+</div>
+
+<p class="print-note">Point Zero AI · Internal Sales Tool · Not for client distribution · onboarding@pointzeroai.com</p>
+
+</body>
+</html>
