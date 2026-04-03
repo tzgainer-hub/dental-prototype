@@ -1243,10 +1243,15 @@ footer {
 .hero-mobile-photo { display: none; }
 .hero-mobile-panel { display: none; }
 .hero-desktop-only { display: contents; }
+/* Hero desktop columns — override display:contents for layout elements */
+.hero-content { display: flex !important; flex-direction: column; justify-content: center; }
+.hero-photo-side { display: block !important; }
 
 @media (max-width: 768px) {
-  /* Kill the desktop hero entirely */
+  /* Kill the desktop hero columns on mobile */
   .hero-desktop-only { display: none !important; }
+  .hero-content { display: none !important; }
+  .hero-photo-side { display: none !important; }
 
   /* Hero section becomes a plain wrapper — no background, no padding */
   .hero {
