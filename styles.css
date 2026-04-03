@@ -1243,14 +1243,15 @@ footer {
     background: linear-gradient(to bottom, transparent, var(--dark));
   }
 
-  /* ── BOTTOM BRAND PANEL ── */
+  /* ── BOTTOM BRAND PANEL — WHITE, warm, research-validated ── */
   .hero-mobile-panel {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    background: var(--dark);
-    padding: 28px 28px 110px;
+    background: #ffffff;
+    padding: 32px 28px 110px;
+    border-top: 3px solid var(--teal);
   }
 
   /* Specialty eyebrow */
@@ -1267,20 +1268,20 @@ footer {
   /* Practice name — dominates the panel */
   .hero-mobile-practice {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(46px, 13vw, 64px);
+    font-size: clamp(42px, 12vw, 60px);
     font-weight: 600;
     line-height: 1.05;
-    color: #ffffff;
+    color: #1a2e3b;
     margin: 0 0 20px;
     letter-spacing: -0.3px;
   }
 
-  /* Thin amber divider */
+  /* Thin teal divider */
   .hero-mobile-divider {
     width: 40px;
-    height: 1px;
-    background: var(--amber);
-    opacity: 0.7;
+    height: 2px;
+    background: var(--teal);
+    opacity: 0.4;
     margin: 0 auto 20px;
   }
 
@@ -1289,7 +1290,7 @@ footer {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-bottom: 24px;
+    margin-bottom: 28px;
     width: 100%;
   }
   .hero-mobile-doctor { display: flex; flex-direction: column; gap: 2px; }
@@ -1297,21 +1298,22 @@ footer {
     font-family: 'Inter', sans-serif;
     font-size: 14px;
     font-weight: 500;
-    color: rgba(255,255,255,0.85);
+    color: #334155;
   }
   .hero-mobile-dr-creds {
     font-family: 'Inter', sans-serif;
     font-size: 11px;
     color: var(--teal);
     letter-spacing: 0.06em;
+    font-weight: 600;
   }
 
   /* Book button */
   .hero-mobile-cta {
     display: block;
     width: 100%;
-    background: var(--amber);
-    color: var(--dark);
+    background: var(--teal);
+    color: #ffffff;
     font-family: 'Inter', sans-serif;
     font-size: 15px;
     font-weight: 700;
@@ -1329,15 +1331,16 @@ footer {
     justify-content: center;
     gap: 8px;
     width: 100%;
-    border: 1px solid rgba(255,255,255,0.18);
-    color: rgba(255,255,255,0.75);
+    border: 1.5px solid var(--teal);
+    color: var(--teal);
     font-family: 'Inter', sans-serif;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     padding: 14px 24px;
     border-radius: 8px;
     text-decoration: none;
     margin-bottom: 24px;
+    background: transparent;
   }
 
   /* Trust strip */
@@ -1355,10 +1358,10 @@ footer {
     font-family: 'Inter', sans-serif;
     font-size: 11px;
     font-weight: 500;
-    color: rgba(255,255,255,0.45);
+    color: #94a3b8;
   }
   .hero-mobile-trust-item svg { color: var(--teal); flex-shrink: 0; }
-  .hero-mobile-trust-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,0.2); }
+  .hero-mobile-trust-dot { width: 3px; height: 3px; border-radius: 50%; background: #cbd5e1; }
 }
 
 @media (max-width: 768px) {
