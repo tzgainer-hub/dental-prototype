@@ -95,7 +95,18 @@ Dental anxiety is the #1 conversion barrier. Every color choice must ask: "Does 
 - **Photos:** Warm, aspirational, smiling humans — clearly visible, never darkened with overlays. Real people, real warmth.
 - **White space:** Use aggressively. Breathing room = calm = trust.
 
-### The 3 Proven Palettes (Use These — Don't Invent New Ones)
+### The 4 Proven Palettes — WOW Blueprint (April 2026)
+Source: Manus AI visual audit of top 10 highest-converting dental websites nationally.
+
+**Palette 0: "Airy & Modern"** ← ACTIVE ON SSA DEMO — Oral Surgery, Cosmetic, Premium General
+- Background: Pure White `#FFFFFF`
+- Hero Headline: Dark Charcoal `#1a2332`
+- Italic Accent: Warm Coral `#EB532F`
+- Body Text: Dark Charcoal `#1C1C1C`
+- CTA Button: Solid Coral `#EB532F` with White Text
+- Ghost Button: Charcoal border, charcoal text
+- Tag/Eyebrow: Coral left-border, coral text, all-caps
+- Why: White space + unexpected warm coral = fresh, premium, differentiated from every teal/blue dental site. Inspired by Airily Ortho nationally.
 
 **Palette 1: "The Clinical Trust"** — General Dentistry, Cosmetic, Family
 - Background: Crisp White `#FFFFFF`
@@ -160,22 +171,37 @@ Our dark navy (`#0c1a2e`) as a HERO BACKGROUND is WRONG — falls in "avoid" cat
 --bg-teal:     #f0fdfa
 --border:      #e2e8f0
 --radius:      14px
+
+/* Airy & Modern palette (active on SSA demo) */
+--coral:       #EB532F    /* Hero accent — headline italic + CTA */
+--coral-dark:  #d4421f
+--coral-bg:    #fef3ef
 ```
 
 ### Typography
-- **Headlines:** `Cormorant Garamond` (serif) — prestigious, medical, premium feel
+- **Hero Headlines:** `Playfair Display` (serif) — elegant, high-contrast, luxury feel. Use for H1 only.
+- **Section Headlines:** `Cormorant Garamond` (serif) — prestigious, medical feel. Use for H2/H3.
 - **Body:** `Inter` (sans-serif) — clean, readable, modern
+- **Hero H1 specs:** font-weight: 400 (NOT bold), font-size: clamp(2.8rem, 4.5vw, 4.2rem), letter-spacing: -0.02em
 - Google Fonts link required in every page `<head>`:
 ```html
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap" rel="stylesheet" />
 ```
+
+### Hero Headline Formula (REQUIRED)
+Never use a practice name or generic welcome as the H1. Use the WOW formula:
+**[Desired Outcome] + [Differentiator/Emotion]**
+- ✅ "Precision Surgery. *Genuine Compassion.*"
+- ✅ "Restoring Confidence. *Transforming Lives.*"
+- ✅ "Exceptional Care. *Exceptional Results.*"
+- ❌ "Welcome to Smith Dental"
+- ❌ "Restore Your Smile. Reclaim Your Life." (too generic)
+The italic second line is always in the accent color (coral, teal, or gold depending on palette).
 
 ### Visual Tone
 - Warm, premium, trustworthy — NOT cold or clinical
-- Reference sites to match: phoenixoralsurgeons.com, adcchandler.com, canyonlakesdentist.com
-- Photography: Unsplash hotlinks acceptable. Use real, high-quality smiling people.
-  - Known good URL: `https://images.unsplash.com/photo-1494790108377-be9c29b29330` (beautiful smiling woman, hero-appropriate)
-- Icons: Always inline SVG line-art. Never emoji in production design elements.
+- Reference sites: phoenixoralsurgeons.com, adcchandler.com, canyonlakesdentist.com
+- Icons: Always inline SVG line-art. **Never emoji in any production design element.**
 - Shadows: Layered — `--shadow-sm`, `--shadow`, `--shadow-lg`
 
 ---
@@ -194,7 +220,8 @@ Active page gets class `nav-active` on its `<li><a>` element.
 ### Page 1: index.html (Home)
 - Topbar (locations, phone numbers)
 - Sticky nav
-- Hero (large, photo right, headlines left, rotating patient reviews, two CTAs)
+- Hero (see Hero Architecture below)
+- Google Reviews bar
 - Google Reviews bar (star ratings, review count, source links)
 - Awards / recognition bar
 - Services overview — 6 cards (each "Learn More →" links to services.html)
@@ -234,6 +261,58 @@ Active page gets class `nav-active` on its `<li><a>` element.
 - FAQ accordion
 - CTA band
 - Footer
+
+### Hero Architecture — Desktop (LOCKED IN — DO NOT CHANGE WITHOUT TOM'S APPROVAL)
+
+The hero uses a **full-bleed background photo** approach. The photo covers the entire hero section as an absolute-positioned background. A solid white left panel (56% width) sits on top for content. The right 44% is transparent, showing the photo.
+
+**Why this works:** Any landscape photo (the most common format from client sites) displays perfectly with no cropping. Both people/subjects are visible. The left panel is always clean white regardless of photo.
+
+```html
+<section class="hero">
+  <!-- Full-bleed background photo -->
+  <div class="hero-bg">
+    <img src="[CLIENT PHOTO URL]" alt="[Practice name] patients" loading="eager" />
+  </div>
+  <div class="hero-inner">
+    <!-- Left: solid white content panel -->
+    <div class="hero-content">
+      <div class="hero-tag">[City] · [Specialty]</div>
+      <h1>[Outcome Line 1].<br><em>[Italic Outcome Line 2.]</em></h1>
+      <p class="hero-desc">[2-3 sentence description]</p>
+      <div class="hero-actions">
+        <a href="contact.html" class="btn-book">Book a Consultation</a>
+        <a href="tel:[PHONE]" class="btn-call">Call Us Now</a>
+      </div>
+      <div class="hero-trust">
+        [4 trust items with SVG icons — NO EMOJI]
+      </div>
+    </div>
+    <!-- Right: transparent — photo shows through — holds floating badges -->
+    <div class="hero-photo-side">
+      <div class="hero-stat-float">
+        <span class="hero-stat-num">[NUMBER]</span>
+        <span class="hero-stat-label">[LABEL]</span>
+      </div>
+      <div class="hero-review-float">[rotating reviews]</div>
+    </div>
+  </div>
+</section>
+```
+
+**Key CSS rules:**
+- `.hero { position: relative; min-height: 90vh; }`
+- `.hero-bg { position: absolute; inset: 0; z-index: 0; }`
+- `.hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center center; }`
+- `.hero-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 56fr 44fr; }`
+- `.hero-content { background: #ffffff; display: flex; flex-direction: column; justify-content: center; }`
+- `.hero-photo-side { background: transparent; }` ← transparent = photo shows through
+
+**Photo rules:**
+- Landscape photos (wider than tall): Use as hero-bg — displays perfectly
+- Portrait photos (taller than wide): Can also use as hero-bg — will be centered
+- **NEVER** put a landscape photo inside a portrait-shaped div column — it will crop wrong
+- **NEVER** use `display: contents` on a div that needs to be a flex or grid container
 
 ### Interior Page Hero (used on pages 2–5)
 ```html
@@ -510,6 +589,10 @@ Pricing is fixed: **$1,599 + $149/mo** (Option A) or **$2,500 flat** (Option B, 
 8. **Don't use generic agency language** in copy ("innovative solutions", "cutting-edge care"). Write like a premium practice, not a web agency.
 9. **Don't skip the mobile sticky CTA** — it's a top conversion driver on mobile.
 10. **Don't use placeholder Unsplash photos of random objects or unattractive subjects.** Always preview or use known-good URLs.
+11. **Don't put a landscape photo inside a portrait-shaped container.** It will crop to one person. Use the full-bleed background approach instead.
+12. **Don't use `display: contents` on layout containers** (hero-content, hero-photo-side). It makes them invisible as flex/grid parents. Use explicit `display: flex` or `display: block`.
+13. **Don't pick one doctor's photo when the practice has two doctors.** Use an office photo, a couple/patient photo, or a photo of both doctors together.
+14. **Don't invent color palettes.** Use the 4 proven palettes in this file. Current demo uses Palette 0: Airy & Modern (coral).
 
 ---
 
@@ -527,5 +610,5 @@ This demo is the primary sales tool. Every prospect sees this before anything el
 
 ---
 
-*Last updated: Session where multi-page architecture was built + white coats expansion identified.*
+*Last updated: April 2, 2026 — Hero redesign session. WOW blueprint integrated. Airy & Modern palette locked in. Full-bleed background photo architecture established. Playfair Display added.*
 *Point Zero AI · onboarding@pointzeroai.com*
