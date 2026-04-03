@@ -1194,30 +1194,66 @@ footer {
   .about-photo-col { max-width: 460px; margin: 0 auto; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
 }
-/* ─── MOBILE HERO — BRAND FIRST ─── */
+/* ─── MOBILE HERO — SPLIT LAYOUT: PHOTO TOP / BRAND PANEL BOTTOM ─── */
 .hero-mobile-brand { display: none; }
+.hero-mobile-photo { display: none; }
+.hero-mobile-panel { display: none; }
 .hero-desktop-only { display: contents; }
 
 @media (max-width: 768px) {
-  /* Show mobile brand block, hide desktop hero content */
-  .hero-mobile-brand { display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%; }
+  /* Kill the desktop hero entirely */
   .hero-desktop-only { display: none !important; }
 
-  /* Hero becomes full-bleed dark canvas with warm background photo */
+  /* Hero section becomes a plain wrapper — no background, no padding */
   .hero {
-    background:
-      linear-gradient(to bottom, rgba(10,22,40,0.82) 0%, rgba(10,22,40,0.88) 60%, rgba(10,22,40,0.96) 100%),
-      url('https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&q=80&auto=format&fit=crop') center/cover no-repeat;
-    min-height: 92vh;
-    padding: 48px 28px 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background: none;
+    padding: 0;
+    min-height: 0;
   }
   .hero::before { display: none; }
-  .hero-inner { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 480px; margin: 0 auto; }
+  .hero-inner { display: block; width: 100%; }
 
-  /* Eyebrow — specialty label */
+  /* Mobile brand block — full column layout */
+  .hero-mobile-brand {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  /* ── TOP PHOTO SECTION ── */
+  .hero-mobile-photo {
+    display: block;
+    width: 100%;
+    height: 44vh;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-mobile-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+  }
+  /* Soft fade into the dark panel below */
+  .hero-mobile-photo::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--dark));
+  }
+
+  /* ── BOTTOM BRAND PANEL ── */
+  .hero-mobile-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: var(--dark);
+    padding: 28px 28px 110px;
+  }
+
+  /* Specialty eyebrow */
   .hero-mobile-eyebrow {
     font-family: 'Inter', sans-serif;
     font-size: 10px;
@@ -1225,58 +1261,52 @@ footer {
     letter-spacing: 4px;
     text-transform: uppercase;
     color: var(--teal);
-    margin-bottom: 20px;
+    margin-bottom: 14px;
   }
 
-  /* Practice name — the brand smack */
+  /* Practice name — dominates the panel */
   .hero-mobile-practice {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(52px, 14vw, 72px);
+    font-size: clamp(46px, 13vw, 64px);
     font-weight: 600;
     line-height: 1.05;
     color: #ffffff;
-    margin: 0 0 24px;
-    letter-spacing: -0.5px;
+    margin: 0 0 20px;
+    letter-spacing: -0.3px;
   }
 
-  /* Thin gold divider lines */
+  /* Thin amber divider */
   .hero-mobile-divider {
-    width: 48px;
+    width: 40px;
     height: 1px;
     background: var(--amber);
-    opacity: 0.6;
-    margin: 0 auto 24px;
+    opacity: 0.7;
+    margin: 0 auto 20px;
   }
 
-  /* Doctor names block */
+  /* Doctor names */
   .hero-mobile-doctors {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-bottom: 28px;
+    gap: 10px;
+    margin-bottom: 24px;
     width: 100%;
   }
-  .hero-mobile-doctor {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-  }
+  .hero-mobile-doctor { display: flex; flex-direction: column; gap: 2px; }
   .hero-mobile-dr-name {
     font-family: 'Inter', sans-serif;
     font-size: 14px;
     font-weight: 500;
     color: rgba(255,255,255,0.85);
-    letter-spacing: 0.02em;
   }
   .hero-mobile-dr-creds {
     font-family: 'Inter', sans-serif;
     font-size: 11px;
-    font-weight: 400;
     color: var(--teal);
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
   }
 
-  /* Primary CTA */
+  /* Book button */
   .hero-mobile-cta {
     display: block;
     width: 100%;
@@ -1285,30 +1315,29 @@ footer {
     font-family: 'Inter', sans-serif;
     font-size: 15px;
     font-weight: 700;
-    letter-spacing: 0.02em;
     padding: 17px 24px;
     border-radius: 8px;
     text-decoration: none;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     text-align: center;
   }
 
-  /* Phone link */
+  /* Phone button */
   .hero-mobile-phone {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
     width: 100%;
-    border: 1px solid rgba(255,255,255,0.2);
-    color: rgba(255,255,255,0.8);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.75);
     font-family: 'Inter', sans-serif;
     font-size: 14px;
     font-weight: 500;
     padding: 14px 24px;
     border-radius: 8px;
     text-decoration: none;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
   }
 
   /* Trust strip */
@@ -1316,25 +1345,20 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 8px;
     flex-wrap: wrap;
   }
   .hero-mobile-trust-item {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
     font-family: 'Inter', sans-serif;
     font-size: 11px;
     font-weight: 500;
-    color: rgba(255,255,255,0.55);
-    letter-spacing: 0.02em;
+    color: rgba(255,255,255,0.45);
   }
   .hero-mobile-trust-item svg { color: var(--teal); flex-shrink: 0; }
-  .hero-mobile-trust-dot {
-    width: 3px; height: 3px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.2);
-  }
+  .hero-mobile-trust-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,0.2); }
 }
 
 @media (max-width: 768px) {
