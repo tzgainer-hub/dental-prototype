@@ -1194,13 +1194,152 @@ footer {
   .about-photo-col { max-width: 460px; margin: 0 auto; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
 }
+/* ─── MOBILE HERO — BRAND FIRST ─── */
+.hero-mobile-brand { display: none; }
+.hero-desktop-only { display: contents; }
+
+@media (max-width: 768px) {
+  /* Show mobile brand block, hide desktop hero content */
+  .hero-mobile-brand { display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%; }
+  .hero-desktop-only { display: none !important; }
+
+  /* Hero becomes full-bleed dark canvas */
+  .hero {
+    background: var(--dark);
+    min-height: 92vh;
+    padding: 48px 28px 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero::before { display: none; }
+  .hero-inner { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 480px; margin: 0 auto; }
+
+  /* Eyebrow — specialty label */
+  .hero-mobile-eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 20px;
+  }
+
+  /* Practice name — the brand smack */
+  .hero-mobile-practice {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 14vw, 72px);
+    font-weight: 600;
+    line-height: 1.05;
+    color: #ffffff;
+    margin: 0 0 24px;
+    letter-spacing: -0.5px;
+  }
+
+  /* Thin gold divider lines */
+  .hero-mobile-divider {
+    width: 48px;
+    height: 1px;
+    background: var(--amber);
+    opacity: 0.6;
+    margin: 0 auto 24px;
+  }
+
+  /* Doctor names block */
+  .hero-mobile-doctors {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 28px;
+    width: 100%;
+  }
+  .hero-mobile-doctor {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .hero-mobile-dr-name {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+    letter-spacing: 0.02em;
+  }
+  .hero-mobile-dr-creds {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+  }
+
+  /* Primary CTA */
+  .hero-mobile-cta {
+    display: block;
+    width: 100%;
+    background: var(--amber);
+    color: var(--dark);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    padding: 17px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  /* Phone link */
+  .hero-mobile-phone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.8);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 14px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    margin-bottom: 32px;
+  }
+
+  /* Trust strip */
+  .hero-mobile-trust {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .hero-mobile-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.02em;
+  }
+  .hero-mobile-trust-item svg { color: var(--teal); flex-shrink: 0; }
+  .hero-mobile-trust-dot {
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+  }
+}
+
 @media (max-width: 768px) {
   .topbar { display: none; }
   .nav-links, .nav-phone-btn { display: none; }
   .nav-hamburger { display: flex; }
   section { padding: 60px 20px; }
-  .hero { padding: 48px 20px 40px; }
-  .hero h1 { font-size: 2.4rem; }
   .hero-review-float { bottom: -10px; left: 10px; min-width: auto; }
   .services-grid { grid-template-columns: 1fr; }
   .team-grid { grid-template-columns: 1fr; }
