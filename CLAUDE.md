@@ -61,6 +61,85 @@ dental-prototype/
 
 ---
 
+## COLOR PSYCHOLOGY — DENTAL WEBSITES (RESEARCH-BACKED — DO NOT SKIP)
+
+This section is based on clinical color psychology research cross-referenced with an audit of the top 40 dental websites in the Phoenix market (conducted April 2026). This is the foundation for ALL color decisions on every white coat site we build.
+
+### The Rules
+
+**Rule 1: White background dominates.**
+82.5% of top-performing dental sites use a stark WHITE background. Not cream. Not light gray. White. It signals clinical cleanliness, modern transparency, and trust. Dark backgrounds (navy, charcoal, black) are for tech companies and law firms — NOT dental practices. Exception: footers, nav bars, and CTA buttons can be dark.
+
+**Rule 2: Dental patients are scared. Design for calm, not impressive.**
+Dental anxiety is the #1 conversion barrier. Every color choice must ask: "Does this make a nervous patient feel safe?" Dark, cold, dramatic = wrong. Light, warm, open = right.
+
+**Rule 3: The winning color families (Phoenix market audit):**
+| Color Family | % of Top Sites | Notes |
+|---|---|---|
+| Teal / Aqua / Blue-Green | 37.5% | #1 dominant — our teal (#0891b2) is validated |
+| Navy / Sky Blue | 22.5% | As accents, not backgrounds |
+| Earth Tones (Brown/Tan/Sage) | 20.0% | Warm, natural, calming |
+| Other | 20.0% | Soft greens, muted lavender, etc. |
+
+**Rule 4: Colors to NEVER use as primary in dental:**
+- **Red** — raises body tension and anxiety. Even subconsciously.
+- **Bright yellow** — elicits tense reactions in large quantities. Amber as a CTA accent is fine. Bright yellow as a background is not.
+- **Dark navy as a hero background** — reads as cold and clinical. Patients avoid it.
+
+### What This Means for Every Build
+
+- **Hero section:** White or very light background. Period.
+- **Teal (#0891b2):** Validated. Use it as accents, borders, buttons, eyebrows, credential text.
+- **Amber (#f59e0b):** Valid for CTAs — warm, action-oriented, not aggressive.
+- **Dark navy (#0c1a2e):** Footer, nav, and text ONLY. Never as a hero or large background section.
+- **Photos:** Warm, aspirational, smiling humans — clearly visible, never darkened with overlays. Real people, real warmth.
+- **White space:** Use aggressively. Breathing room = calm = trust.
+
+### The 3 Proven Palettes (Use These — Don't Invent New Ones)
+
+**Palette 1: "The Clinical Trust"** — General Dentistry, Cosmetic, Family
+- Background: Crisp White `#FFFFFF`
+- Primary: Navy `#1B3A5C` or Slate Blue `#2574A9`
+- Accent: Soft Gray `#F4F4F4`
+- CTA Button: Warm Orange `#F57C00`
+- Why: Blue builds trust and stability. White signals hygiene. Orange converts without red's anxiety trigger.
+
+**Palette 2: "The Calming Wellness"** — Pediatric, Holistic, General
+- Background: Off-White/Cream `#FAFAFA`
+- Primary: Sage Green `#79997C` or Deep Teal `#244D4D`
+- Accent: Soft Aqua `#84C5BD`
+- CTA Button: Soft Gold `#FFEE84`
+- Why: Green lowers heart rate and reduces stress. Scientifically proven for anxiety reduction.
+
+**Palette 3: "The Premium Boutique"** — Oral Surgery, Implants, Prosthodontics, Specialists
+- Background: Crisp White `#FFFFFF`
+- Primary: Warm Charcoal `#333333`
+- Accent: Warm Taupe/Brown `#A88D6C`
+- CTA Button: Muted Gold `#C5A880`
+- Why: High-revenue specialty practices moving toward luxury hotel/spa aesthetic. Premium without cold.
+
+### Per-Specialty Assignment
+
+| Specialty | Palette | Notes |
+|---|---|---|
+| Oral Surgery | Premium Boutique OR Clinical Trust | High-end, specialist, surgical |
+| General Dentistry | Clinical Trust | Approachable, family, trusted |
+| Orthodontics | Clinical Trust | Modern, optimistic |
+| Pediatric Dentistry | Calming Wellness | Fun, safe, non-threatening |
+| Plastic Surgery | Premium Boutique | Luxury, transformation |
+| Dermatology | Calming Wellness | Natural, skin, clean |
+| Periodontics | Clinical Trust | Clinical, precise |
+| Prosthodontics | Premium Boutique | High-end specialty |
+
+### Our Existing Color System vs. Research
+
+Our teal (`#0891b2`) is VALIDATED — 37.5% of top dental sites use teal/aqua as primary.
+Our amber (`#f59e0b`) is VALIDATED — warm orange/gold CTAs are the top converter.
+Our dark navy (`#0c1a2e`) as a HERO BACKGROUND is WRONG — falls in "avoid" category with black/dark gray.
+**Dark navy belongs in: footers, nav bars, text, and accents ONLY. Never as a large background section.**
+
+---
+
 ## Design System — Never Deviate From These
 
 ### CSS Custom Properties (defined in styles.css)
