@@ -43,7 +43,28 @@ function calendlyGet(path) {
   });
 }
 
-async function getAvailableSlots(preferenceDays, preferenceTime) {
+function parseWeekOffset(messages) {
+  // Look at the last few patient messages for timing hints
+  const recentText = messages.slice(-4)
+    .filter(m => m.role === 'user')
+    .map(m => m.content).join(' ').toLowerCase();
+
+  const threeWeeks = /3\s*weeks?\s*out|three\s*weeks?\s*out/;
+  const fourWeeks  = /4\s*weeks?\s*out|four\s*weeks?\s*out/;
+  const twoWeeks   = /2\s*weeks?\s*out|two\s*weeks?\s*out/;
+  const nextMonth  = /next\s*month/;
+  const endOfMonth = /end\s*of\s*(the\s*)?month/;
+  const later      = /\b(later|further out|not so soon|not right away|further ahead)\b/;
+
+  if (fourWeeks.test(recentText)) return 4;
+  if (threeWeeks.test(recentText)) return 3;
+  if (nextMonth.test(recentText) || endOfMonth.test(recentText)) return 3;
+  if (twoWeeks.test(recentText)) return 2;
+  if (later.test(recentText)) return 2;
+  return 0;
+}
+
+async function getAvailableSlots(preferenceDays, preferenceTime, startWeekOffset = 0) {
   // Search week by week until we have 4 matching slots, up to 6 weeks out
   const dayMap = { 'sunday': 0, 'monday': 1, 'tuesday': 2, 'wednesday': 3, 'thursday': 4, 'friday': 5, 'saturday': 6 };
   const preferredDayNums = (preferenceDays || []).map(d => dayMap[d.toLowerCase()]).filter(d => d !== undefined);
@@ -53,7 +74,7 @@ async function getAvailableSlots(preferenceDays, preferenceTime) {
 
   for (let week = 0; week < MAX_WEEKS && matchingSlots.length < 4; week++) {
     const start = new Date();
-    start.setDate(start.getDate() + 1 + (week * 7));
+    start.setDate(start.getDate() + 1 + ((week + startWeekOffset) * 7));
     start.setHours(0, 0, 0, 0);
 
     const end = new Date(start);
@@ -196,6 +217,7 @@ Note: Scottsdale Surgical Arts is a specialist practice (oral surgery). If someo
 - Ask 1-2 questions at a time, never a list
 - Never make up appointment times — only use slots the system provides
 - Do not make up [FETCH_SLOTS] results — wait for the system to inject them
+- If the patient wants different timing ("3 weeks out", "later", "next month", "further ahead"), acknowledge it warmly and write [FETCH_SLOTS] again — the system will automatically shift the search window
 - Be warm and human, not robotic or form-like`;
 
 // ── Sessions ──────────────────────────────────────────────────────────────────
@@ -216,6 +238,7 @@ app.post('/api/chat/start', async (req, res) => {
       messages: [],
       summaryEmailed: false,
       slotsShown: false,
+      startWeekOffset: 0,
       patientName: null,
       patientEmail: null,
       availableSlots: []
@@ -275,9 +298,10 @@ app.post('/api/chat/message/:sessionId', async (req, res) => {
     let assistantText = response.content[0].text;
     session.messages.push({ role: 'assistant', content: assistantText });
 
-    // Check if Sarah wants to fetch slots
-    if (assistantText.includes('[FETCH_SLOTS]') && !session.slotsShown && CALENDLY_TOKEN) {
+    // Check if Sarah wants to fetch slots (can fire multiple times)
+    if (assistantText.includes('[FETCH_SLOTS]') && CALENDLY_TOKEN) {
       session.slotsShown = true;
+      const weekOffset = parseWeekOffset(session.messages);
       assistantText = assistantText.replace('[FETCH_SLOTS]', '').trim();
 
       // Parse preferences from conversation
@@ -288,7 +312,7 @@ app.post('/api/chat/message/:sessionId', async (req, res) => {
         : convoText.includes('morning') ? 'morning' : null;
 
       try {
-        const slots = await getAvailableSlots(days, preferenceTime);
+        const slots = await getAvailableSlots(days, preferenceTime, weekOffset);
         session.availableSlots = slots;
 
         if (slots.length > 0) {
