@@ -44,10 +44,14 @@ function calendlyGet(path) {
 }
 
 async function getAvailableSlots(preferenceDays, preferenceTime) {
-  // Calendly max range is 7 days — query two 7-day windows and combine
-  const allSlots = [];
+  // Search week by week until we have 4 matching slots, up to 6 weeks out
+  const dayMap = { 'sunday': 0, 'monday': 1, 'tuesday': 2, 'wednesday': 3, 'thursday': 4, 'friday': 5, 'saturday': 6 };
+  const preferredDayNums = (preferenceDays || []).map(d => dayMap[d.toLowerCase()]).filter(d => d !== undefined);
 
-  for (let week = 0; week < 2; week++) {
+  const matchingSlots = [];
+  const MAX_WEEKS = 6;
+
+  for (let week = 0; week < MAX_WEEKS && matchingSlots.length < 4; week++) {
     const start = new Date();
     start.setDate(start.getDate() + 1 + (week * 7));
     start.setHours(0, 0, 0, 0);
@@ -62,39 +66,26 @@ async function getAvailableSlots(preferenceDays, preferenceTime) {
     const data = await calendlyGet(
       `/event_type_available_times?event_type=${encodeURIComponent(CALENDLY_EVENT_TYPE_URI)}&start_time=${startStr}&end_time=${endStr}`
     );
-    console.log(`Week ${week + 1} slots found: ${(data.collection || []).length} (${startStr} to ${endStr})`);
-    allSlots.push(...(data.collection || []));
-  }
 
-  let slots = allSlots;
+    let weekSlots = data.collection || [];
+    console.log(`Week ${week + 1}: ${weekSlots.length} raw slots (${startStr})`);
 
-  // Filter by patient preference
-  if (preferenceDays && preferenceDays.length > 0) {
-    const dayMap = { 'sunday': 0, 'monday': 1, 'tuesday': 2, 'wednesday': 3, 'thursday': 4, 'friday': 5, 'saturday': 6 };
-    const preferredDayNums = preferenceDays.map(d => dayMap[d.toLowerCase()]).filter(d => d !== undefined);
+    // Filter by preferred days
     if (preferredDayNums.length > 0) {
-      const filtered = slots.filter(s => {
-        const day = new Date(s.start_time).getDay();
-        return preferredDayNums.includes(day);
-      });
-      if (filtered.length > 0) slots = filtered;
+      weekSlots = weekSlots.filter(s => preferredDayNums.includes(new Date(s.start_time).getDay()));
     }
+
+    // Filter by time of day (Arizona = UTC-7)
+    if (preferenceTime === 'morning') {
+      weekSlots = weekSlots.filter(s => (new Date(s.start_time).getUTCHours() - 7 + 24) % 24 < 12);
+    } else if (preferenceTime === 'afternoon') {
+      weekSlots = weekSlots.filter(s => (new Date(s.start_time).getUTCHours() - 7 + 24) % 24 >= 12);
+    }
+
+    matchingSlots.push(...weekSlots);
   }
 
-  if (preferenceTime === 'morning') {
-    const filtered = slots.filter(s => {
-      // Arizona is UTC-7 (no DST)
-      const hourAZ = (new Date(s.start_time).getUTCHours() - 7 + 24) % 24;
-      return hourAZ < 12;
-    });
-    if (filtered.length > 0) slots = filtered;
-  } else if (preferenceTime === 'afternoon') {
-    const filtered = slots.filter(s => {
-      const hourAZ = (new Date(s.start_time).getUTCHours() - 7 + 24) % 24;
-      return hourAZ >= 12;
-    });
-    if (filtered.length > 0) slots = filtered;
-  }
+  let slots = matchingSlots;
 
   // Return up to 4 slots
   return slots.slice(0, 4).map(s => {
