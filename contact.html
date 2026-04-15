@@ -142,10 +142,51 @@
             <label for="message">Anything else we should know?</label>
             <textarea id="message" placeholder="Tell us about your situation, concerns, or questions..."></textarea>
           </div>
-          <button type="submit" class="form-submit">
+          <button type="button" class="form-submit" id="appt-submit-btn" onclick="submitAppointmentForm()">
             📅 Request My Appointment
           </button>
+          <div id="appt-success" style="display:none;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:16px 20px;margin-top:16px;color:#15803d;font-size:14px;line-height:1.6;">
+            <strong>✓ Request received!</strong><br>Our team will call you within 2 hours to confirm your appointment.
+          </div>
           <p class="form-note">🔒 Your information is private and never shared. We'll reach out within 2 hours.</p>
+
+          <script>
+          function submitAppointmentForm() {
+            const btn = document.getElementById('appt-submit-btn');
+            const fname = document.getElementById('fname').value.trim();
+            const lname = document.getElementById('lname').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const service = document.getElementById('service').value;
+            const date = document.getElementById('date').value;
+            const location = document.getElementById('location').value;
+            const message = document.getElementById('message').value.trim();
+
+            if (!fname || !lname || !phone || !email) {
+              alert('Please fill in your name, phone, and email before submitting.');
+              return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = 'Sending...';
+
+            fetch('/api/contact', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ fname, lname, phone, email, service, date, location, message })
+            })
+            .then(r => r.json())
+            .then(() => {
+              btn.style.display = 'none';
+              document.getElementById('appt-success').style.display = 'block';
+            })
+            .catch(() => {
+              btn.disabled = false;
+              btn.textContent = '📅 Request My Appointment';
+              alert('Something went wrong. Please call us at (480) 922-9933.');
+            });
+          }
+          </script>
         </div>
 
         <div class="appt-info">

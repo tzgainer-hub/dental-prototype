@@ -367,6 +367,52 @@ app.post('/api/chat/message/:sessionId', async (req, res) => {
   }
 });
 
+// POST /api/contact — existing patient appointment request form
+app.post('/api/contact', async (req, res) => {
+  const { fname, lname, phone, email, service, date, location, message } = req.body;
+  try {
+    if (process.env.GMAIL_APP_PASSWORD) {
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.GMAIL_USER || 'tzgainer@gmail.com',
+          pass: process.env.GMAIL_APP_PASSWORD
+        }
+      });
+      await transporter.sendMail({
+        from: `"SSA Website" <${process.env.GMAIL_USER || 'tzgainer@gmail.com'}>`,
+        to: 'tomz@pointzeroai.com',
+        subject: `Appointment Request — ${fname} ${lname}`,
+        html: `
+          <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;">
+            <div style="background:#0891b2;color:white;padding:24px;border-radius:8px 8px 0 0;">
+              <h2 style="margin:0;font-size:20px;">Appointment Request</h2>
+              <p style="margin:6px 0 0;opacity:0.85;font-size:14px;">Submitted via Scottsdale Surgical Arts website</p>
+            </div>
+            <div style="padding:24px;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 8px 8px;background:#fff;">
+              <table style="width:100%;font-size:14px;line-height:2;color:#1e293b;">
+                <tr><td style="color:#64748b;width:140px;">Name</td><td><strong>${fname} ${lname}</strong></td></tr>
+                <tr><td style="color:#64748b;">Phone</td><td>${phone}</td></tr>
+                <tr><td style="color:#64748b;">Email</td><td>${email}</td></tr>
+                <tr><td style="color:#64748b;">Service</td><td>${service || 'Not specified'}</td></tr>
+                <tr><td style="color:#64748b;">Preferred Date</td><td>${date || 'Not specified'}</td></tr>
+                <tr><td style="color:#64748b;">Location</td><td>${location}</td></tr>
+                <tr><td style="color:#64748b;">Notes</td><td>${message || 'None'}</td></tr>
+              </table>
+            </div>
+            <p style="color:#94a3b8;font-size:12px;margin-top:12px;text-align:center;">Powered by Point Zero AI · pointzeroai.com</p>
+          </div>
+        `
+      });
+    }
+    console.log(`Appointment request from ${fname} ${lname} (${email})`);
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Contact form error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
 app.listen(PORT, () => console.log(`Dental prototype running on port ${PORT}`));
