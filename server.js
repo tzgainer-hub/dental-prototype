@@ -144,18 +144,22 @@ function buildCalendlyLink(name, email) {
 
 // ── Email helper ──────────────────────────────────────────────────────────────
 
-async function sendIntakeEmail(summaryText) {
-  if (!process.env.GMAIL_APP_PASSWORD) {
-    console.log('No email credentials set — skipping email');
-    return;
-  }
-  const transporter = nodemailer.createTransport({
+function getTransporter() {
+  return nodemailer.createTransport({
     service: 'gmail',
     auth: {
       user: process.env.GMAIL_USER || 'tzgainer@gmail.com',
       pass: process.env.GMAIL_APP_PASSWORD
     }
   });
+}
+
+async function sendIntakeEmail(summaryText) {
+  if (!process.env.GMAIL_APP_PASSWORD) {
+    console.log('No email credentials set — skipping email');
+    return;
+  }
+  const transporter = getTransporter();
   await transporter.sendMail({
     from: `"SSA Patient Intake" <${process.env.GMAIL_USER || 'tzgainer@gmail.com'}>`,
     to: 'tomz@pointzeroai.com',
@@ -174,6 +178,53 @@ async function sendIntakeEmail(summaryText) {
     `
   });
   console.log('Intake email sent to tomz@pointzeroai.com');
+}
+
+async function sendPatientConfirmationEmail(patientEmail, patientName, summaryText, bookingLink) {
+  if (!process.env.GMAIL_APP_PASSWORD || !patientEmail) return;
+
+  const cleanSummary = summaryText
+    .replace(/\*\*/g, '')
+    .replace(/New Patient Intake Summary/gi, '')
+    .replace(/---/g, '')
+    .trim();
+
+  const transporter = getTransporter();
+  await transporter.sendMail({
+    from: `"Scottsdale Surgical Arts" <${process.env.GMAIL_USER || 'tzgainer@gmail.com'}>`,
+    to: patientEmail,
+    subject: `Your Appointment Request — Scottsdale Surgical Arts`,
+    html: `
+      <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;">
+        <div style="background:#0891b2;color:white;padding:28px 24px;border-radius:8px 8px 0 0;">
+          <h2 style="margin:0;font-size:22px;">You're all set, ${patientName || 'there'}!</h2>
+          <p style="margin:8px 0 0;opacity:0.9;font-size:15px;">Your request has been received by our team at Scottsdale Surgical Arts.</p>
+        </div>
+        <div style="padding:28px 24px;border:1px solid #e2e8f0;border-top:none;background:#ffffff;">
+
+          <p style="font-size:15px;color:#1e293b;line-height:1.6;margin:0 0 20px;">Here's a copy of the information you provided. Please review it and let us know if anything needs to be corrected.</p>
+
+          <div style="background:#f8fafc;border-radius:8px;padding:20px;font-size:14px;line-height:1.8;color:#1e293b;white-space:pre-wrap;">${cleanSummary}</div>
+
+          ${bookingLink ? `
+          <div style="text-align:center;margin:28px 0 8px;">
+            <a href="${bookingLink}" style="display:inline-block;background:#f59e0b;color:white;text-decoration:none;border-radius:10px;padding:14px 32px;font-size:15px;font-weight:700;">
+              Confirm Your Appointment Time →
+            </a>
+            <p style="color:#94a3b8;font-size:12px;margin-top:10px;">Click above to lock in your appointment on our calendar</p>
+          </div>
+          ` : ''}
+
+          <div style="border-top:1px solid #e2e8f0;margin-top:24px;padding-top:20px;">
+            <p style="font-size:14px;color:#64748b;margin:0 0 8px;"><strong>Scottsdale Office</strong><br>10603 N. Hayden Road, Suite H-112<br>Scottsdale, AZ 85260<br><a href="tel:4809229933" style="color:#0891b2;">(480) 922-9933</a></p>
+            <p style="font-size:14px;color:#64748b;margin:16px 0 0;"><strong>Sedona Office</strong><br>2935 Southwest Drive, Suite 100<br>Sedona, AZ 86336<br><a href="tel:9282821224" style="color:#0891b2;">(928) 282-1224</a></p>
+          </div>
+        </div>
+        <p style="color:#94a3b8;font-size:12px;margin-top:12px;text-align:center;">Scottsdale Surgical Arts · Oral &amp; Maxillofacial Surgery<br>Powered by Point Zero AI · pointzeroai.com</p>
+      </div>
+    `
+  });
+  console.log(`Patient confirmation email sent to ${patientEmail}`);
 }
 
 // ── System prompt ─────────────────────────────────────────────────────────────
@@ -384,7 +435,16 @@ app.post('/api/chat/message/:sessionId', async (req, res) => {
     ) {
       session.summaryEmailed = true;
       emailSent = true;
+      const bookingLink = session.availableSlots?.length > 0
+        ? buildCalendlyLink(session.patientName, session.patientEmail)
+        : null;
       sendIntakeEmail(assistantText).catch(console.error);
+      sendPatientConfirmationEmail(
+        session.patientEmail,
+        session.patientName,
+        assistantText,
+        bookingLink
+      ).catch(console.error);
     }
 
     res.json({ message: assistantText, emailSent, bookingLink });
