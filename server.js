@@ -10,10 +10,38 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname)));
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-const AGENT_ID = process.env.DENTAL_AGENT_ID || 'agent_011Ca5gHhDynKtP7qtKJUnkA';
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+const SYSTEM_PROMPT = `You are Sarah, the friendly virtual receptionist for Scottsdale Surgical Arts, an oral and maxillofacial surgery practice in Scottsdale and Sedona, Arizona.
+
+Your job is to warmly welcome new patients, collect the information needed to schedule their first visit, and make them feel at ease. Dental anxiety is very common — always be calm, warm, and reassuring.
+
+You need to collect:
+1. Patient's full name
+2. Date of birth
+3. Phone number
+4. Email address
+5. Reason for visit (e.g., implants, wisdom teeth, jaw surgery, consultation, emergency)
+6. Whether they've been referred by a doctor or found us on their own
+7. Insurance provider (or if they're self-pay)
+8. Preferred appointment days/times (morning, afternoon, weekday, weekend)
+9. Which location they prefer: Scottsdale (10603 N Hayden Rd) or Sedona (2935 Southwest Dr)
+10. Any questions or concerns they want the doctor to know about
+
+Guidelines:
+- Start with a warm greeting and ask what brings them in today
+- Ask one or two questions at a time — don't overwhelm them with a form-like list
+- If they express anxiety or fear, acknowledge it warmly before moving on
+- Be conversational, not robotic
+- Once you have all the information, tell them the team will call to confirm their appointment within one business day
+- End by producing a clean summary titled "New Patient Intake Summary" with all collected info formatted clearly for the front desk
+
+Do not make up appointment times or confirm specific slots — you are collecting their preferences, not booking a specific time.`;
+
+// Active sessions: sessionId -> { messages: [], summaryEmailed: bool }
+const sessions = new Map();
+
+function makeSessionId() {
+  return Math.random().toString(36).slice(2) + Date.now().toString(36);
 }
 
 async function sendIntakeEmail(summaryText) {
@@ -48,107 +76,73 @@ async function sendIntakeEmail(summaryText) {
   console.log('Intake email sent to tomz@pointzeroai.com');
 }
 
-// Active sessions: sessionId -> { started: bool }
-const sessions = new Map();
-
-// POST /api/chat/start — create session
+// POST /api/chat/start — create session, get Sarah's opening message
 app.post('/api/chat/start', async (req, res) => {
   try {
-    const env = await client.beta.environments.create({ name: 'dental-intake-env' });
-    const session = await client.beta.sessions.create({
-      agent: AGENT_ID,
-      environment_id: env.id
+    const sessionId = makeSessionId();
+    sessions.set(sessionId, { messages: [], summaryEmailed: false });
+
+    // Get Sarah's opening message
+    const response = await client.messages.create({
+      model: 'claude-opus-4-5',
+      max_tokens: 1024,
+      system: SYSTEM_PROMPT,
+      messages: [
+        { role: 'user', content: 'Hello, I found your website and I\'m interested in becoming a new patient.' }
+      ]
     });
-    sessions.set(session.id, { started: false });
-    res.json({ sessionId: session.id });
+
+    const assistantText = response.content[0].text;
+
+    // Store the exchange in session history
+    sessions.get(sessionId).messages.push(
+      { role: 'user', content: 'Hello, I found your website and I\'m interested in becoming a new patient.' },
+      { role: 'assistant', content: assistantText }
+    );
+
+    res.json({ sessionId, message: assistantText });
   } catch (err) {
     console.error('Start session error:', err.message);
     res.status(500).json({ error: err.message });
   }
 });
 
-// GET /api/chat/stream/:sessionId — SSE event stream
-app.get('/api/chat/stream/:sessionId', async (req, res) => {
-  const { sessionId } = req.params;
-
-  res.setHeader('Content-Type', 'text/event-stream');
-  res.setHeader('Cache-Control', 'no-cache');
-  res.setHeader('Connection', 'keep-alive');
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.flushHeaders();
-
-  const send = (data) => {
-    if (!res.destroyed) res.write(`data: ${JSON.stringify(data)}\n\n`);
-  };
-
-  req.on('close', () => console.log('Client disconnected:', sessionId));
-
-  try {
-    const sessionData = sessions.get(sessionId);
-
-    if (!sessionData?.started) {
-      send({ type: 'status', text: 'Connecting to AI assistant...' });
-      await sleep(6000); // Give container time to spin up
-
-      await client.beta.sessions.events.send(sessionId, {
-        events: [{
-          type: 'user.message',
-          content: [{ type: 'text', text: "Hello, I'd like to schedule an appointment as a new patient." }]
-        }]
-      });
-      sessions.set(sessionId, { started: true });
-    }
-
-    const stream = client.beta.sessions.events.stream(sessionId);
-
-    for await (const event of stream) {
-      if (req.destroyed) break;
-
-      if (event.type === 'agent.message') {
-        let text = '';
-        for (const block of event.content) {
-          if (block.text) text += block.text;
-        }
-        send({ type: 'message', text });
-
-        if (text.includes('New Patient Intake Summary') || text.includes('intake summary')) {
-          sendIntakeEmail(text).catch(console.error);
-          send({ type: 'email_sent' });
-        }
-      } else if (event.type === 'session.status_idle') {
-        send({ type: 'idle' });
-      } else if (event.type === 'session.status_running') {
-        send({ type: 'running' });
-      } else if (event.type === 'session.status_terminated') {
-        send({ type: 'terminated' });
-        break;
-      }
-    }
-  } catch (err) {
-    console.error('Stream error:', err.message);
-    send({ type: 'error', message: 'Connection issue. Please refresh and try again.' });
-  }
-
-  res.end();
-});
-
-// POST /api/chat/message/:sessionId — send patient message
+// POST /api/chat/message/:sessionId — send patient message, get Sarah's reply
 app.post('/api/chat/message/:sessionId', async (req, res) => {
   const { sessionId } = req.params;
   const { message } = req.body;
 
   if (!message?.trim()) return res.status(400).json({ error: 'Message cannot be empty' });
 
+  const session = sessions.get(sessionId);
+  if (!session) return res.status(404).json({ error: 'Session not found' });
+
+  session.messages.push({ role: 'user', content: message.trim() });
+
   try {
-    await client.beta.sessions.events.send(sessionId, {
-      events: [{
-        type: 'user.message',
-        content: [{ type: 'text', text: message.trim() }]
-      }]
+    const response = await client.messages.create({
+      model: 'claude-opus-4-5',
+      max_tokens: 1024,
+      system: SYSTEM_PROMPT,
+      messages: session.messages
     });
-    res.json({ success: true });
+
+    const assistantText = response.content[0].text;
+    session.messages.push({ role: 'assistant', content: assistantText });
+
+    // Check if summary is ready and email it
+    if (
+      !session.summaryEmailed &&
+      (assistantText.includes('New Patient Intake Summary') || assistantText.includes('intake summary'))
+    ) {
+      session.summaryEmailed = true;
+      sendIntakeEmail(assistantText).catch(console.error);
+      return res.json({ message: assistantText, emailSent: true });
+    }
+
+    res.json({ message: assistantText });
   } catch (err) {
-    console.error('Send message error:', err.message);
+    console.error('Message error:', err.message);
     res.status(500).json({ error: err.message });
   }
 });

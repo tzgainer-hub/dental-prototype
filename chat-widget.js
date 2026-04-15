@@ -49,7 +49,6 @@
       background: #ffffff;
       border-radius: 16px;
       box-shadow: 0 20px 60px rgba(0,0,0,0.18);
-      display: none;
       flex-direction: column;
       overflow: hidden;
       font-family: Inter, sans-serif;
@@ -251,47 +250,35 @@
     </div>
   `);
 
-  // ── Logic ─────────────────────────────────────────────────────────────────
+  // ── State ─────────────────────────────────────────────────────────────────
   let sessionId = null;
-  let eventSource = null;
-  let isConnected = false;
-  let isAgentTyping = false;
-  let typingEl = null;
 
   const modal = document.getElementById('ai-chat-modal');
   const messages = document.getElementById('chat-messages');
   const input = document.getElementById('chat-input');
   const sendBtn = document.getElementById('chat-send');
 
+  // ── Helpers ───────────────────────────────────────────────────────────────
   function addBubble(text, role) {
     const div = document.createElement('div');
     div.className = `chat-bubble ${role}`;
     div.textContent = text;
     messages.appendChild(div);
     messages.scrollTop = messages.scrollHeight;
-    return div;
-  }
-
-  function addStatusBubble(text) {
-    const div = document.createElement('div');
-    div.className = 'chat-bubble status';
-    div.textContent = text;
-    messages.appendChild(div);
-    messages.scrollTop = messages.scrollHeight;
-    return div;
   }
 
   function showTyping() {
-    if (typingEl) return;
-    typingEl = document.createElement('div');
-    typingEl.className = 'chat-typing';
-    typingEl.innerHTML = '<span></span><span></span><span></span>';
-    messages.appendChild(typingEl);
+    const el = document.createElement('div');
+    el.className = 'chat-typing';
+    el.id = 'chat-typing-indicator';
+    el.innerHTML = '<span></span><span></span><span></span>';
+    messages.appendChild(el);
     messages.scrollTop = messages.scrollHeight;
   }
 
   function hideTyping() {
-    if (typingEl) { typingEl.remove(); typingEl = null; }
+    const el = document.getElementById('chat-typing-indicator');
+    if (el) el.remove();
   }
 
   function setInputEnabled(enabled) {
@@ -300,88 +287,38 @@
     if (enabled) input.focus();
   }
 
-  function startSession() {
-    if (sessionId) return;
+  function showEmailNotice() {
+    const div = document.createElement('div');
+    div.className = 'chat-email-notice';
+    div.innerHTML = `
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:5px"><polyline points="20 6 9 17 4 12"/></svg>
+      Summary sent to the front desk — they'll call you within one business day
+    `;
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+  }
 
-    const statusEl = addStatusBubble('Starting secure session...');
+  // ── Session start ─────────────────────────────────────────────────────────
+  function startSession() {
     showTyping();
 
     fetch('/api/chat/start', { method: 'POST', headers: { 'Content-Type': 'application/json' } })
       .then(r => r.json())
       .then(data => {
+        hideTyping();
         if (data.error) throw new Error(data.error);
         sessionId = data.sessionId;
-        statusEl.textContent = 'Connected. Warming up AI assistant...';
-        connectStream();
+        addBubble(data.message, 'agent');
+        setInputEnabled(true);
       })
       .catch(err => {
         hideTyping();
-        statusEl.textContent = 'Could not connect. Please try again.';
+        addBubble('Sorry, I could not connect right now. Please call us at (480) 922-9933.', 'status');
         console.error(err);
       });
   }
 
-  function connectStream() {
-    if (eventSource) eventSource.close();
-
-    eventSource = new EventSource(`/api/chat/stream/${sessionId}`);
-
-    eventSource.onmessage = function (e) {
-      const event = JSON.parse(e.data);
-
-      if (event.type === 'status') {
-        // Update status bubble (find last status bubble)
-        const statusBubbles = messages.querySelectorAll('.chat-bubble.status');
-        if (statusBubbles.length > 0) {
-          statusBubbles[statusBubbles.length - 1].textContent = event.text;
-        }
-
-      } else if (event.type === 'running') {
-        showTyping();
-
-      } else if (event.type === 'message') {
-        hideTyping();
-        // Remove any status bubbles before first agent message
-        if (!isConnected) {
-          isConnected = true;
-          messages.querySelectorAll('.chat-bubble.status').forEach(el => el.remove());
-        }
-        addBubble(event.text, 'agent');
-        setInputEnabled(false);
-
-      } else if (event.type === 'idle') {
-        hideTyping();
-        if (isConnected) setInputEnabled(true);
-
-      } else if (event.type === 'email_sent') {
-        const div = document.createElement('div');
-        div.className = 'chat-email-notice';
-        div.innerHTML = `
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:5px"><polyline points="20 6 9 17 4 12"/></svg>
-          Summary sent to the front desk
-        `;
-        messages.appendChild(div);
-        messages.scrollTop = messages.scrollHeight;
-
-      } else if (event.type === 'error') {
-        hideTyping();
-        addStatusBubble('Connection issue. Please close and try again.');
-
-      } else if (event.type === 'terminated') {
-        setInputEnabled(false);
-        addStatusBubble('Session ended. Thank you!');
-        eventSource.close();
-      }
-    };
-
-    eventSource.onerror = function () {
-      hideTyping();
-      if (isConnected) {
-        addStatusBubble('Connection lost. Please refresh.');
-      }
-    };
-  }
-
+  // ── Send message ──────────────────────────────────────────────────────────
   window.aiChat = {
     toggle: function () {
       const isOpen = modal.classList.contains('open');
@@ -406,10 +343,21 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: text })
-      }).catch(err => {
-        hideTyping();
-        console.error('Send error:', err);
-      });
+      })
+        .then(r => r.json())
+        .then(data => {
+          hideTyping();
+          if (data.error) throw new Error(data.error);
+          addBubble(data.message, 'agent');
+          if (data.emailSent) showEmailNotice();
+          setInputEnabled(true);
+        })
+        .catch(err => {
+          hideTyping();
+          addBubble('Something went wrong. Please try again or call (480) 922-9933.', 'status');
+          setInputEnabled(true);
+          console.error(err);
+        });
     }
   };
 
