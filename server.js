@@ -500,6 +500,197 @@ app.post('/api/contact', async (req, res) => {
   }
 });
 
+// POST /api/patient-forms — new patient health history & intake forms
+app.post('/api/patient-forms', async (req, res) => {
+  const d = req.body;
+  const p = d.patient || {};
+  const ec = d.emergencyContact || {};
+  const ins1 = d.primaryInsurance || {};
+  const ins2 = d.secondaryInsurance || {};
+  const hh = d.healthHistory || {};
+  const rec = d.recordsRelease || {};
+
+  const patientName = `${p.firstName || ''} ${p.lastName || ''}`.trim();
+
+  try {
+    if (process.env.GMAIL_APP_PASSWORD) {
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.GMAIL_USER || 'tzgainer@gmail.com',
+          pass: process.env.GMAIL_APP_PASSWORD
+        }
+      });
+
+      const row = (label, value) => value && value !== '—'
+        ? `<tr><td style="color:#64748b;padding:4px 12px 4px 0;white-space:nowrap;font-size:13px;">${label}</td><td style="font-size:13px;color:#1e293b;">${value}</td></tr>`
+        : '';
+
+      const sectionHeader = (title) =>
+        `<tr><td colspan="2" style="padding:20px 0 6px;"><strong style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#0891b2;">${title}</strong><hr style="border:none;border-top:1px solid #e2e8f0;margin:4px 0 0;"></td></tr>`;
+
+      const tableRows = `
+        ${sectionHeader('Patient — Personal Information')}
+        ${row('Full Name', `${p.firstName} ${p.middleInitial ? p.middleInitial + '. ' : ''}${p.lastName}`)}
+        ${row('Date of Birth', p.dob)}
+        ${row('Gender', p.gender)}
+        ${row('Marital Status', p.maritalStatus)}
+        ${row('SSN (for claims)', p.ssn || 'Not provided')}
+        ${row('Address', `${p.address}, ${p.city}, ${p.state} ${p.zip}`)}
+        ${row('Mobile', p.mobile)}
+        ${row('Home Phone', p.homePhone)}
+        ${row('Work Phone', p.workPhone)}
+        ${row('Email', p.email)}
+        ${row('Employer', p.employer)}
+        ${row('Referred By', p.referredBy)}
+        ${row('Driver\'s License', p.driverLicense ? `${p.driverLicense} (${p.dlState})` : '')}
+        ${p.guardian ? row('Guardian (minor)', `${p.guardian} — ${p.guardianRel}`) : ''}
+        ${row('Nickname', p.nickname)}
+
+        ${sectionHeader('Emergency Contact')}
+        ${row('Name', ec.name)}
+        ${row('Relationship', ec.relationship)}
+        ${row('Phone', ec.phone)}
+
+        ${sectionHeader('Primary Insurance')}
+        ${row('Company', ins1.company)}
+        ${row('Employer/Group', ins1.employer)}
+        ${row('Group/Policy #', ins1.groupNumber)}
+        ${row('Insurance Phone', ins1.phone)}
+        ${row('Address', ins1.address ? `${ins1.address}, ${ins1.cityStateZip}` : '')}
+        ${row('Subscriber Name', ins1.employeeName)}
+        ${row('Subscriber DOB', ins1.employeeDob)}
+        ${row('Member ID / SSN', ins1.memberId)}
+        ${row('Patient Relationship', ins1.relationship)}
+
+        ${d.hasSecondaryInsurance ? `
+        ${sectionHeader('Secondary Insurance')}
+        ${row('Company', ins2.company)}
+        ${row('Employer/Group', ins2.employer)}
+        ${row('Group/Policy #', ins2.groupNumber)}
+        ${row('Insurance Phone', ins2.phone)}
+        ${row('Subscriber Name', ins2.employeeName)}
+        ${row('Subscriber DOB', ins2.employeeDob)}
+        ${row('Member ID / SSN', ins2.memberId)}
+        ${row('Patient Relationship', ins2.relationship)}
+        ` : ''}
+
+        ${sectionHeader('Dental & Medical History')}
+        ${row('Reason for Visit', hh.reasonForVisit)}
+        ${row('⚠ Requires Antibiotics', hh.requiresAntibiotics)}
+        ${row('Currently in Pain', hh.currentlyInPain)}
+        ${row('TMJ/Jaw Pain', hh.tmjPain)}
+        ${row('Frequent Headaches', hh.frequentHeadaches)}
+        ${row('Dental Health Rating', hh.dentalHealthRating)}
+        ${row('Flosses Daily', hh.flossDaily)}
+        ${row('Brushes Daily', hh.brushDaily)}
+        ${row('Toothbrush Type', hh.toothbrushType)}
+        ${row('Bristle Hardness', hh.bristleHardness)}
+        ${row('Gums Bleed', hh.gumsBleed)}
+        ${row('Periodontal Disease', hh.periodontaldisease)}
+        ${row('Medical Conditions', hh.conditions)}
+        ${row('Other Conditions', hh.conditionsOther)}
+        ${row('Under Physician Care', hh.underPhysicianCare)}
+        ${hh.underPhysicianCare === 'Yes' ? row('Physician', `${hh.physicianName} · ${hh.physicianPhone} · Last visit: ${hh.physicianLastVisit}`) : ''}
+        ${row('Tobacco Use', hh.usesTobacco === 'Yes' ? `Yes — ${hh.tobaccoYears} years` : hh.usesTobacco)}
+        ${hh.birthControl && hh.birthControl !== '—' ? row('Birth Control', hh.birthControl) : ''}
+        ${hh.pregnant && hh.pregnant !== '—' ? row('Pregnant', hh.pregnant === 'Yes' ? `Yes — Week ${hh.pregnancyWeek}` : 'No') : ''}
+        ${hh.nursing && hh.nursing !== '—' ? row('Nursing', hh.nursing) : ''}
+
+        ${sectionHeader('Allergies')}
+        <tr><td colspan="2" style="font-size:13px;color:#1e293b;white-space:pre-line;padding:4px 0;">${d.allergies || '—'}</td></tr>
+        ${row('Other Allergies', d.allergyOther)}
+
+        ${sectionHeader('Current Medications')}
+        <tr><td colspan="2" style="font-size:13px;color:#1e293b;white-space:pre-line;padding:4px 0;">${d.medications || 'None reported'}</td></tr>
+
+        ${sectionHeader('Payment & Consent')}
+        ${row('Payment Method', d.payment)}
+        ${row('Authorized Party 1', d.authorizedParties?.[0]?.name ? `${d.authorizedParties[0].name} (${d.authorizedParties[0].relationship})` : '')}
+        ${row('Authorized Party 2', d.authorizedParties?.[1]?.name ? `${d.authorizedParties[1].name} (${d.authorizedParties[1].relationship})` : '')}
+
+        ${rec.previousDentist ? `
+        ${sectionHeader('Records Release Request')}
+        ${row('Previous Dentist', rec.previousDentist)}
+        ${row('Phone', rec.phone)}
+        ${row('Fax/Email', rec.faxEmail)}
+        ` : ''}
+
+        ${sectionHeader('Electronic Signature')}
+        ${row('Signed By', d.signature)}
+        ${row('Date', d.signatureDate)}
+      `;
+
+      await transporter.sendMail({
+        from: `"SSA New Patient Forms" <${process.env.GMAIL_USER || 'tzgainer@gmail.com'}>`,
+        to: 'tomz@pointzeroai.com',
+        subject: `New Patient Forms — ${patientName}`,
+        html: `
+          <div style="font-family:Arial,sans-serif;max-width:680px;margin:0 auto;">
+            <div style="background:#0891b2;color:white;padding:28px 32px;border-radius:8px 8px 0 0;">
+              <h2 style="margin:0;font-size:22px;">New Patient Forms Received</h2>
+              <p style="margin:8px 0 0;opacity:0.85;font-size:14px;">Scottsdale Surgical Arts · Submitted ${d.signatureDate}</p>
+            </div>
+            ${hh.requiresAntibiotics === 'Yes' ? `
+            <div style="background:#fffbeb;border:2px solid #f59e0b;padding:14px 20px;">
+              <strong style="color:#92400e;">⚠ ANTIBIOTICS REQUIRED before treatment — see health history below</strong>
+            </div>
+            ` : ''}
+            <div style="padding:28px 32px;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 8px 8px;background:#fff;">
+              <table style="width:100%;border-collapse:collapse;">${tableRows}</table>
+            </div>
+            <p style="color:#94a3b8;font-size:12px;margin-top:12px;text-align:center;">Powered by Point Zero AI · pointzeroai.com</p>
+          </div>
+        `
+      });
+
+      // Confirmation email to patient
+      if (p.email) {
+        await transporter.sendMail({
+          from: `"Scottsdale Surgical Arts" <${process.env.GMAIL_USER || 'tzgainer@gmail.com'}>`,
+          to: p.email,
+          subject: `Your Patient Forms — Scottsdale Surgical Arts`,
+          html: `
+            <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;">
+              <div style="background:#0c1a2e;color:white;padding:28px 32px;border-radius:8px 8px 0 0;">
+                <h2 style="margin:0;font-size:20px;">Scottsdale Surgical Arts</h2>
+                <p style="margin:6px 0 0;opacity:0.7;font-size:13px;">Oral &amp; Maxillofacial Surgery</p>
+              </div>
+              <div style="padding:28px 32px;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 8px 8px;background:#fff;">
+                <p style="font-size:16px;color:#0c1a2e;margin:0 0 12px;"><strong>Thank you, ${p.firstName}!</strong></p>
+                <p style="font-size:14px;color:#374151;line-height:1.7;margin:0 0 20px;">
+                  We've received your new patient forms. Our team will review everything before your appointment so we can hit the ground running when you arrive.<br><br>
+                  If you haven't scheduled your appointment yet, you can do so online:
+                </p>
+                <div style="text-align:center;margin:24px 0;">
+                  <a href="https://dental-prototype-production.up.railway.app/contact.html" style="background:#f59e0b;color:#fff;text-decoration:none;border-radius:8px;padding:14px 32px;font-weight:700;font-size:14px;display:inline-block;">Book My Appointment →</a>
+                </div>
+                <div style="background:#f8fafc;border-radius:8px;padding:16px 20px;font-size:13px;color:#374151;line-height:1.9;margin-top:20px;">
+                  <strong>Scottsdale Office</strong><br>
+                  10603 North Hayden Road, Suite H-112<br>
+                  Scottsdale, AZ 85260<br>
+                  <a href="tel:4809229933" style="color:#0891b2;">(480) 922-9933</a><br><br>
+                  <strong>Sedona Office</strong><br>
+                  2935 Southwest Drive, Suite 100<br>
+                  Sedona, AZ 86336<br>
+                  <a href="tel:9282821224" style="color:#0891b2;">(928) 282-1224</a>
+                </div>
+              </div>
+              <p style="color:#94a3b8;font-size:12px;margin-top:12px;text-align:center;">Powered by Point Zero AI · pointzeroai.com</p>
+            </div>
+          `
+        });
+      }
+    }
+
+    console.log(`New patient forms submitted: ${patientName}`);
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Patient forms error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
 app.listen(PORT, () => console.log(`Dental prototype running on port ${PORT}`));

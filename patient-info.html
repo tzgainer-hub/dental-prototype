@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New Patient Forms | Scottsdale Surgical Arts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ── WIZARD SHELL ─────────────────────────────────── */
+    .wizard-wrap {
+      background: #f8fafc;
+      padding: 48px 0 80px;
+      min-height: 70vh;
+    }
+    .wizard-inner {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── PROGRESS BAR ─────────────────────────────────── */
+    .progress-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 40px;
+      gap: 0;
+    }
+    .progress-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      position: relative;
+      flex: 1;
+    }
+    .progress-step::before {
+      content: '';
+      position: absolute;
+      top: 17px;
+      left: calc(50% + 20px);
+      right: calc(-50% + 20px);
+      height: 2px;
+      background: #e2e8f0;
+      z-index: 0;
+    }
+    .progress-step:last-child::before { display: none; }
+    .progress-step.done::before { background: #0891b2; }
+    .step-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+      font-family: Inter, sans-serif;
+      position: relative;
+      z-index: 1;
+      transition: all 0.3s;
+    }
+    .progress-step.active .step-circle {
+      background: #0891b2;
+      color: #fff;
+      box-shadow: 0 0 0 4px rgba(8,145,178,0.15);
+    }
+    .progress-step.done .step-circle {
+      background: #0891b2;
+      color: #fff;
+    }
+    .step-label {
+      font-size: 11px;
+      font-family: Inter, sans-serif;
+      color: #94a3b8;
+      font-weight: 500;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .progress-step.active .step-label,
+    .progress-step.done .step-label { color: #0891b2; font-weight: 600; }
+
+    /* ── FORM CARD ────────────────────────────────────── */
+    .form-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 2px 24px rgba(0,0,0,0.07);
+      padding: 40px 48px;
+    }
+    .step-panel { display: none; }
+    .step-panel.active { display: block; }
+
+    .step-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: #0c1a2e;
+      margin: 0 0 4px;
+    }
+    .step-sub {
+      font-family: Inter, sans-serif;
+      font-size: 14px;
+      color: #64748b;
+      margin: 0 0 28px;
+    }
+    .section-divider {
+      font-family: Inter, sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #0891b2;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 8px;
+      margin: 28px 0 20px;
+    }
+
+    /* ── FIELDS ───────────────────────────────────────── */
+    .pf-row { display: grid; gap: 16px; margin-bottom: 16px; }
+    .pf-row.cols-2 { grid-template-columns: 1fr 1fr; }
+    .pf-row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .pf-row.cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+    .pf-row.cols-1 { grid-template-columns: 1fr; }
+    .pf-group { display: flex; flex-direction: column; gap: 5px; }
+    .pf-group label {
+      font-family: Inter, sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: #374151;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .pf-group label span.req { color: #EB532F; margin-left: 2px; }
+    .pf-group input,
+    .pf-group select,
+    .pf-group textarea {
+      border: 1.5px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 10px 13px;
+      font-family: Inter, sans-serif;
+      font-size: 14px;
+      color: #1e293b;
+      background: #fff;
+      transition: border-color 0.2s;
+      outline: none;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .pf-group input:focus,
+    .pf-group select:focus,
+    .pf-group textarea:focus { border-color: #0891b2; }
+    .pf-group textarea { min-height: 80px; resize: vertical; }
+    .pf-group .field-note {
+      font-size: 11px;
+      color: #94a3b8;
+      font-family: Inter, sans-serif;
+    }
+
+    /* ── RADIO / CHECKBOX GROUPS ──────────────────────── */
+    .radio-group, .check-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 2px;
+    }
+    .radio-opt, .check-opt {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: Inter, sans-serif;
+      font-size: 13px;
+      color: #374151;
+      cursor: pointer;
+      padding: 7px 14px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 8px;
+      transition: all 0.2s;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .radio-opt input, .check-opt input { display: none; }
+    .radio-opt.selected, .check-opt.selected {
+      border-color: #0891b2;
+      background: #f0fdff;
+      color: #0891b2;
+      font-weight: 600;
+    }
+    .yn-group { display: flex; gap: 8px; }
+    .yn-opt {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 18px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 8px;
+      font-family: Inter, sans-serif;
+      font-size: 13px;
+      color: #374151;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .yn-opt input { display: none; }
+    .yn-opt.yes.selected { border-color: #16a34a; background: #f0fdf4; color: #16a34a; font-weight: 600; }
+    .yn-opt.no.selected  { border-color: #dc2626; background: #fef2f2; color: #dc2626; font-weight: 600; }
+
+    /* ── CONDITIONS GRID ──────────────────────────────── */
+    .conditions-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .cond-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: Inter, sans-serif;
+      font-size: 13px;
+      color: #374151;
+      padding: 8px 10px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .cond-item input { display: none; }
+    .cond-check {
+      width: 16px;
+      height: 16px;
+      border: 2px solid #cbd5e1;
+      border-radius: 4px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .cond-item.checked { border-color: #EB532F; background: #fef3ef; }
+    .cond-item.checked .cond-check {
+      background: #EB532F;
+      border-color: #EB532F;
+    }
+    .cond-item.checked .cond-check::after {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 8px;
+      border: 2px solid #fff;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg) translateY(-1px);
+    }
+
+    /* ── ALLERGY TABLE ────────────────────────────────── */
+    .allergy-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .allergy-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 8px;
+      font-family: Inter, sans-serif;
+      font-size: 13px;
+      color: #374151;
+    }
+    .allergy-name { font-weight: 500; }
+    .yn-mini { display: flex; gap: 6px; }
+    .yn-mini-opt {
+      padding: 4px 10px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+      font-family: Inter, sans-serif;
+    }
+    .yn-mini-opt.yes.selected { border-color: #16a34a; background: #f0fdf4; color: #16a34a; }
+    .yn-mini-opt.no.selected  { border-color: #dc2626; background: #fef2f2; color: #dc2626; }
+
+    /* ── MED LIST ─────────────────────────────────────── */
+    .med-list { display: flex; flex-direction: column; gap: 8px; }
+    .med-row {
+      display: flex;
+      gap: 8px;
+    }
+    .med-row input {
+      flex: 1;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 10px 13px;
+      font-family: Inter, sans-serif;
+      font-size: 14px;
+      color: #1e293b;
+      outline: none;
+    }
+    .med-row input:focus { border-color: #0891b2; }
+    .med-remove {
+      background: none;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 8px;
+      width: 38px;
+      cursor: pointer;
+      color: #94a3b8;
+      font-size: 16px;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .med-remove:hover { border-color: #dc2626; color: #dc2626; background: #fef2f2; }
+    .add-med-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: Inter, sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: #0891b2;
+      background: none;
+      border: 1.5px dashed #0891b2;
+      border-radius: 8px;
+      padding: 8px 16px;
+      cursor: pointer;
+      margin-top: 4px;
+      transition: all 0.2s;
+    }
+    .add-med-btn:hover { background: #f0fdff; }
+
+    /* ── POLICY TEXT ──────────────────────────────────── */
+    .policy-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 18px 20px;
+      font-family: Inter, sans-serif;
+      font-size: 13px;
+      color: #374151;
+      line-height: 1.7;
+    }
+    .policy-box strong { color: #0c1a2e; }
+    .payment-options { display: flex; flex-direction: column; gap: 10px; margin: 12px 0; }
+    .payment-opt {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: Inter, sans-serif;
+    }
+    .payment-opt input { margin-top: 2px; accent-color: #0891b2; flex-shrink: 0; }
+    .payment-opt-text strong { display: block; font-size: 14px; color: #0c1a2e; margin-bottom: 2px; }
+    .payment-opt-text span { font-size: 12px; color: #64748b; }
+    .payment-opt.selected { border-color: #0891b2; background: #f0fdff; }
+    .consent-check-wrap {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 14px 16px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      margin-top: 10px;
+      cursor: pointer;
+      font-family: Inter, sans-serif;
+      font-size: 13px;
+      color: #374151;
+      line-height: 1.5;
+    }
+    .consent-check-wrap input { margin-top: 2px; accent-color: #0891b2; flex-shrink: 0; }
+    .consent-check-wrap.checked { border-color: #0891b2; background: #f0fdff; }
+
+    /* ── AUTHORIZED PARTIES ───────────────────────────── */
+    .auth-party-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    /* ── SIGNATURE ────────────────────────────────────── */
+    .sig-box {
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+    }
+    .sig-box p {
+      font-family: Inter, sans-serif;
+      font-size: 13px;
+      color: #64748b;
+      margin: 0 0 14px;
+      line-height: 1.6;
+    }
+    .sig-name-input {
+      border: none;
+      border-bottom: 2px solid #0891b2;
+      background: transparent;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      color: #0c1a2e;
+      text-align: center;
+      width: 100%;
+      max-width: 360px;
+      padding: 8px 4px;
+      outline: none;
+    }
+    .sig-date {
+      font-family: Inter, sans-serif;
+      font-size: 13px;
+      color: #94a3b8;
+      margin-top: 8px;
+    }
+
+    /* ── NAVIGATION BUTTONS ───────────────────────────── */
+    .wizard-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 36px;
+      padding-top: 24px;
+      border-top: 1px solid #e2e8f0;
+    }
+    .wizard-nav .step-count {
+      font-family: Inter, sans-serif;
+      font-size: 12px;
+      color: #94a3b8;
+    }
+    .btn-back {
+      background: none;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 11px 24px;
+      font-family: Inter, sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: #64748b;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-back:hover { border-color: #94a3b8; color: #374151; }
+    .btn-next {
+      background: #0891b2;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 32px;
+      font-family: Inter, sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 14px rgba(8,145,178,0.3);
+    }
+    .btn-next:hover { background: #0e7490; transform: translateY(-1px); }
+    .btn-submit {
+      background: #f59e0b;
+      border: none;
+      border-radius: 10px;
+      padding: 14px 36px;
+      font-family: Inter, sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 18px rgba(245,158,11,0.4);
+    }
+    .btn-submit:hover { background: #d97706; transform: translateY(-1px); }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    /* ── SUCCESS STATE ────────────────────────────────── */
+    .success-panel {
+      display: none;
+      text-align: center;
+      padding: 60px 40px;
+    }
+    .success-icon {
+      width: 72px;
+      height: 72px;
+      background: #f0fdf4;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+    .success-panel h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      color: #0c1a2e;
+      margin: 0 0 12px;
+    }
+    .success-panel p {
+      font-family: Inter, sans-serif;
+      font-size: 15px;
+      color: #64748b;
+      line-height: 1.7;
+      max-width: 480px;
+      margin: 0 auto 28px;
+    }
+
+    /* ── HIGHLIGHT ────────────────────────────────────── */
+    .field-highlight {
+      background: #fffbeb;
+      border: 1.5px solid #f59e0b;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+    }
+    .field-highlight .highlight-label {
+      font-family: Inter, sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #92400e;
+      margin-bottom: 8px;
+    }
+
+    /* ── SECONDARY INSURANCE TOGGLE ──────────────────── */
+    .secondary-toggle {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 20px 0 0;
+      font-family: Inter, sans-serif;
+      font-size: 14px;
+      color: #374151;
+      cursor: pointer;
+    }
+    .secondary-toggle input { accent-color: #0891b2; }
+    #secondary-ins-fields { display: none; }
+
+    /* ── WOMEN'S SECTION ──────────────────────────────── */
+    #womens-section {
+      background: #fdf4ff;
+      border: 1px solid #e9d5ff;
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-top: 16px;
+    }
+    #womens-section .section-divider {
+      color: #7c3aed;
+      border-color: #e9d5ff;
+      margin-top: 0;
+    }
+
+    /* ── RESPONSIVE ───────────────────────────────────── */
+    @media (max-width: 768px) {
+      .form-card { padding: 24px 20px; }
+      .pf-row.cols-2, .pf-row.cols-3, .pf-row.cols-4 { grid-template-columns: 1fr; }
+      .conditions-grid { grid-template-columns: 1fr 1fr; }
+      .allergy-grid { grid-template-columns: 1fr; }
+      .auth-party-row { grid-template-columns: 1fr; }
+      .step-label { display: none; }
+      .progress-bar { gap: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP INFO BAR -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-left">
+        <div class="topbar-item">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8a8 8 0 1 1 16 0c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+          Scottsdale · Sedona
+        </div>
+        <div class="topbar-item">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Same-Day Emergency Appointments Available
+        </div>
+      </div>
+      <div class="topbar-right">
+        <a href="tel:4809229933" class="topbar-phone">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.38 2 2 0 0 1 3.59 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17z"/></svg>
+          (480) 922-9933
+        </a>
+        <a href="#" class="topbar-link">Patient Portal</a>
+        <a href="#" class="topbar-link">Pay My Bill</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- STICKY NAVIGATION -->
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-text">
+          <span class="logo-name">Scottsdale Surgical Arts</span>
+          <span class="logo-sub">Oral &amp; Maxillofacial Surgery</span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Our Services</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="team.html">Our Team</a></li>
+        <li><a href="patient-info.html" class="nav-active">Patient Info</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="tel:4809229933" class="nav-phone-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.38 2 2 0 0 1 3.59 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17z"/></svg>
+          (480) 922-9933
+        </a>
+        <a href="contact.html" class="nav-book-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span>Existing Patients</span>
+        </a>
+      </div>
+      <button class="nav-hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="index.html">Home</a>
+      <a href="services.html">Our Services</a>
+      <a href="about.html">About Us</a>
+      <a href="team.html">Our Team</a>
+      <a href="patient-info.html">Patient Info</a>
+      <a href="tel:4809229933">(480) 922-9933</a>
+      <a href="contact.html" class="mobile-book">Book Your Appointment →</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="section-inner">
+      <div class="page-hero-eyebrow">New Patient Forms</div>
+      <h1 class="page-hero-title">Complete Your Paperwork Online</h1>
+      <div class="page-hero-breadcrumb"><a href="index.html">Home</a> → Patient Info</div>
+    </div>
+  </section>
+
+  <!-- INTRO STRIP -->
+  <div style="background:#f0fdff;border-bottom:1px solid #cffafe;padding:20px 0;">
+    <div style="max-width:820px;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:8px;font-family:Inter,sans-serif;font-size:13px;color:#0891b2;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        No printing required
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-family:Inter,sans-serif;font-size:13px;color:#0891b2;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Secure &amp; private
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-family:Inter,sans-serif;font-size:13px;color:#0891b2;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Takes about 5 minutes
+      </div>
+      <div style="margin-left:auto;font-family:Inter,sans-serif;font-size:13px;color:#64748b;">
+        Questions? Call <a href="tel:4809229933" style="color:#0891b2;font-weight:600;">(480) 922-9933</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- WIZARD -->
+  <div class="wizard-wrap">
+    <div class="wizard-inner">
+
+      <!-- PROGRESS BAR -->
+      <div class="progress-bar" id="progress-bar">
+        <div class="progress-step active" data-step="1">
+          <div class="step-circle">1</div>
+          <div class="step-label">Personal Info</div>
+        </div>
+        <div class="progress-step" data-step="2">
+          <div class="step-circle">2</div>
+          <div class="step-label">Insurance</div>
+        </div>
+        <div class="progress-step" data-step="3">
+          <div class="step-circle">3</div>
+          <div class="step-label">Health History</div>
+        </div>
+        <div class="progress-step" data-step="4">
+          <div class="step-circle">4</div>
+          <div class="step-label">Allergies &amp; Meds</div>
+        </div>
+        <div class="progress-step" data-step="5">
+          <div class="step-circle">5</div>
+          <div class="step-label">Consent &amp; Sign</div>
+        </div>
+      </div>
+
+      <!-- FORM CARD -->
+      <div class="form-card">
+
+        <!-- SUCCESS PANEL -->
+        <div class="success-panel" id="success-panel">
+          <div class="success-icon">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h2>Forms Submitted Successfully</h2>
+          <p>Thank you! Your new patient forms have been received by our team. We'll review your information before your appointment and reach out if we have any questions.<br><br>Check your email for a confirmation copy.</p>
+          <a href="contact.html" style="display:inline-block;background:#0891b2;color:#fff;text-decoration:none;border-radius:10px;padding:13px 30px;font-family:Inter,sans-serif;font-weight:700;font-size:14px;box-shadow:0 4px 14px rgba(8,145,178,0.3);">Book Your Appointment →</a>
+        </div>
+
+        <!-- ═══════════════════════════════════════════ -->
+        <!-- STEP 1: PERSONAL INFO                      -->
+        <!-- ═══════════════════════════════════════════ -->
+        <div class="step-panel active" id="step-1">
+          <h2 class="step-heading">Personal Information</h2>
+          <p class="step-sub">Fields marked <span style="color:#EB532F;">*</span> are required.</p>
+
+          <div class="pf-row cols-3">
+            <div class="pf-group" style="grid-column:span 1">
+              <label>Last Name <span class="req">*</span></label>
+              <input type="text" id="p-lname" placeholder="Smith" />
+            </div>
+            <div class="pf-group">
+              <label>First Name <span class="req">*</span></label>
+              <input type="text" id="p-fname" placeholder="Jane" />
+            </div>
+            <div class="pf-group">
+              <label>Middle Initial</label>
+              <input type="text" id="p-mi" placeholder="A" maxlength="2" />
+            </div>
+          </div>
+
+          <div class="pf-row cols-3">
+            <div class="pf-group">
+              <label>Date of Birth <span class="req">*</span></label>
+              <input type="date" id="p-dob" />
+            </div>
+            <div class="pf-group">
+              <label>Gender</label>
+              <div class="radio-group" id="gender-group">
+                <label class="radio-opt" onclick="selectRadio(this,'gender-group')"><input type="radio" name="gender" value="Male" />Male</label>
+                <label class="radio-opt" onclick="selectRadio(this,'gender-group')"><input type="radio" name="gender" value="Female" />Female</label>
+                <label class="radio-opt" onclick="selectRadio(this,'gender-group')"><input type="radio" name="gender" value="Other" />Other</label>
+              </div>
+            </div>
+            <div class="pf-group">
+              <label>Marital Status</label>
+              <div class="radio-group" id="marital-group">
+                <label class="radio-opt" onclick="selectRadio(this,'marital-group')"><input type="radio" name="marital" value="Single" />Single</label>
+                <label class="radio-opt" onclick="selectRadio(this,'marital-group')"><input type="radio" name="marital" value="Married" />Married</label>
+                <label class="radio-opt" onclick="selectRadio(this,'marital-group')"><input type="radio" name="marital" value="Partnered" />Partnered</label>
+                <label class="radio-opt" onclick="selectRadio(this,'marital-group')"><input type="radio" name="marital" value="Other" />Other</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="pf-row cols-2">
+            <div class="pf-group">
+              <label>Social Security Number</label>
+              <input type="text" id="p-ssn" placeholder="XXX-XX-XXXX (needed for insurance filing)" />
+              <span class="field-note">Used only for insurance claim filing. Never shared.</span>
+            </div>
+            <div class="pf-group">
+              <label>Nickname / Preferred Name</label>
+              <input type="text" id="p-nickname" placeholder="Optional" />
+            </div>
+          </div>
+
+          <div class="section-divider">Contact &amp; Address</div>
+
+          <div class="pf-row cols-1">
+            <div class="pf-group">
+              <label>Home Address <span class="req">*</span></label>
+              <input type="text" id="p-address" placeholder="123 Main Street, Apt 4B" />
+            </div>
+          </div>
+          <div class="pf-row cols-3">
+            <div class="pf-group">
+              <label>City <span class="req">*</span></label>
+              <input type="text" id="p-city" placeholder="Scottsdale" />
+            </div>
+            <div class="pf-group">
+              <label>State</label>
+              <input type="text" id="p-state" placeholder="AZ" maxlength="2" />
+            </div>
+            <div class="pf-group">
+              <label>Zip Code</label>
+              <input type="text" id="p-zip" placeholder="85260" maxlength="10" />
+            </div>
+          </div>
+
+          <div class="pf-row cols-2">
+            <div class="pf-group">
+              <label>Mobile Phone <span class="req">*</span></label>
+              <input type="tel" id="p-mobile" placeholder="(480) 000-0000" />
+            </div>
+            <div class="pf-group">
+              <label>Home Phone</label>
+              <input type="tel" id="p-homephone" placeholder="(480) 000-0000" />
+            </div>
+          </div>
+
+          <div class="pf-row cols-2">
+            <div class="pf-group">
+              <label>Email Address <span class="req">*</span></label>
+              <input type="email" id="p-email" placeholder="jane@example.com" />
+            </div>
+            <div class="pf-group">
+              <label>Work Phone</label>
+              <input type="tel" id="p-workphone" placeholder="(480) 000-0000" />
+            </div>
+          </div>
+
+          <div class="section-divider">Additional Information</div>
+
+          <div class="pf-row cols-2">
+            <div class="pf-group">
+              <label>Employer / Responsible Party</label>
+              <input type="text" id="p-employer" placeholder="Company name" />
+            </div>
+            <div class="pf-group">
+              <label>Referred By</label>
+              <select id="p-referred">
+                <option value="">— Select —</option>
+                <option>Another Patient</option>
+                <option>Google / Internet Search</option>
+                <option>Insurance Directory</option>
+                <option>Referring Dentist</option>
+                <option>Social Media</option>
+                <option>Friend or Family</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="pf-row cols-2">
+            <div class="pf-group">
+              <label>Driver's License Number</label>
+              <input type="text" id="p-dl" placeholder="Optional" />
+            </div>
+            <div class="pf-group">
+              <label>DL State</label>
+              <input type="text" id="p-dl-state" placeholder="AZ" maxlength="2" />
+            </div>
+          </div>
+
+          <div id="child-section" style="display:none;margin-top:4px;">
+            <div class="pf-row cols-2">
+              <div class="pf-group">
+                <label>If a Minor — Who Brought You Today?</label>
+                <input type="text" id="p-guardian" placeholder="Guardian's full name" />
+              </div>
+              <div class="pf-group">
+                <label>Relationship to Child</label>
+                <input type="text" id="p-guardian-rel" placeholder="Parent, Grandparent, etc." />
+              </div>
+            </div>
+          </div>
+
+          <div class="section-divider">Emergency Contact</div>
+          <div class="pf-row cols-3">
+            <div class="pf-group">
+              <label>Emergency Contact Name <span class="req">*</span></label>
+              <input type="text" id="ec-name" placeholder="Full name" />
+            </div>
+            <div class="pf-group">
+              <label>Relationship</label>
+              <input type="text" id="ec-rel" placeholder="Spouse, Parent, etc." />
+            </div>
+            <div class="pf-group">
+              <label>Phone <span class="req">*</span></label>
+              <input type="tel" id="ec-phone" placeholder="(480) 000-0000" />
+            </div>
+          </div>
+
+          <div class="wizard-nav">
+            <div class="step-count">Step 1 of 5</div>
+            <div></div>
+            <button class="btn-next" onclick="goNext(1)">Next: Insurance →</button>
+          </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════ -->
+        <!-- STEP 2: INSURANCE                          -->
+        <!-- ═══════════════════════════════════════════ -->
+        <div class="step-panel" id="step-2">
+          <h2 class="step-heading">Insurance Information</h2>
+          <p class="step-sub">Enter your primary insurance. Add secondary if applicable.</p>
+
+          <div class="section-divider">Primary Dental Insurance</div>
+          <div class="pf-row cols-2">
+            <div class="pf-group">
+              <label>Insurance Company</label>
+              <input type="text" id="ins1-company" placeholder="Delta Dental, Cigna, Aetna…" />
+            </div>
+            <div class="pf-group">
+              <label>Employer / Group</label>
+              <input type="text" id="ins1-employer" placeholder="Your employer name" />
+            </div>
+          </div>
+          <div class="pf-row cols-2">
+            <div class="pf-group">
+              <label>Group / Policy Number</label>
+              <input type="text" id="ins1-group" placeholder="Group or policy #" />
+            </div>
+            <div class="pf-group">
+              <label>Insurance Phone</label>
+              <input type="tel" id="ins1-phone" placeholder="Phone on back of card" />
+            </div>
+          </div>
+          <div class="pf-row cols-2">
+            <div class="pf-group">
+              <label>Insurance Address</label>
+              <input type="text" id="ins1-address" placeholder="P.O. Box or street address" />
+            </div>
+            <div class="pf-group">
+              <label>City / State / Zip</label>
+              <input type="text" id="ins1-csz" placeholder="City, ST 00000" />
+            </div>
+          </div>
+          <div class="pf-row cols-2">
+            <div class="pf-group">
+              <label>Employee (Subscriber) Name</label>
+              <input type="text" id="ins1-employee" placeholder="Name on the insurance card" />
+            </div>
+            <div class="pf-group">
+              <label>Subscriber Date of Birth</label>
+              <input type="date" id="ins1-dob" />
+            </div>
+          </div>
+          <div class="pf-row cols-2">
+            <div class="pf-group">
+              <label>Member ID / SSN (for claims)</label>
+              <input type="text" id="ins1-id" placeholder="ID number on card" />
+            </div>
+            <div class="pf-group">
+              <label>Patient's Relationship to Subscriber</label>
+              <select id="ins1-rel">
+                <option value="">— Select —</option>
+                <option>Self</option>
+                <option>Spouse</option>
+                <option>Child</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <label class="secondary-toggle">
+            <input type="checkbox" id="has-secondary" onchange="toggleSecondary()" />
+            I have a secondary dental insurance plan
+          </label>
+
+          <div id="secondary-ins-fields">
+            <div class="section-divider">Secondary Dental Insurance</div>
+            <div class="pf-row cols-2">
+              <div class="pf-group">
+                <label>Insurance Company</label>
+                <input type="text" id="ins2-company" placeholder="Insurance company name" />
+              </div>
+              <div class="pf-group">
+                <label>Employer / Group</label>
+                <input type="text" id="ins2-employer" placeholder="Your employer name" />
+              </div>
+            </div>
+            <div class="pf-row cols-2">
+              <div class="pf-group">
+                <label>Group / Policy Number</label>
+                <input type="text" id="ins2-group" placeholder="Group or policy #" />
+              </div>
+              <div class="pf-group">
+                <label>Insurance Phone</label>
+                <input type="tel" id="ins2-phone" placeholder="Phone on back of card" />
+              </div>
+            </div>
+            <div class="pf-row cols-2">
+              <div class="pf-group">
+                <label>Employee (Subscriber) Name</label>
+                <input type="text" id="ins2-employee" placeholder="Name on the insurance card" />
+              </div>
+              <div class="pf-group">
+                <label>Subscriber Date of Birth</label>
+                <input type="date" id="ins2-dob" />
+              </div>
+            </div>
+            <div class="pf-row cols-2">
+              <div class="pf-group">
+                <label>Member ID / SSN (for claims)</label>
+                <input type="text" id="ins2-id" placeholder="ID number on card" />
+              </div>
+              <div class="pf-group">
+                <label>Patient's Relationship to Subscriber</label>
+                <select id="ins2-rel">
+                  <option value="">— Select —</option>
+                  <option>Self</option>
+                  <option>Spouse</option>
+                  <option>Child</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="wizard-nav">
+            <div class="step-count">Step 2 of 5</div>
+            <button class="btn-back" onclick="goBack(2)">← Back</button>
+            <button class="btn-next" onclick="goNext(2)">Next: Health History →</button>
+          </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════ -->
+        <!-- STEP 3: HEALTH HISTORY                     -->
+        <!-- ═══════════════════════════════════════════ -->
+        <div class="step-panel" id="step-3">
+          <h2 class="step-heading">Dental &amp; Medical History</h2>
+          <p class="step-sub">Please answer as accurately as possible. All information is confidential.</p>
+
+          <div class="pf-row cols-1">
+            <div class="pf-group">
+              <label>Why have you come to see us today? <span class="req">*</span></label>
+              <textarea id="hh-reason" placeholder="Describe your reason for this visit, any symptoms, or what procedure you're interested in…"></textarea>
+            </div>
+          </div>
+
+          <div class="field-highlight">
+            <div class="highlight-label">Important — Please Answer</div>
+            <div class="pf-group">
+              <label>Do you require antibiotics before dental treatment?</label>
+              <div class="yn-group" id="hh-antibiotics-group">
+                <label class="yn-opt yes" onclick="selectYN(this,'hh-antibiotics-group')"><input type="radio" name="hh-antibiotics" value="Yes" /> Yes</label>
+                <label class="yn-opt no" onclick="selectYN(this,'hh-antibiotics-group')"><input type="radio" name="hh-antibiotics" value="No" /> No</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-divider">Dental Health</div>
+          <div class="pf-row cols-2">
+            <div class="pf-group">
+              <label>Are you currently in pain?</label>
+              <div class="yn-group" id="hh-pain-group">
+                <label class="yn-opt yes" onclick="selectYN(this,'hh-pain-group')"><input type="radio" name="hh-pain" value="Yes" /> Yes</label>
+                <label class="yn-opt no" onclick="selectYN(this,'hh-pain-group')"><input type="radio" name="hh-pain" value="No" /> No</label>
+              </div>
+            </div>
+            <div class="pf-group">
+              <label>Do you experience jaw pain or discomfort? (TMJ/TMD)</label>
+              <div class="yn-group" id="hh-tmj-group">
+                <label class="yn-opt yes" onclick="selectYN(this,'hh-tmj-group')"><input type="radio" name="hh-tmj" value="Yes" /> Yes</label>
+                <label class="yn-opt no" onclick="selectYN(this,'hh-tmj-group')"><input type="radio" name="hh-tmj" value="No" /> No</label>
+              </div>
+            </div>
+          </div>
+          <div class="pf-row cols-2">
+            <div class="pf-group">
+              <label>Do you get frequent headaches?</label>
+              <div class="yn-group" id="hh-headaches-group">
+                <label class="yn-opt yes" onclick="selectYN(this,'hh-headaches-group')"><input type="radio" name="hh-headaches" value="Yes" /> Yes</label>
+                <label class="yn-opt no" onclick="selectYN(this,'hh-headaches-group')"><input type="radio" name="hh-headaches" value="No" /> No</label>
+              </div>
+            </div>
+            <div class="pf-group">
+              <label>Current dental health rating</label>
+              <div class="radio-group" id="hh-dental-health-group">
+                <label class="radio-opt" onclick="selectRadio(this,'hh-dental-health-group')"><input type="radio" name="hh-dental-health" value="Good" />Good</label>
+                <label class="radio-opt" onclick="selectRadio(this,'hh-dental-health-group')"><input type="radio" name="hh-dental-health" value="Fair" />Fair</label>
+                <label class="radio-opt" onclick="selectRadio(this,'hh-dental-health-group')"><input type="radio" name="hh-dental-health" value="Poor" />Poor</label>
+              </div>
+            </div>
+          </div>
+          <div class="pf-row cols-2">
+            <div class="pf-group">
+              <label>Do you floss daily?</label>
+              <div class="yn-group" id="hh-floss-group">
+                <label class="yn-opt yes" onclick="selectYN(this,'hh-floss-group')"><input type="radio" name="hh-floss" value="Yes" /> Yes</label>
+                <label class="yn-opt no" onclick="selectYN(this,'hh-floss-group')"><input type="radio" name="hh-floss" value="No" /> No</label>
+              </div>
+            </div>
+            <div class="pf-group">
+              <label>Do you brush daily?</label>
+              <div class="yn-group" id="hh-brush-group">
+                <label class="yn-opt yes" onclick="selectYN(this,'hh-brush-group')"><input type="radio" name="hh-brush" value="Yes" /> Yes</label>
+                <label class="yn-opt no" onclick="selectYN(this,'hh-brush-group')"><input type="radio" name="hh-brush" value="No" /> No</label>
+              </div>
+            </div>
+          </div>
+          <div class="pf-row cols-2">
+            <div class="pf-group">
+              <label>Toothbrush type</label>
+              <div class="radio-group" id="hh-brush-type-group">
+                <label class="radio-opt" onclick="selectRadio(this,'hh-brush-type-group')"><input type="radio" name="hh-brush-type" value="Electric" />Electric</label>
+                <label class="radio-opt" onclick="selectRadio(this,'hh-brush-type-group')"><input type="radio" name="hh-brush-type" value="Manual" />Manual</label>
+              </div>
+            </div>
+            <div class="pf-group">
+              <label>Bristle hardness</label>
+              <div class="radio-group" id="hh-bristles-group">
+                <label class="radio-opt" onclick="selectRadio(this,'hh-bristles-group')"><input type="radio" name="hh-bristles" value="Soft" />Soft</label>
+                <label class="radio-opt" onclick="selectRadio(this,'hh-bristles-group')"><input type="radio" name="hh-bristles" value="Medium" />Medium</label>
+                <label class="radio-opt" onclick="selectRadio(this,'hh-bristles-group')"><input type="radio" name="hh-bristles" value="Hard" />Hard</label>
+              </div>
+            </div>
+          </div>
+          <div class="pf-row cols-2">
+            <div class="pf-group">
+              <label>Do your gums bleed when brushing?</label>
+              <div class="yn-group" id="hh-gums-group">
+                <label class="yn-opt yes" onclick="selectYN(this,'hh-gums-group')"><input type="radio" name="hh-gums" value="Yes" /> Yes</label>
+                <label class="yn-opt no" onclick="selectYN(this,'hh-gums-group')"><input type="radio" name="hh-gums" value="No" /> No</label>
+              </div>
+            </div>
+            <div class="pf-group">
+              <label>Have you had periodontal disease or treatment?</label>
+              <div class="yn-group" id="hh-perio-group">
+                <label class="yn-opt yes" onclick="selectYN(this,'hh-perio-group')"><input type="radio" name="hh-perio" value="Yes" /> Yes</label>
+                <label class="yn-opt no" onclick="selectYN(this,'hh-perio-group')"><input type="radio" name="hh-perio" value="No" /> No</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-divider">Medical Conditions — Check all that apply</div>
+          <div class="conditions-grid" id="conditions-grid">
+            <label class="cond-item" onclick="toggleCond(this)"><input type="checkbox" value="AIDS/HIV" /><div class="cond-check"></div>AIDS/HIV</label>
+            <label class="cond-item" onclick="toggleCond(this)"><input type="checkbox" value="Anemia" /><div class="cond-check"></div>Anemia</label>
+            <label class="cond-item" onclick="toggleCond(this)"><input type="checkbox" value="Artificial Joints" /><div class="cond-check"></div>Artificial Joints</label>
+            <label class="cond-item" onclick="toggleCond(this)"><input type="checkbox" value="Asthma" /><div class="cond-check"></div>Asthma</label>
+            <label class="cond-item" onclick="toggleCond(this)"><input type="checkbox" value="Blood Pressure (High)" /><div class="cond-check"></div>Blood Pressure (High)</label>
+            <label class="cond-item" onclick="toggleCond(this)"><input type="checkbox" value="Cancer" /><div class="cond-check"></div>Cancer</label>
+            <label class="cond-item" onclick="toggleCond(this)"><input type="checkbox" value="Chronic Cough" /><div class="cond-check"></div>Chronic Cough</label>
+            <label class="cond-item" onclick="toggleCond(this)"><input type="checkbox" value="Diabetes" /><div class="cond-check"></div>Diabetes</label>
+            <label class="cond-item" onclick="toggleCond(this)"><input type="checkbox" value="Emphysema" /><div class="cond-check"></div>Emphysema</label>
+            <label class="cond-item" onclick="toggleCond(this)"><input type="checkbox" value="Fibromyalgia" /><div class="cond-check"></div>Fibromyalgia</label>
+            <label class="cond-item" onclick="toggleCond(this)"><input type="checkbox" value="Glaucoma" /><div class="cond-check"></div>Glaucoma</label>
+            <label class="cond-item" onclick="toggleCond(this)"><input type="checkbox" value="Hay Fever" /><div class="cond-check"></div>Hay Fever</label>
+            <label class="cond-item" onclick="toggleCond(this)"><input type="checkbox" value="Heart Defect" /><div class="cond-check"></div>Heart Defect</label>
+            <label class="cond-item" onclick="toggleCond(this)"><input type="checkbox" value="Heart Murmur" /><div class="cond-check"></div>Heart Murmur</label>
+            <label class="cond-item" onclick="toggleCond(this)"><input type="checkbox" value="Heart Surgery" /><div class="cond-check"></div>Heart Surgery</label>
+            <label class="cond-item" onclick="toggleCond(this)"><input type="checkbox" value="Hepatitis" /><div class="cond-check"></div>Hepatitis</label>
+            <label class="cond-item" onclick="toggleCond(this)"><input type="checkbox" value="Herpes" /><div class="cond-check"></div>Herpes</label>
+            <label class="cond-item" onclick="toggleCond(this)"><input type="checkbox" value="Lupus" /><div class="cond-check"></div>Lupus</label>
+            <label class="cond-item" onclick="toggleCond(this)"><input type="checkbox" value="Pace Maker" /><div class="cond-check"></div>Pace Maker</label>
+            <label class="cond-item" onclick="toggleCond(this)"><input type="checkbox" value="Rheumatic Fever" /><div class="cond-check"></div>Rheumatic Fever</label>
+            <label class="cond-item" onclick="toggleCond(this)"><input type="checkbox" value="Stroke" /><div class="cond-check"></div>Stroke</label>
+            <label class="cond-item" onclick="toggleCond(this)"><input type="checkbox" value="TB (Tuberculosis)" /><div class="cond-check"></div>TB (Tuberculosis)</label>
+            <label class="cond-item" onclick="toggleCond(this)"><input type="checkbox" value="Thyroid Disorder" /><div class="cond-check"></div>Thyroid Disorder</label>
+            <label class="cond-item" onclick="toggleCond(this)"><input type="checkbox" value="Ulcer" /><div class="cond-check"></div>Ulcer</label>
+            <label class="cond-item" onclick="toggleCond(this)"><input type="checkbox" value="Yellow Jaundice" /><div class="cond-check"></div>Yellow Jaundice</label>
+          </div>
+          <div class="pf-row cols-1" style="margin-top:10px;">
+            <div class="pf-group">
+              <label>Other conditions not listed</label>
+              <input type="text" id="hh-conditions-other" placeholder="Please describe any other medical conditions…" />
+            </div>
+          </div>
+
+          <div class="section-divider">Physician</div>
+          <div class="pf-row cols-2">
+            <div class="pf-group">
+              <label>Are you currently under the care of a physician?</label>
+              <div class="yn-group" id="hh-physician-group">
+                <label class="yn-opt yes" onclick="selectYN(this,'hh-physician-group');togglePhysician(true)"><input type="radio" name="hh-physician" value="Yes" /> Yes</label>
+                <label class="yn-opt no" onclick="selectYN(this,'hh-physician-group');togglePhysician(false)"><input type="radio" name="hh-physician" value="No" /> No</label>
+              </div>
+            </div>
+          </div>
+          <div id="physician-fields" style="display:none;">
+            <div class="pf-row cols-2">
+              <div class="pf-group">
+                <label>Physician's Name</label>
+                <input type="text" id="hh-phys-name" placeholder="Dr. First Last" />
+              </div>
+              <div class="pf-group">
+                <label>Phone</label>
+                <input type="tel" id="hh-phys-phone" placeholder="Physician's office phone" />
+              </div>
+            </div>
+            <div class="pf-row cols-2">
+              <div class="pf-group">
+                <label>Address</label>
+                <input type="text" id="hh-phys-address" placeholder="Office address" />
+              </div>
+              <div class="pf-group">
+                <label>Date of Last Visit</label>
+                <input type="date" id="hh-phys-lastvisit" />
+              </div>
+            </div>
+          </div>
+
+          <div class="section-divider">Tobacco &amp; Women's Health</div>
+          <div class="pf-row cols-2">
+            <div class="pf-group">
+              <label>Do you smoke, vape, or use any tobacco?</label>
+              <div class="yn-group" id="hh-tobacco-group">
+                <label class="yn-opt yes" onclick="selectYN(this,'hh-tobacco-group');toggleTobacco(true)"><input type="radio" name="hh-tobacco" value="Yes" /> Yes</label>
+                <label class="yn-opt no" onclick="selectYN(this,'hh-tobacco-group');toggleTobacco(false)"><input type="radio" name="hh-tobacco" value="No" /> No</label>
+              </div>
+            </div>
+            <div class="pf-group" id="tobacco-years" style="display:none;">
+              <label>How long? (years)</label>
+              <input type="number" id="hh-tobacco-years" placeholder="Number of years" min="0" max="80" />
+            </div>
+          </div>
+
+          <div id="womens-section" style="display:none;">
+            <div class="section-divider">Women's Health</div>
+            <div class="pf-row cols-3">
+              <div class="pf-group">
+                <label>Taking birth control?</label>
+                <div class="yn-group" id="hh-bc-group">
+                  <label class="yn-opt yes" onclick="selectYN(this,'hh-bc-group')"><input type="radio" name="hh-bc" value="Yes" /> Yes</label>
+                  <label class="yn-opt no" onclick="selectYN(this,'hh-bc-group')"><input type="radio" name="hh-bc" value="No" /> No</label>
+                </div>
+              </div>
+              <div class="pf-group">
+                <label>Pregnant?</label>
+                <div class="yn-group" id="hh-preg-group">
+                  <label class="yn-opt yes" onclick="selectYN(this,'hh-preg-group');togglePreg(true)"><input type="radio" name="hh-preg" value="Yes" /> Yes</label>
+                  <label class="yn-opt no" onclick="selectYN(this,'hh-preg-group');togglePreg(false)"><input type="radio" name="hh-preg" value="No" /> No</label>
+                </div>
+              </div>
+              <div class="pf-group">
+                <label>Nursing?</label>
+                <div class="yn-group" id="hh-nursing-group">
+                  <label class="yn-opt yes" onclick="selectYN(this,'hh-nursing-group')"><input type="radio" name="hh-nursing" value="Yes" /> Yes</label>
+                  <label class="yn-opt no" onclick="selectYN(this,'hh-nursing-group')"><input type="radio" name="hh-nursing" value="No" /> No</label>
+                </div>
+              </div>
+            </div>
+            <div id="preg-week" style="display:none;">
+              <div class="pf-row cols-2">
+                <div class="pf-group">
+                  <label>Week # of Pregnancy</label>
+                  <input type="number" id="hh-preg-week" placeholder="e.g. 14" min="1" max="42" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="wizard-nav">
+            <div class="step-count">Step 3 of 5</div>
+            <button class="btn-back" onclick="goBack(3)">← Back</button>
+            <button class="btn-next" onclick="goNext(3)">Next: Allergies &amp; Meds →</button>
+          </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════ -->
+        <!-- STEP 4: ALLERGIES & MEDICATIONS            -->
+        <!-- ═══════════════════════════════════════════ -->
+        <div class="step-panel" id="step-4">
+          <h2 class="step-heading">Allergies &amp; Medications</h2>
+          <p class="step-sub">Please indicate any allergies and list all current medications.</p>
+
+          <div class="section-divider">Allergies — indicate Yes or No for each</div>
+          <div class="allergy-grid" id="allergy-grid">
+            <div class="allergy-item"><span class="allergy-name">Aspirin</span><div class="yn-mini"><span class="yn-mini-opt yes" onclick="selectAllergyYN(this)">Y</span><span class="yn-mini-opt no" onclick="selectAllergyYN(this)">N</span></div></div>
+            <div class="allergy-item"><span class="allergy-name">Codeine</span><div class="yn-mini"><span class="yn-mini-opt yes" onclick="selectAllergyYN(this)">Y</span><span class="yn-mini-opt no" onclick="selectAllergyYN(this)">N</span></div></div>
+            <div class="allergy-item"><span class="allergy-name">Erythromycin</span><div class="yn-mini"><span class="yn-mini-opt yes" onclick="selectAllergyYN(this)">Y</span><span class="yn-mini-opt no" onclick="selectAllergyYN(this)">N</span></div></div>
+            <div class="allergy-item"><span class="allergy-name">Latex</span><div class="yn-mini"><span class="yn-mini-opt yes" onclick="selectAllergyYN(this)">Y</span><span class="yn-mini-opt no" onclick="selectAllergyYN(this)">N</span></div></div>
+            <div class="allergy-item"><span class="allergy-name">Penicillin</span><div class="yn-mini"><span class="yn-mini-opt yes" onclick="selectAllergyYN(this)">Y</span><span class="yn-mini-opt no" onclick="selectAllergyYN(this)">N</span></div></div>
+            <div class="allergy-item"><span class="allergy-name">Sulfa Drugs</span><div class="yn-mini"><span class="yn-mini-opt yes" onclick="selectAllergyYN(this)">Y</span><span class="yn-mini-opt no" onclick="selectAllergyYN(this)">N</span></div></div>
+            <div class="allergy-item"><span class="allergy-name">Local Anesthesia</span><div class="yn-mini"><span class="yn-mini-opt yes" onclick="selectAllergyYN(this)">Y</span><span class="yn-mini-opt no" onclick="selectAllergyYN(this)">N</span></div></div>
+          </div>
+          <div class="pf-row cols-1" style="margin-top:12px;">
+            <div class="pf-group">
+              <label>Other Allergies</label>
+              <input type="text" id="allergy-other" placeholder="Any other drug, food, or environmental allergies…" />
+            </div>
+          </div>
+
+          <div class="section-divider">Current Medications</div>
+          <p style="font-family:Inter,sans-serif;font-size:13px;color:#64748b;margin:0 0 12px;">List all medications, vitamins, and supplements you currently take.</p>
+          <div class="med-list" id="med-list">
+            <div class="med-row">
+              <input type="text" placeholder="Medication name, dose, frequency (e.g. Lisinopril 10mg daily)" />
+              <button class="med-remove" onclick="removeMed(this)" title="Remove">×</button>
+            </div>
+          </div>
+          <button class="add-med-btn" onclick="addMed()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Another Medication
+          </button>
+
+          <div class="wizard-nav">
+            <div class="step-count">Step 4 of 5</div>
+            <button class="btn-back" onclick="goBack(4)">← Back</button>
+            <button class="btn-next" onclick="goNext(4)">Next: Consent &amp; Sign →</button>
+          </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════ -->
+        <!-- STEP 5: CONSENT & SIGNATURE                -->
+        <!-- ═══════════════════════════════════════════ -->
+        <div class="step-panel" id="step-5">
+          <h2 class="step-heading">Consent &amp; Signature</h2>
+          <p class="step-sub">Please review and agree to the following policies before submitting.</p>
+
+          <div class="section-divider">Payment Policy — Please Select One</div>
+          <div class="payment-options">
+            <label class="payment-opt" id="pay-selfpay" onclick="selectPayment('selfpay')">
+              <input type="radio" name="payment" value="Self-Pay" />
+              <div class="payment-opt-text">
+                <strong>Self-Pay</strong>
+                <span>Payment is due in full at the time of service.</span>
+              </div>
+            </label>
+            <label class="payment-opt" id="pay-insurance" onclick="selectPayment('insurance')">
+              <input type="radio" name="payment" value="Primary/Secondary Insurance" />
+              <div class="payment-opt-text">
+                <strong>Primary / Secondary Insurance</strong>
+                <span>We will bill your insurance as a courtesy. Co-pays and deductibles are due at time of service. Any balance unpaid after 30 days is the patient's responsibility.</span>
+              </div>
+            </label>
+          </div>
+
+          <div class="section-divider">Cancellation Policy</div>
+          <div class="policy-box">
+            <strong>Please read carefully:</strong> All patients who fail to arrive for their scheduled appointments or do not give 24 hours' advance notice will be charged a missed appointment fee.<br><br>
+            • 30-minute to 1-hour appointment — <strong>$50.00</strong><br>
+            • 1-hour+ appointment — <strong>$100.00</strong><br><br>
+            This fee is <strong>not covered by insurance</strong> and is your personal responsibility. If you miss three appointments without advance notice, any remaining appointments will be cancelled.
+          </div>
+          <label class="consent-check-wrap" id="cancel-policy-wrap" onclick="toggleConsent(this,'cancel-policy-wrap')">
+            <input type="checkbox" id="cancel-policy-check" />
+            I have read and understand the cancellation/missed appointment policy.
+          </label>
+
+          <div class="section-divider">HIPAA — Patient Information Consent</div>
+          <div class="policy-box">
+            I hereby authorize Scottsdale Surgical Arts to request and receive the release of any protected health information regarding my treatment, payment, or administrative operations related to treatment and payment. I understand that the identity of designated parties must be verified before the release of any information.
+          </div>
+          <div style="margin-top:14px;">
+            <p style="font-family:Inter,sans-serif;font-size:13px;color:#374151;margin:0 0 10px;font-weight:600;">Authorized parties who may access my health information:</p>
+            <div class="auth-party-row">
+              <div class="pf-group"><label>Name</label><input type="text" id="auth1-name" placeholder="Full name" /></div>
+              <div class="pf-group"><label>Relationship</label><input type="text" id="auth1-rel" placeholder="Spouse, Parent, etc." /></div>
+            </div>
+            <div class="auth-party-row">
+              <div class="pf-group"><label>Name</label><input type="text" id="auth2-name" placeholder="Full name (optional)" /></div>
+              <div class="pf-group"><label>Relationship</label><input type="text" id="auth2-rel" placeholder="Relationship (optional)" /></div>
+            </div>
+          </div>
+          <label class="consent-check-wrap" id="hipaa-wrap" onclick="toggleConsent(this,'hipaa-wrap')">
+            <input type="checkbox" id="hipaa-check" />
+            I authorize Scottsdale Surgical Arts to release my health information to the parties listed above as needed for my treatment and care.
+          </label>
+
+          <div class="section-divider">Treatment Consent</div>
+          <div class="policy-box" style="font-size:12px;line-height:1.8;">
+            I understand that the information I have given is correct to the best of my knowledge. This information will be held in the strictest confidence, and it is my responsibility to inform this office of any changes in my medical status. I authorize the dental staff to perform the dental services necessary for my oral health. I understand that payment is due in full at the time of treatment unless prior arrangements have been made.
+            <br><br>
+            <strong>24-hour notice required to cancel or reschedule without a fee.</strong>
+          </div>
+          <label class="consent-check-wrap" id="treatment-wrap" onclick="toggleConsent(this,'treatment-wrap')">
+            <input type="checkbox" id="treatment-check" />
+            I agree to the above treatment consent and certify that all information I have provided is accurate and complete.
+          </label>
+
+          <div class="section-divider">Records Release (Optional)</div>
+          <p style="font-family:Inter,sans-serif;font-size:13px;color:#64748b;margin:0 0 12px;">If you'd like us to request your records from a previous dentist, complete this section.</p>
+          <div class="pf-row cols-2">
+            <div class="pf-group">
+              <label>Previous Dentist's Name</label>
+              <input type="text" id="rec-dentist" placeholder="Dr. First Last" />
+            </div>
+            <div class="pf-group">
+              <label>Practice Phone</label>
+              <input type="tel" id="rec-phone" placeholder="Previous office phone" />
+            </div>
+          </div>
+          <div class="pf-row cols-2">
+            <div class="pf-group">
+              <label>Practice Fax or Email</label>
+              <input type="text" id="rec-fax" placeholder="Fax number or email address" />
+            </div>
+          </div>
+
+          <div class="section-divider">Signature</div>
+          <div class="sig-box">
+            <p>By typing your full name below, you confirm that all information provided is accurate and that you agree to the policies above. This serves as your electronic signature.</p>
+            <input type="text" class="sig-name-input" id="sig-name" placeholder="Type your full legal name" />
+            <div class="sig-date" id="sig-date-display"></div>
+          </div>
+
+          <div id="form-error" style="display:none;background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:14px 18px;margin-top:16px;font-family:Inter,sans-serif;font-size:13px;color:#dc2626;"></div>
+
+          <div class="wizard-nav">
+            <div class="step-count">Step 5 of 5</div>
+            <button class="btn-back" onclick="goBack(5)">← Back</button>
+            <button class="btn-submit" id="submit-btn" onclick="submitForms()">Submit My Forms →</button>
+          </div>
+        </div>
+
+      </div><!-- /form-card -->
+    </div><!-- /wizard-inner -->
+  </div><!-- /wizard-wrap -->
+
+  <!-- CTA BAND -->
+  <section class="cta-band">
+    <div class="section-inner">
+      <div class="cta-band-content">
+        <h2 class="cta-band-title">Ready to schedule your appointment?</h2>
+        <p class="cta-band-sub">Complete your forms first, then book your visit online in seconds.</p>
+        <div class="cta-band-actions">
+          <a href="contact.html" class="btn-primary-light">Book My Appointment →</a>
+          <a href="tel:4809229933" class="btn-outline-light">Call (480) 922-9933</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-col footer-brand">
+        <div class="footer-logo-text">Scottsdale Surgical Arts</div>
+        <p class="footer-tagline">Oral &amp; Maxillofacial Surgery<br>Scottsdale · Sedona, Arizona</p>
+        <div class="footer-phones">
+          <a href="tel:4809229933">Scottsdale: (480) 922-9933</a>
+          <a href="tel:9282821224">Sedona: (928) 282-1224</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Our Services</h4>
+        <ul class="footer-links">
+          <li><a href="services.html">Dental Implants</a></li>
+          <li><a href="services.html">Wisdom Teeth Removal</a></li>
+          <li><a href="services.html">Bone Grafting</a></li>
+          <li><a href="services.html">IV Sedation</a></li>
+          <li><a href="services.html">Oral Pathology</a></li>
+          <li><a href="services.html">Jaw Surgery</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Patient Resources</h4>
+        <ul class="footer-links">
+          <li><a href="patient-info.html">New Patient Forms</a></li>
+          <li><a href="contact.html">Existing Patient Booking</a></li>
+          <li><a href="about.html">About Our Practice</a></li>
+          <li><a href="team.html">Our Surgical Team</a></li>
+          <li><a href="services.html">Before &amp; After Gallery</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Scottsdale Surgical Arts. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Accessibility</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MOBILE STICKY CTA -->
+  <div class="mobile-sticky-cta" id="mobile-sticky">
+    <a href="tel:4809229933" class="mobile-sticky-call">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.38 2 2 0 0 1 3.59 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17z"/></svg>
+      Call
+    </a>
+    <a href="contact.html" class="mobile-sticky-book">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Book
+    </a>
+    <button class="mobile-sticky-chat" onclick="window.aiChat && aiChat.toggle()">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Chat
+    </button>
+  </div>
+
+  <script src="/chat-widget.js"></script>
+  <script>
+    // ── NAV ──────────────────────────────────────────────
+    function toggleMobileMenu() {
+      document.getElementById('mobile-menu').classList.toggle('open');
+    }
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // ── DATE ─────────────────────────────────────────────
+    const today = new Date();
+    document.getElementById('sig-date-display').textContent =
+      'Date: ' + today.toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+
+    // ── WOMEN'S SECTION TOGGLE ───────────────────────────
+    function checkGenderForWomens() {
+      const selected = document.querySelector('#gender-group .radio-opt.selected');
+      const ws = document.getElementById('womens-section');
+      if (selected && selected.querySelector('input').value === 'Female') {
+        ws.style.display = 'block';
+      } else {
+        ws.style.display = 'none';
+      }
+    }
+    document.querySelectorAll('#gender-group .radio-opt').forEach(opt => {
+      opt.addEventListener('click', checkGenderForWomens);
+    });
+
+    // ── CHILD SECTION TOGGLE ──────────────────────────────
+    function checkDOBForChild() {
+      const dobVal = document.getElementById('p-dob').value;
+      if (dobVal) {
+        const age = Math.floor((new Date() - new Date(dobVal)) / 31557600000);
+        document.getElementById('child-section').style.display = age < 18 ? 'block' : 'none';
+      }
+    }
+    document.getElementById('p-dob').addEventListener('change', checkDOBForChild);
+
+    // ── RADIO SELECT ──────────────────────────────────────
+    function selectRadio(el, groupId) {
+      document.querySelectorAll('#' + groupId + ' .radio-opt').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+
+    // ── Y/N SELECT ────────────────────────────────────────
+    function selectYN(el, groupId) {
+      document.querySelectorAll('#' + groupId + ' .yn-opt').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+
+    // ── CONDITION TOGGLE ──────────────────────────────────
+    function toggleCond(el) {
+      el.classList.toggle('checked');
+      el.querySelector('input').checked = el.classList.contains('checked');
+    }
+
+    // ── ALLERGY Y/N ───────────────────────────────────────
+    function selectAllergyYN(el) {
+      const siblings = el.parentElement.querySelectorAll('.yn-mini-opt');
+      siblings.forEach(s => s.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+
+    // ── SECONDARY INSURANCE ───────────────────────────────
+    function toggleSecondary() {
+      const checked = document.getElementById('has-secondary').checked;
+      document.getElementById('secondary-ins-fields').style.display = checked ? 'block' : 'none';
+    }
+
+    // ── PHYSICIAN ─────────────────────────────────────────
+    function togglePhysician(show) {
+      document.getElementById('physician-fields').style.display = show ? 'block' : 'none';
+    }
+
+    // ── TOBACCO ───────────────────────────────────────────
+    function toggleTobacco(show) {
+      document.getElementById('tobacco-years').style.display = show ? 'block' : 'none';
+    }
+
+    // ── PREGNANCY ─────────────────────────────────────────
+    function togglePreg(show) {
+      document.getElementById('preg-week').style.display = show ? 'block' : 'none';
+    }
+
+    // ── PAYMENT SELECT ────────────────────────────────────
+    function selectPayment(id) {
+      document.querySelectorAll('.payment-opt').forEach(o => o.classList.remove('selected'));
+      document.getElementById('pay-' + id).classList.add('selected');
+    }
+
+    // ── CONSENT CHECKBOX ──────────────────────────────────
+    function toggleConsent(el, id) {
+      const cb = el.querySelector('input[type=checkbox]');
+      cb.checked = !cb.checked;
+      el.classList.toggle('checked', cb.checked);
+    }
+
+    // ── MED LIST ─────────────────────────────────────────
+    function addMed() {
+      const list = document.getElementById('med-list');
+      const row = document.createElement('div');
+      row.className = 'med-row';
+      row.innerHTML = '<input type="text" placeholder="Medication name, dose, frequency" /><button class="med-remove" onclick="removeMed(this)" title="Remove">×</button>';
+      list.appendChild(row);
+    }
+    function removeMed(btn) {
+      const list = document.getElementById('med-list');
+      if (list.children.length > 1) btn.parentElement.remove();
+      else btn.previousElementSibling.value = '';
+    }
+
+    // ── STEP NAVIGATION ───────────────────────────────────
+    let currentStep = 1;
+    function goNext(from) {
+      if (!validateStep(from)) return;
+      showStep(from + 1);
+    }
+    function goBack(from) {
+      showStep(from - 1);
+    }
+    function showStep(n) {
+      document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('step-' + n).classList.add('active');
+
+      document.querySelectorAll('.progress-step').forEach((s, i) => {
+        s.classList.remove('active', 'done');
+        if (i + 1 < n) s.classList.add('done');
+        if (i + 1 === n) s.classList.add('active');
+      });
+
+      currentStep = n;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function validateStep(step) {
+      if (step === 1) {
+        const req = ['p-lname','p-fname','p-dob','p-mobile','p-email','ec-name','ec-phone'];
+        for (const id of req) {
+          const el = document.getElementById(id);
+          if (!el.value.trim()) {
+            el.focus();
+            el.style.borderColor = '#EB532F';
+            setTimeout(() => el.style.borderColor = '', 2000);
+            return false;
+          }
+        }
+      }
+      if (step === 3) {
+        if (!document.getElementById('hh-reason').value.trim()) {
+          document.getElementById('hh-reason').focus();
+          return false;
+        }
+      }
+      return true;
+    }
+
+    // ── COLLECT ALL FORM DATA ──────────────────────────────
+    function getRadioVal(name) {
+      const el = document.querySelector('input[name="' + name + '"]:checked');
+      return el ? el.value : '—';
+    }
+    function getAllergyData() {
+      const rows = document.querySelectorAll('#allergy-grid .allergy-item');
+      const result = [];
+      rows.forEach(row => {
+        const name = row.querySelector('.allergy-name').textContent;
+        const selected = row.querySelector('.yn-mini-opt.selected');
+        result.push(name + ': ' + (selected ? selected.textContent === 'Y' ? 'Yes' : 'No' : 'Not answered'));
+      });
+      return result.join('\n');
+    }
+    function getConditions() {
+      const checked = document.querySelectorAll('#conditions-grid .cond-item.checked');
+      if (!checked.length) return 'None reported';
+      return Array.from(checked).map(c => c.querySelector('input').value).join(', ');
+    }
+    function getMedications() {
+      const inputs = document.querySelectorAll('#med-list .med-row input');
+      const meds = Array.from(inputs).map(i => i.value.trim()).filter(v => v);
+      return meds.length ? meds.join('\n') : 'None reported';
+    }
+
+    // ── SUBMIT ────────────────────────────────────────────
+    function submitForms() {
+      const errEl = document.getElementById('form-error');
+      errEl.style.display = 'none';
+
+      const sigName = document.getElementById('sig-name').value.trim();
+      const cancelOk = document.getElementById('cancel-policy-check').checked;
+      const hipaaOk = document.getElementById('hipaa-check').checked;
+      const treatOk = document.getElementById('treatment-check').checked;
+      const payVal = getRadioVal('payment');
+
+      if (!sigName) { showError('Please type your full legal name as your signature.'); return; }
+      if (!cancelOk) { showError('Please acknowledge the cancellation policy.'); return; }
+      if (!hipaaOk) { showError('Please agree to the HIPAA patient information consent.'); return; }
+      if (!treatOk) { showError('Please agree to the treatment consent.'); return; }
+      if (payVal === '—') { showError('Please select a payment method.'); return; }
+
+      const btn = document.getElementById('submit-btn');
+      btn.disabled = true;
+      btn.textContent = 'Submitting…';
+
+      const payload = {
+        // Step 1
+        patient: {
+          lastName: document.getElementById('p-lname').value,
+          firstName: document.getElementById('p-fname').value,
+          middleInitial: document.getElementById('p-mi').value,
+          dob: document.getElementById('p-dob').value,
+          gender: getRadioVal('gender'),
+          maritalStatus: getRadioVal('marital'),
+          ssn: document.getElementById('p-ssn').value,
+          nickname: document.getElementById('p-nickname').value,
+          address: document.getElementById('p-address').value,
+          city: document.getElementById('p-city').value,
+          state: document.getElementById('p-state').value,
+          zip: document.getElementById('p-zip').value,
+          mobile: document.getElementById('p-mobile').value,
+          homePhone: document.getElementById('p-homephone').value,
+          workPhone: document.getElementById('p-workphone').value,
+          email: document.getElementById('p-email').value,
+          employer: document.getElementById('p-employer').value,
+          referredBy: document.getElementById('p-referred').value,
+          driverLicense: document.getElementById('p-dl').value,
+          dlState: document.getElementById('p-dl-state').value,
+          guardian: document.getElementById('p-guardian').value,
+          guardianRel: document.getElementById('p-guardian-rel').value,
+        },
+        emergencyContact: {
+          name: document.getElementById('ec-name').value,
+          relationship: document.getElementById('ec-rel').value,
+          phone: document.getElementById('ec-phone').value,
+        },
+        // Step 2
+        primaryInsurance: {
+          company: document.getElementById('ins1-company').value,
+          employer: document.getElementById('ins1-employer').value,
+          groupNumber: document.getElementById('ins1-group').value,
+          phone: document.getElementById('ins1-phone').value,
+          address: document.getElementById('ins1-address').value,
+          cityStateZip: document.getElementById('ins1-csz').value,
+          employeeName: document.getElementById('ins1-employee').value,
+          employeeDob: document.getElementById('ins1-dob').value,
+          memberId: document.getElementById('ins1-id').value,
+          relationship: document.getElementById('ins1-rel').value,
+        },
+        hasSecondaryInsurance: document.getElementById('has-secondary').checked,
+        secondaryInsurance: {
+          company: document.getElementById('ins2-company').value,
+          employer: document.getElementById('ins2-employer').value,
+          groupNumber: document.getElementById('ins2-group').value,
+          phone: document.getElementById('ins2-phone').value,
+          employeeName: document.getElementById('ins2-employee').value,
+          employeeDob: document.getElementById('ins2-dob').value,
+          memberId: document.getElementById('ins2-id').value,
+          relationship: document.getElementById('ins2-rel').value,
+        },
+        // Step 3
+        healthHistory: {
+          reasonForVisit: document.getElementById('hh-reason').value,
+          requiresAntibiotics: getRadioVal('hh-antibiotics'),
+          currentlyInPain: getRadioVal('hh-pain'),
+          tmjPain: getRadioVal('hh-tmj'),
+          frequentHeadaches: getRadioVal('hh-headaches'),
+          dentalHealthRating: getRadioVal('hh-dental-health'),
+          flossDaily: getRadioVal('hh-floss'),
+          brushDaily: getRadioVal('hh-brush'),
+          toothbrushType: getRadioVal('hh-brush-type'),
+          bristleHardness: getRadioVal('hh-bristles'),
+          gumsBleed: getRadioVal('hh-gums'),
+          periodontaldisease: getRadioVal('hh-perio'),
+          conditions: getConditions(),
+          conditionsOther: document.getElementById('hh-conditions-other').value,
+          underPhysicianCare: getRadioVal('hh-physician'),
+          physicianName: document.getElementById('hh-phys-name').value,
+          physicianPhone: document.getElementById('hh-phys-phone').value,
+          physicianAddress: document.getElementById('hh-phys-address').value,
+          physicianLastVisit: document.getElementById('hh-phys-lastvisit').value,
+          usesTobacco: getRadioVal('hh-tobacco'),
+          tobaccoYears: document.getElementById('hh-tobacco-years').value,
+          birthControl: getRadioVal('hh-bc'),
+          pregnant: getRadioVal('hh-preg'),
+          pregnancyWeek: document.getElementById('hh-preg-week').value,
+          nursing: getRadioVal('hh-nursing'),
+        },
+        // Step 4
+        allergies: getAllergyData(),
+        allergyOther: document.getElementById('allergy-other').value,
+        medications: getMedications(),
+        // Step 5
+        payment: payVal,
+        authorizedParties: [
+          { name: document.getElementById('auth1-name').value, relationship: document.getElementById('auth1-rel').value },
+          { name: document.getElementById('auth2-name').value, relationship: document.getElementById('auth2-rel').value },
+        ],
+        recordsRelease: {
+          previousDentist: document.getElementById('rec-dentist').value,
+          phone: document.getElementById('rec-phone').value,
+          faxEmail: document.getElementById('rec-fax').value,
+        },
+        signature: sigName,
+        signatureDate: today.toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' }),
+      };
+
+      fetch('/api/patient-forms', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      .then(r => r.json())
+      .then(() => {
+        document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+        document.getElementById('progress-bar').style.display = 'none';
+        document.getElementById('success-panel').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      })
+      .catch(() => {
+        btn.disabled = false;
+        btn.textContent = 'Submit My Forms →';
+        showError('Something went wrong. Please call us at (480) 922-9933 and we\'ll take your information over the phone.');
+      });
+    }
+
+    function showError(msg) {
+      const el = document.getElementById('form-error');
+      el.textContent = msg;
+      el.style.display = 'block';
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  </script>
+</body>
+</html>
