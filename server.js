@@ -44,20 +44,29 @@ function calendlyGet(path) {
 }
 
 async function getAvailableSlots(preferenceDays, preferenceTime) {
-  // Fetch next 14 days of availability
-  const start = new Date();
-  start.setDate(start.getDate() + 1);
-  start.setHours(0, 0, 0, 0);
+  // Calendly max range is 7 days — query two 7-day windows and combine
+  const allSlots = [];
 
-  const end = new Date(start);
-  end.setDate(end.getDate() + 14);
+  for (let week = 0; week < 2; week++) {
+    const start = new Date();
+    start.setDate(start.getDate() + 1 + (week * 7));
+    start.setHours(0, 0, 0, 0);
 
-  const startStr = start.toISOString().replace('.000', '');
-  const endStr = end.toISOString().replace('.000', '');
+    const end = new Date(start);
+    end.setDate(end.getDate() + 6);
+    end.setHours(23, 59, 59, 0);
 
-  const data = await calendlyGet(
-    `/event_type_available_times?event_type=${encodeURIComponent(CALENDLY_EVENT_TYPE_URI)}&start_time=${startStr}&end_time=${endStr}`
-  );
+    const startStr = start.toISOString().split('.')[0] + 'Z';
+    const endStr = end.toISOString().split('.')[0] + 'Z';
+
+    const data = await calendlyGet(
+      `/event_type_available_times?event_type=${encodeURIComponent(CALENDLY_EVENT_TYPE_URI)}&start_time=${startStr}&end_time=${endStr}`
+    );
+    console.log(`Week ${week + 1} slots found: ${(data.collection || []).length} (${startStr} to ${endStr})`);
+    allSlots.push(...(data.collection || []));
+  }
+
+  let slots = allSlots;
 
   let slots = data.collection || [];
 
