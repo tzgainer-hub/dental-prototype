@@ -48,9 +48,12 @@ dental-prototype/
 ├── services.html        ← Our Services + Before/After gallery
 ├── about.html           ← About Us + Technology
 ├── team.html            ← Surgeons + Support Staff
-├── contact.html         ← Existing patients page: Calendly booking + message form
+├── contact.html         ← Existing patients: Calendly direct booking + message form
+├── patient-info.html    ← New patient digital forms (5-step wizard) — linked from nav + topbar
+├── patient-portal.html  ← Placeholder page (future upsell: connect to practice software)
+├── pay-bill.html        ← Placeholder page (future upsell: online payments)
 ├── styles.css           ← ALL shared CSS (never inline styles in HTML pages)
-├── chat-widget.js       ← AI patient intake chat widget (loads on all 5 pages)
+├── chat-widget.js       ← AI patient intake chat widget (loads on all pages)
 ├── server.js            ← Express server: static files + AI chat API + email + Calendly
 ├── package.json         ← Dependencies: express, @anthropic-ai/sdk, nodemailer
 ├── pricing.html         ← Fee schedule (Option A vs B) — send to prospects
@@ -86,6 +89,25 @@ This is the core differentiator of the White Coat Website product. Every page ha
 - Nav button says **"Existing Patients"** → goes to contact.html
 - Top of contact.html: **"Book Your Next Visit Instantly"** → amber button → straight to Calendly
 - Below: **"Not ready to schedule?"** message form → name, phone, email, message → emails front desk
+
+**New patient forms flow:**
+- Nav "Patient Info" → `patient-info.html` (5-step digital intake wizard)
+- Topbar "Patient Forms" → same page
+- Sarah mentions the forms link in chat after booking summary
+- Patient confirmation email includes a teal CTA block linking to patient-info.html
+- On submit → `/api/patient-forms` → emails full intake to `tomz@pointzeroai.com` + confirmation to patient
+- Sections: Personal Info, Insurance (primary + optional secondary), Health History (conditions checklist, physician, tobacco, women's health), Allergies & Medications, Consent & Signature
+- Antibiotic flag: if patient checks "requires antibiotics before treatment," a warning banner appears at top of front desk email
+
+**Navigation structure (all pages):**
+- Topbar: Phone · **Patient Forms** (→ patient-info.html) · Pay My Bill (→ pay-bill.html)
+- Nav links: Home · Our Services · About Us · Our Team · **Patient Info** (→ patient-info.html)
+- Nav right button: **Existing Patients** (→ contact.html)
+
+**Future upsell (in pocket):**
+- Patient portal connected to practice management software (Dentrix, NexHealth, etc.)
+- Online bill pay integration
+- Both placeholder pages exist: patient-portal.html, pay-bill.html
 
 ### Railway Environment Variables (ALL REQUIRED)
 
