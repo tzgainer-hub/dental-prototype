@@ -83,14 +83,15 @@ async function getAvailableSlots(preferenceDays, preferenceTime) {
 
   if (preferenceTime === 'morning') {
     const filtered = slots.filter(s => {
-      const hour = new Date(s.start_time).getHours();
-      return hour < 12;
+      // Arizona is UTC-7 (no DST)
+      const hourAZ = (new Date(s.start_time).getUTCHours() - 7 + 24) % 24;
+      return hourAZ < 12;
     });
     if (filtered.length > 0) slots = filtered;
   } else if (preferenceTime === 'afternoon') {
     const filtered = slots.filter(s => {
-      const hour = new Date(s.start_time).getHours();
-      return hour >= 12;
+      const hourAZ = (new Date(s.start_time).getUTCHours() - 7 + 24) % 24;
+      return hourAZ >= 12;
     });
     if (filtered.length > 0) slots = filtered;
   }
