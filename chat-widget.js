@@ -291,6 +291,19 @@
     if (enabled) input.focus();
   }
 
+  function showBookingButton(link) {
+    const div = document.createElement('div');
+    div.style.cssText = 'align-self:center;text-align:center;margin:8px 0;';
+    div.innerHTML = `
+      <a href="${link}" target="_blank" style="display:inline-block;background:#f59e0b;color:white;text-decoration:none;border-radius:10px;padding:12px 24px;font-size:14px;font-weight:700;font-family:Inter,sans-serif;box-shadow:0 4px 14px rgba(245,158,11,0.4);">
+        ✓ Confirm My Appointment
+      </a>
+      <p style="font-size:11px;color:#64748b;margin:6px 0 0;font-family:Inter,sans-serif;">Opens Calendly — takes 30 seconds</p>
+    `;
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
   function showEmailNotice() {
     const div = document.createElement('div');
     div.className = 'chat-email-notice';
@@ -382,6 +395,7 @@
           hideTyping();
           if (data.error) throw new Error(data.error);
           addBubble(data.message, 'agent');
+          if (data.bookingLink) showBookingButton(data.bookingLink);
           if (data.emailSent) showEmailNotice();
           setInputEnabled(true);
         })
