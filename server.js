@@ -215,6 +215,14 @@ async function sendPatientConfirmationEmail(patientEmail, patientName, summaryTe
           </div>
           ` : ''}
 
+          <div style="background:#f0fdff;border:1px solid #cffafe;border-radius:10px;padding:20px 24px;margin:20px 0;">
+            <p style="margin:0 0 6px;font-size:13px;font-weight:700;color:#0891b2;text-transform:uppercase;letter-spacing:0.05em;">One more step — Complete Your Patient Forms</p>
+            <p style="margin:0 0 14px;font-size:14px;color:#374151;line-height:1.6;">Save time at your appointment by completing your new patient health history online before you arrive. It takes about 5 minutes and means no paperwork when you get here.</p>
+            <a href="https://dental-prototype-production.up.railway.app/patient-info.html" style="display:inline-block;background:#0891b2;color:white;text-decoration:none;border-radius:8px;padding:12px 26px;font-size:14px;font-weight:700;">
+              Complete New Patient Forms →
+            </a>
+          </div>
+
           <div style="border-top:1px solid #e2e8f0;margin-top:24px;padding-top:20px;">
             <p style="font-size:14px;color:#64748b;margin:0 0 8px;"><strong>Scottsdale Office</strong><br>10603 N. Hayden Road, Suite H-112<br>Scottsdale, AZ 85260<br><a href="tel:4809229933" style="color:#0891b2;">(480) 922-9933</a></p>
             <p style="font-size:14px;color:#64748b;margin:16px 0 0;"><strong>Sedona Office</strong><br>2935 Southwest Drive, Suite 100<br>Sedona, AZ 86336<br><a href="tel:9282821224" style="color:#0891b2;">(928) 282-1224</a></p>
@@ -256,7 +264,7 @@ After they confirm, THEN collect the remaining details conversationally:
 - Which location: Scottsdale (10603 N Hayden Rd) or Sedona (2935 Southwest Dr)
 - Any questions or concerns
 
-End with a clean summary titled "New Patient Intake Summary" with everything collected.
+End with a clean summary titled "New Patient Intake Summary" with everything collected. Then add one final message: "One last thing — to save time at your appointment, you can complete your new patient health history forms online before you arrive: https://dental-prototype-production.up.railway.app/patient-info.html — takes about 5 minutes and means no paperwork when you get here!"
 
 ## IF THEY HAVE QUESTIONS FIRST
 

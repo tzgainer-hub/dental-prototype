@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pay My Bill | Scottsdale Surgical Arts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-left">
+        <div class="topbar-item">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8a8 8 0 1 1 16 0c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+          Scottsdale · Sedona
+        </div>
+        <div class="topbar-item">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Same-Day Emergency Appointments Available
+        </div>
+      </div>
+      <div class="topbar-right">
+        <a href="tel:4809229933" class="topbar-phone">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.38 2 2 0 0 1 3.59 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17z"/></svg>
+          (480) 922-9933
+        </a>
+        <a href="patient-portal.html" class="topbar-link">Patient Portal</a>
+        <a href="pay-bill.html" class="topbar-link" style="color:#f59e0b;">Pay My Bill</a>
+      </div>
+    </div>
+  </div>
+
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-text">
+          <span class="logo-name">Scottsdale Surgical Arts</span>
+          <span class="logo-sub">Oral &amp; Maxillofacial Surgery</span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Our Services</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="team.html">Our Team</a></li>
+        <li><a href="patient-info.html">Patient Info</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="tel:4809229933" class="nav-phone-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.38 2 2 0 0 1 3.59 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17z"/></svg>
+          (480) 922-9933
+        </a>
+        <a href="contact.html" class="nav-book-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span>Existing Patients</span>
+        </a>
+      </div>
+      <button class="nav-hamburger" onclick="document.getElementById('mobile-menu').classList.toggle('open')" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="index.html">Home</a>
+      <a href="services.html">Our Services</a>
+      <a href="about.html">About Us</a>
+      <a href="team.html">Our Team</a>
+      <a href="patient-info.html">Patient Info</a>
+      <a href="tel:4809229933">(480) 922-9933</a>
+      <a href="contact.html" class="mobile-book">Book Your Appointment →</a>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="section-inner">
+      <div class="page-hero-eyebrow">Billing &amp; Payments</div>
+      <h1 class="page-hero-title">Pay My Bill</h1>
+      <div class="page-hero-breadcrumb"><a href="index.html">Home</a> → Pay My Bill</div>
+    </div>
+  </section>
+
+  <section style="padding:80px 0;background:#f8fafc;">
+    <div style="max-width:680px;margin:0 auto;padding:0 24px;text-align:center;">
+
+      <div style="width:80px;height:80px;background:#fff9ec;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 28px;">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      </div>
+
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:2.2rem;color:#0c1a2e;margin:0 0 14px;">Online Payments Coming Soon</h2>
+      <p style="font-family:Inter,sans-serif;font-size:15px;color:#64748b;line-height:1.8;margin:0 0 36px;">
+        Our secure online payment system is being finalized. In the meantime, our billing team is available to process your payment over the phone or in person at either of our offices.
+      </p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:40px;">
+        <a href="tel:4809229933" style="display:flex;flex-direction:column;align-items:center;gap:10px;padding:24px 20px;background:#fff;border:1.5px solid #e2e8f0;border-radius:14px;text-decoration:none;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0891b2" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.38 2 2 0 0 1 3.59 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17z"/></svg>
+          <div>
+            <div style="font-family:Inter,sans-serif;font-size:13px;font-weight:700;color:#0c1a2e;">Scottsdale Billing</div>
+            <div style="font-family:Inter,sans-serif;font-size:14px;color:#0891b2;font-weight:600;">(480) 922-9933</div>
+          </div>
+        </a>
+        <a href="tel:9282821224" style="display:flex;flex-direction:column;align-items:center;gap:10px;padding:24px 20px;background:#fff;border:1.5px solid #e2e8f0;border-radius:14px;text-decoration:none;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0891b2" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.38 2 2 0 0 1 3.59 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17z"/></svg>
+          <div>
+            <div style="font-family:Inter,sans-serif;font-size:13px;font-weight:700;color:#0c1a2e;">Sedona Billing</div>
+            <div style="font-family:Inter,sans-serif;font-size:14px;color:#0891b2;font-weight:600;">(928) 282-1224</div>
+          </div>
+        </a>
+      </div>
+
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:24px 28px;text-align:left;">
+        <div style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#0891b2;margin-bottom:14px;">Payment options we accept</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div style="display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif;font-size:14px;color:#374151;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Visa / Mastercard
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif;font-size:14px;color:#374151;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            American Express
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif;font-size:14px;color:#374151;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Check or Cash
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif;font-size:14px;color:#374151;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            CareCredit Financing
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif;font-size:14px;color:#374151;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            FSA / HSA Cards
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif;font-size:14px;color:#374151;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Most Major Insurance
+          </div>
+        </div>
+      </div>
+
+      <p style="font-family:Inter,sans-serif;font-size:13px;color:#94a3b8;margin-top:28px;">
+        Office hours: Mon–Thu 7am–5pm · Fri 7am–3pm · Sat 8am–12pm
+      </p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-col footer-brand">
+        <div class="footer-logo-text">Scottsdale Surgical Arts</div>
+        <p class="footer-tagline">Oral &amp; Maxillofacial Surgery<br>Scottsdale · Sedona, Arizona</p>
+        <div class="footer-phones">
+          <a href="tel:4809229933">Scottsdale: (480) 922-9933</a>
+          <a href="tel:9282821224">Sedona: (928) 282-1224</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Our Services</h4>
+        <ul class="footer-links">
+          <li><a href="services.html">Dental Implants</a></li>
+          <li><a href="services.html">Wisdom Teeth Removal</a></li>
+          <li><a href="services.html">Bone Grafting</a></li>
+          <li><a href="services.html">IV Sedation</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Patient Resources</h4>
+        <ul class="footer-links">
+          <li><a href="patient-info.html">New Patient Forms</a></li>
+          <li><a href="contact.html">Book an Appointment</a></li>
+          <li><a href="patient-portal.html">Patient Portal</a></li>
+          <li><a href="pay-bill.html">Pay My Bill</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Scottsdale Surgical Arts. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Accessibility</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/chat-widget.js"></script>
+</body>
+</html>
