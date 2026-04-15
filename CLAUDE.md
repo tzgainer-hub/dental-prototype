@@ -20,6 +20,26 @@ Point Zero AI builds **premium, custom websites for healthcare professionals** (
 
 ---
 
+## Build Tools — Claude Code + Google Stitch
+
+This project is built using **two tools working together:**
+
+### Claude Code (this tool)
+- Writes all HTML, CSS, JavaScript, and server code
+- Handles logic: AI chat, Calendly integration, email, form submissions
+- Cannot visually "see" rendered output — works from code only
+
+### Google Stitch (MCP-connected design tool)
+- Used when visual design decisions are stuck or broken: colors, typography, layout, spacing, image placement
+- Claude Code cannot see what the page looks like in a browser. Stitch can render and iterate visually.
+- **When to use Stitch:** Any time there's a design problem that can't be solved by reading code alone — e.g., "the hero looks wrong," "fonts aren't rendering right," "the layout is broken on mobile"
+- Stitch tools available in session: `mcp__stitch__*` (generate_screen_from_text, edit_screens, apply_design_system, etc.)
+- The 4 proven color palettes and design system in this file came out of Stitch sessions
+
+**The workflow:** Stitch handles visual design → Claude Code implements it in clean HTML/CSS → deploy to Railway.
+
+---
+
 ## Repository & Deployment
 
 - **GitHub:** https://github.com/tzgainer-hub/dental-prototype.git
