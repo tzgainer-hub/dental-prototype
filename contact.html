@@ -144,9 +144,6 @@
             const lname = document.getElementById('lname').value.trim();
             const phone = document.getElementById('phone').value.trim();
             const email = document.getElementById('email').value.trim();
-            const service = document.getElementById('service').value;
-            const date = document.getElementById('date').value;
-            const location = document.getElementById('location').value;
             const message = document.getElementById('message').value.trim();
 
             if (!fname || !lname || !phone || !email) {
@@ -160,16 +157,20 @@
             fetch('/api/contact', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ fname, lname, phone, email, service, date, location, message })
+              body: JSON.stringify({ fname, lname, phone, email, message })
             })
             .then(r => r.json())
             .then(() => {
+              document.querySelector('.appt-form-wrap form, .appt-form-wrap > *:not(#appt-success):not(script)');
               btn.style.display = 'none';
-              document.getElementById('appt-success').style.display = 'block';
+              const success = document.getElementById('appt-success');
+              success.innerHTML = '<strong style="font-size:16px;">Thanks for reaching out, ' + fname + '!</strong><br><br>We\'ve received your message and will be in touch as soon as possible — usually within 2 hours during business hours.<br><br>If it\'s urgent, call us directly at <a href="tel:4809229933" style="color:#15803d;">(480) 922-9933</a>.';
+              success.style.display = 'block';
+              success.scrollIntoView({ behavior: 'smooth', block: 'center' });
             })
             .catch(() => {
               btn.disabled = false;
-              btn.textContent = '📅 Request My Appointment';
+              btn.textContent = 'Send Message';
               alert('Something went wrong. Please call us at (480) 922-9933.');
             });
           }

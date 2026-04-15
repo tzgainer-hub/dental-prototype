@@ -25,12 +25,13 @@ Point Zero AI builds **premium, custom websites for healthcare professionals** (
 - **GitHub:** https://github.com/tzgainer-hub/dental-prototype.git
 - **Live URL:** https://dental-prototype-production.up.railway.app
 - **Deploy:** Auto-deploy via Railway on every push to `main`
-- **Stack:** Static HTML + CSS + Vanilla JS. No build step. No frameworks. Files serve directly.
-- **Server:** server.js (Express, serves static files from root)
+- **Stack:** Static HTML + CSS + Vanilla JS + Node.js/Express backend
+- **Server:** server.js (Express — serves static files AND powers the AI chat API and email)
+- **Local path:** `/Users/thomaszgainer/Desktop/dental-prototype/` (no space — different from old ClaudeWork path)
 
 **To deploy any change:**
 ```bash
-cd "/Users/thomaszgainer/Desktop/ClaudeWork /dental-prototype"
+cd "/Users/thomaszgainer/Desktop/dental-prototype"
 git add [files]
 git commit -m "description"
 git push
@@ -43,21 +44,115 @@ Railway picks it up automatically. Live in ~60 seconds.
 
 ```
 dental-prototype/
-├── index.html          ← Home page
-├── services.html       ← Our Services + Before/After gallery
-├── about.html          ← About Us + Technology
-├── team.html           ← Surgeons + Support Staff
-├── contact.html        ← Appointment form + Map + FAQ
-├── styles.css          ← ALL shared CSS (never inline styles in HTML pages)
-├── pricing.html        ← Fee schedule (Option A vs B) — send to prospects
-├── intake-form.html    ← Client onboarding form — send after close
-├── hub.html            ← Internal sales hub for closers
+├── index.html           ← Home page (includes AI chat widget)
+├── services.html        ← Our Services + Before/After gallery
+├── about.html           ← About Us + Technology
+├── team.html            ← Surgeons + Support Staff
+├── contact.html         ← Existing patients page: Calendly booking + message form
+├── styles.css           ← ALL shared CSS (never inline styles in HTML pages)
+├── chat-widget.js       ← AI patient intake chat widget (loads on all 5 pages)
+├── server.js            ← Express server: static files + AI chat API + email + Calendly
+├── package.json         ← Dependencies: express, @anthropic-ai/sdk, nodemailer
+├── pricing.html         ← Fee schedule (Option A vs B) — send to prospects
+├── intake-form.html     ← Client onboarding form — send after close
+├── hub.html             ← Internal sales hub for closers
 ├── outreach-emails.html ← 3-touch email sequence for 900-client campaign
-├── sms-sequence.html   ← SMS text sequence + phone scripts
-├── server.js           ← Express static file server for Railway
-├── package.json
-└── CLAUDE.md           ← This file
+├── sms-sequence.html    ← SMS text sequence + phone scripts
+└── CLAUDE.md            ← This file
 ```
+
+---
+
+## AI Patient Intake Agent — "Sarah"
+
+This is the core differentiator of the White Coat Website product. Every page has a chat widget powered by Claude that acts as a virtual receptionist named Sarah.
+
+### How It Works
+
+**Patient flow (new patients):**
+1. Patient clicks **"Schedule a Visit"** button (bottom right, all pages)
+2. Chat opens: "Book Your Appointment — Hi! I'm Sarah, your virtual assistant"
+3. Sarah fast-tracks: collects name, email, day preference, time preference (4 questions)
+4. Server fetches real available slots from Calendly API
+5. Clickable slot buttons appear — one per day, spread across multiple days/weeks
+6. Patient taps a slot → amber **"Confirm My Appointment"** button appears
+7. Patient clicks → Calendly opens pre-filled with their name and email → one-click confirm
+8. Two emails fire simultaneously:
+   - **Front desk email** → `tomz@pointzeroai.com` with full intake summary
+   - **Patient confirmation email** → their inbox with summary + Calendly booking link
+9. Patient can click **"Save My Transcript"** to download the full conversation as a .txt file
+
+**Existing patient flow:**
+- Nav button says **"Existing Patients"** → goes to contact.html
+- Top of contact.html: **"Book Your Next Visit Instantly"** → amber button → straight to Calendly
+- Below: **"Not ready to schedule?"** message form → name, phone, email, message → emails front desk
+
+### Railway Environment Variables (ALL REQUIRED)
+
+| Variable | Value | Purpose |
+|----------|-------|---------|
+| `ANTHROPIC_API_KEY` | `sk-ant-...` | Powers Sarah (Claude claude-opus-4-5) |
+| `GMAIL_USER` | `tzgainer@gmail.com` | Email sender |
+| `GMAIL_APP_PASSWORD` | 16-char app password | Gmail authentication |
+| `CALENDLY_API_TOKEN` | `eyJ...` | Fetches real calendar availability |
+
+### Calendly Config (hardcoded in server.js — change per client)
+
+```javascript
+const CALENDLY_EVENT_TYPE_URI = 'https://api.calendly.com/event_types/740bfb87-61f2-4851-8e9a-7f5cb41f9f03';
+const CALENDLY_SCHEDULING_URL = 'https://calendly.com/tomz-pointzeroai/30min';
+```
+
+**To find a new client's event type URI:**
+```bash
+curl "https://api.calendly.com/event_types?user=https://api.calendly.com/users/[UUID]" \
+  -H "Authorization: Bearer [CALENDLY_TOKEN]"
+```
+The user UUID is in the middle section of the JWT token (base64 decode the payload).
+
+### Slot Fetching Logic
+
+- Queries Calendly week-by-week (max 7 days per API call — Calendly limit)
+- Searches up to **6 weeks out** until it finds 4 matching slots
+- Filters by patient's preferred days (Monday, Tuesday, etc.) and time (morning/afternoon)
+- Timezone: **America/Phoenix (UTC-7, no DST)** — always convert before time-of-day filtering
+- Returns **one slot per calendar day** spread across different days (not 4 slots on same day)
+- Supports re-fetching: if patient says "3 weeks out" / "later" / "next month", Sarah emits `[FETCH_SLOTS]` again and server shifts search window accordingly
+
+### Sarah's Behavior (system prompt approach)
+
+Sarah uses Claude claude-opus-4-5 via `client.messages.create()` — NOT the beta sessions API.
+Conversation history is stored in-memory per session (`sessions` Map in server.js).
+Sessions are lost on server restart — this is acceptable for a demo.
+
+Sarah signals the server by writing `[FETCH_SLOTS]` in her response when ready to check the calendar.
+The server intercepts this, fetches real slots, injects them back, and Sarah presents them.
+
+### Email Flow
+
+**Front desk email** — fires when summary is detected:
+- From: SSA Patient Intake (Gmail)
+- To: `tomz@pointzeroai.com`
+- Subject: `New Patient Intake — [Date]`
+- Body: Full intake summary
+
+**Patient confirmation email** — fires at same time:
+- From: Scottsdale Surgical Arts (Gmail)
+- To: patient's email (extracted from conversation)
+- Subject: `Your Appointment Request — Scottsdale Surgical Arts`
+- Body: Warm greeting + copy of their intake info + Calendly booking button
+
+**Patient message form** (existing patients, contact.html):
+- To: `tomz@pointzeroai.com`
+- Subject: `Patient Message — [First Last]`
+
+### What's NOT Built Yet (future sessions)
+- SMS confirmation (requires Twilio setup)
+- Per-location calendars (currently one Calendly for all locations)
+- Per-client email addresses (currently uses Tom's Gmail for all demo emails)
+- Session persistence across page refreshes
+
+---
 
 ---
 
