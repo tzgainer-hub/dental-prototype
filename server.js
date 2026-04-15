@@ -68,8 +68,6 @@ async function getAvailableSlots(preferenceDays, preferenceTime) {
 
   let slots = allSlots;
 
-  let slots = data.collection || [];
-
   // Filter by patient preference
   if (preferenceDays && preferenceDays.length > 0) {
     const dayMap = { 'sunday': 0, 'monday': 1, 'tuesday': 2, 'wednesday': 3, 'thursday': 4, 'friday': 5, 'saturday': 6 };
