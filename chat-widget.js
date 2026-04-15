@@ -309,13 +309,54 @@
     div.className = 'chat-email-notice';
     div.innerHTML = `
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:5px"><polyline points="20 6 9 17 4 12"/></svg>
-      Summary sent to the front desk — they'll call you within one business day
+      <strong>You're all set!</strong> Check your email for your appointment confirmation.
       <br><br>
       <button onclick="window.aiChat.saveTranscript()" style="background:#0891b2;color:white;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif;margin-top:4px;">
         &#8681; Save My Transcript
       </button>
     `;
     messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function showSlotButtons(slots) {
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'display:flex;flex-direction:column;gap:8px;margin:4px 0;align-self:flex-start;width:100%;';
+    slots.forEach((slot, i) => {
+      const btn = document.createElement('button');
+      btn.style.cssText = 'background:#ffffff;border:1.5px solid #0891b2;border-radius:10px;padding:11px 16px;font-size:14px;font-family:Inter,sans-serif;color:#0891b2;font-weight:600;cursor:pointer;text-align:left;transition:all 0.15s;';
+      btn.textContent = slot.display;
+      btn.onmouseenter = () => { btn.style.background = '#0891b2'; btn.style.color = 'white'; };
+      btn.onmouseleave = () => { btn.style.background = '#ffffff'; btn.style.color = '#0891b2'; };
+      btn.onclick = () => {
+        // Remove slot buttons after selection
+        wrap.remove();
+        addBubble(slot.display, 'user');
+        setInputEnabled(false);
+        showTyping();
+        fetch(`/api/chat/message/${sessionId}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: slot.display })
+        })
+        .then(r => r.json())
+        .then(data => {
+          hideTyping();
+          if (data.error) throw new Error(data.error);
+          addBubble(data.message, 'agent');
+          if (data.bookingLink) showBookingButton(data.bookingLink);
+          if (data.emailSent) showEmailNotice();
+          setInputEnabled(true);
+        })
+        .catch(err => {
+          hideTyping();
+          addBubble('Something went wrong. Please try again or call (480) 922-9933.', 'status');
+          setInputEnabled(true);
+        });
+      };
+      wrap.appendChild(btn);
+    });
+    messages.appendChild(wrap);
     messages.scrollTop = messages.scrollHeight;
   }
 
@@ -395,6 +436,7 @@
           hideTyping();
           if (data.error) throw new Error(data.error);
           addBubble(data.message, 'agent');
+          if (data.availableSlots && data.availableSlots.length > 0) showSlotButtons(data.availableSlots);
           if (data.bookingLink) showBookingButton(data.bookingLink);
           if (data.emailSent) showEmailNotice();
           setInputEnabled(true);

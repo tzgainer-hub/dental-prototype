@@ -293,20 +293,24 @@ app.post('/api/chat/message/:sessionId', async (req, res) => {
         session.availableSlots = slots;
 
         if (slots.length > 0) {
-          const slotList = slots.map((s, i) => `${i + 1}. ${s.display}`).join('\n');
+          session.availableSlots = slots;
 
-          // Feed slots back to Sarah so she presents them naturally
-          session.messages.push({ role: 'user', content: `[SYSTEM: Real available slots from our calendar:\n${slotList}\n\nPlease present these to the patient naturally and ask which they prefer.]` });
+          // Feed slots to Sarah so she introduces them — widget renders the actual buttons
+          const slotList = slots.map((s, i) => `${i + 1}. ${s.display}`).join('\n');
+          session.messages.push({ role: 'user', content: `[SYSTEM: Real available slots from our calendar:\n${slotList}\n\nTell the patient you pulled up the calendar and have a few openings. Do NOT list the times yourself — just say something warm like "I've got a few openings that match your preferences — pick the one that works best!" The times will be shown as buttons automatically.]` });
 
           const slotResponse = await client.messages.create({
             model: 'claude-opus-4-5',
-            max_tokens: 512,
+            max_tokens: 256,
             system: SYSTEM_PROMPT,
             messages: session.messages
           });
 
           assistantText = slotResponse.content[0].text;
           session.messages.push({ role: 'assistant', content: assistantText });
+
+          // Return slots to frontend for rendering as buttons
+          return res.json({ message: assistantText, availableSlots: slots });
         } else {
           // No slots available — fall back gracefully
           session.messages.push({ role: 'user', content: '[SYSTEM: No online slots available right now. Please tell the patient the team will call to confirm within one business day.]' });
