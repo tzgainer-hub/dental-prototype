@@ -252,6 +252,7 @@
 
   // ── State ─────────────────────────────────────────────────────────────────
   let sessionId = null;
+  const transcript = []; // { role, text }
 
   const modal = document.getElementById('ai-chat-modal');
   const messages = document.getElementById('chat-messages');
@@ -265,6 +266,9 @@
     div.textContent = text;
     messages.appendChild(div);
     messages.scrollTop = messages.scrollHeight;
+    if (role === 'agent' || role === 'user') {
+      transcript.push({ role, text });
+    }
   }
 
   function showTyping() {
@@ -293,6 +297,10 @@
     div.innerHTML = `
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:5px"><polyline points="20 6 9 17 4 12"/></svg>
       Summary sent to the front desk — they'll call you within one business day
+      <br><br>
+      <button onclick="window.aiChat.saveTranscript()" style="background:#0891b2;color:white;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif;margin-top:4px;">
+        &#8681; Save My Transcript
+      </button>
     `;
     messages.appendChild(div);
     messages.scrollTop = messages.scrollHeight;
@@ -328,6 +336,31 @@
         modal.classList.add('open');
         if (!sessionId) startSession();
       }
+    },
+
+    saveTranscript: function () {
+      const lines = transcript.map(m => {
+        const label = m.role === 'agent' ? 'Sarah (Scottsdale Surgical Arts)' : 'You';
+        return `${label}:\n${m.text}`;
+      });
+      const content = [
+        'Scottsdale Surgical Arts — Appointment Intake Transcript',
+        `Date: ${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`,
+        '─'.repeat(50),
+        '',
+        lines.join('\n\n'),
+        '',
+        '─'.repeat(50),
+        'Scottsdale: (480) 922-9933  |  dental-prototype-production.up.railway.app'
+      ].join('\n');
+
+      const blob = new Blob([content], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'SSA-Intake-Transcript.txt';
+      a.click();
+      URL.revokeObjectURL(url);
     },
 
     sendMessage: function () {
