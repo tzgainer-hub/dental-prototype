@@ -103,8 +103,8 @@
     <div class="section-inner">
       <div class="appt-grid">
         <div class="appt-form-wrap">
-          <div class="form-title">Send Us a Message</div>
-          <p class="form-subtitle">Questions about billing, records, insurance, or anything else — we'll respond within 2 hours.</p>
+          <div class="form-title" style="font-size:1.1rem;">Not ready to schedule?</div>
+          <p class="form-subtitle">Have a question or comment for our team? We read every message and respond within 2 hours.</p>
           <div class="form-row">
             <div class="form-group">
               <label for="fname">First Name</label>
@@ -126,42 +126,16 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="service">Service Needed</label>
-            <select id="service">
-              <option value="">Select a service...</option>
-              <option>Dental Implants</option>
-              <option>Wisdom Teeth Removal</option>
-              <option>Bone Grafting</option>
-              <option>Jaw Surgery</option>
-              <option>Facial Trauma / Emergency</option>
-              <option>Sedation Consultation</option>
-              <option>Not Sure – Need a Consult</option>
-            </select>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="date">Preferred Date</label>
-              <input type="date" id="date" />
-            </div>
-            <div class="form-group">
-              <label for="location">Preferred Location</label>
-              <select id="location">
-                <option>Scottsdale — 10603 N. Hayden Rd.</option>
-                <option>Sedona — 2935 Southwest Dr.</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="message">Anything else we should know?</label>
-            <textarea id="message" placeholder="Tell us about your situation, concerns, or questions..."></textarea>
+            <label for="message">Your Message</label>
+            <textarea id="message" placeholder="Ask us anything — insurance questions, what to expect before surgery, billing, records requests..." style="min-height:120px;"></textarea>
           </div>
           <button type="button" class="form-submit" id="appt-submit-btn" onclick="submitAppointmentForm()">
-            📅 Request My Appointment
+            Send Message
           </button>
           <div id="appt-success" style="display:none;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:16px 20px;margin-top:16px;color:#15803d;font-size:14px;line-height:1.6;">
-            <strong>✓ Request received!</strong><br>Our team will call you within 2 hours to confirm your appointment.
+            <strong>✓ Message received!</strong><br>Someone from our team will be in touch within 2 hours.
           </div>
-          <p class="form-note">🔒 Your information is private and never shared. We'll reach out within 2 hours.</p>
+          <p class="form-note">Your information is private and never shared.</p>
 
           <script>
           function submitAppointmentForm() {
