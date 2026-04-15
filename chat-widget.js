@@ -218,7 +218,7 @@
   document.body.insertAdjacentHTML('beforeend', `
     <button id="ai-chat-btn" onclick="window.aiChat.toggle()">
       <span class="chat-pulse"></span>
-      New Patient Intake
+      Schedule a Visit
     </button>
 
     <div id="ai-chat-modal">
@@ -230,8 +230,8 @@
           </svg>
         </div>
         <div class="chat-header-text">
-          <p class="chat-title">New Patient Intake</p>
-          <p class="chat-subtitle">AI-powered · 2 minutes · No phone call needed</p>
+          <p class="chat-title">Book Your Appointment</p>
+          <p class="chat-subtitle">Hi! I'm Sarah, your virtual assistant — here to help</p>
         </div>
         <button class="chat-close" onclick="window.aiChat.toggle()" aria-label="Close">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
