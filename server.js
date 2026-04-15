@@ -87,22 +87,30 @@ async function getAvailableSlots(preferenceDays, preferenceTime) {
 
   let slots = matchingSlots;
 
-  // Return up to 4 slots
-  return slots.slice(0, 4).map(s => {
-    const dt = new Date(s.start_time);
-    return {
-      iso: s.start_time,
-      display: dt.toLocaleString('en-US', {
-        weekday: 'long',
-        month: 'long',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: '2-digit',
-        timeZone: 'America/Phoenix',
-        hour12: true
-      })
-    };
-  });
+  // Pick one slot per calendar day, spread across 4 different days
+  const seenDates = new Set();
+  const spread = [];
+  for (const s of slots) {
+    const dateKey = new Date(s.start_time).toLocaleDateString('en-US', { timeZone: 'America/Phoenix' });
+    if (!seenDates.has(dateKey)) {
+      seenDates.add(dateKey);
+      spread.push(s);
+    }
+    if (spread.length === 4) break;
+  }
+
+  return spread.map(s => ({
+    iso: s.start_time,
+    display: new Date(s.start_time).toLocaleString('en-US', {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      timeZone: 'America/Phoenix',
+      hour12: true
+    })
+  }));
 }
 
 function buildCalendlyLink(name, email) {
