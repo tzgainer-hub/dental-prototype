@@ -134,11 +134,20 @@ async function getAvailableSlots(preferenceDays, preferenceTime, startWeekOffset
   }));
 }
 
-function buildCalendlyLink(name, email) {
+function buildCalendlyLink(name, email, slotIso) {
   const params = new URLSearchParams({
     name: name || '',
     email: email || ''
   });
+  if (slotIso) {
+    // Pre-select the date in Arizona time so Calendly opens on the right day
+    const d = new Date(slotIso);
+    const yyyy = d.toLocaleString('en-US', { timeZone: 'America/Phoenix', year: 'numeric' });
+    const mm   = d.toLocaleString('en-US', { timeZone: 'America/Phoenix', month: '2-digit' });
+    const dd   = d.toLocaleString('en-US', { timeZone: 'America/Phoenix', day: '2-digit' });
+    params.set('month', `${yyyy}-${mm}`);
+    params.set('date',  `${yyyy}-${mm}-${dd}`);
+  }
   return `${CALENDLY_SCHEDULING_URL}?${params.toString()}`;
 }
 
@@ -300,7 +309,8 @@ app.post('/api/chat/start', async (req, res) => {
       startWeekOffset: 0,
       patientName: null,
       patientEmail: null,
-      availableSlots: []
+      availableSlots: [],
+      selectedSlot: null
     });
 
     const response = await client.messages.create({
@@ -430,7 +440,8 @@ app.post('/api/chat/message/:sessionId', async (req, res) => {
       });
 
       if (selectedSlot) {
-        bookingLink = buildCalendlyLink(session.patientName, session.patientEmail);
+        session.selectedSlot = selectedSlot;
+        bookingLink = buildCalendlyLink(session.patientName, session.patientEmail, selectedSlot.iso);
         session.availableSlots = []; // clear so we don't keep triggering
       }
     }
@@ -443,9 +454,11 @@ app.post('/api/chat/message/:sessionId', async (req, res) => {
     ) {
       session.summaryEmailed = true;
       emailSent = true;
-      const bookingLink = session.availableSlots?.length > 0
-        ? buildCalendlyLink(session.patientName, session.patientEmail)
-        : null;
+      const bookingLink = session.selectedSlot
+        ? buildCalendlyLink(session.patientName, session.patientEmail, session.selectedSlot.iso)
+        : (session.availableSlots?.length > 0
+          ? buildCalendlyLink(session.patientName, session.patientEmail)
+          : null);
       sendIntakeEmail(assistantText).catch(console.error);
       sendPatientConfirmationEmail(
         session.patientEmail,
