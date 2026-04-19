@@ -86,16 +86,16 @@ dental-prototype/
 
 ---
 
-## AI Patient Intake Agent — "Sarah"
+## AI Patient Intake Agent — "Sophia"
 
-This is the core differentiator of the White Coat Website product. Every page has a chat widget powered by Claude that acts as a virtual receptionist named Sarah.
+This is the core differentiator of the White Coat Website product. Every page has a chat widget powered by Claude that acts as a virtual receptionist named Sophia.
 
 ### How It Works
 
 **Patient flow (new patients):**
 1. Patient clicks **"Schedule a Visit"** button (bottom right, all pages)
-2. Chat opens: "Book Your Appointment — Hi! I'm Sarah, your virtual assistant"
-3. Sarah fast-tracks: collects name, email, day preference, time preference (4 questions)
+2. Chat opens: "Book Your Appointment — Hi! I'm Sophia, your virtual assistant"
+3. Sophia fast-tracks: collects name, email, day preference, time preference (4 questions)
 4. Server fetches real available slots from Calendly API
 5. Clickable slot buttons appear — one per day, spread across multiple days/weeks
 6. Patient taps a slot → amber **"Confirm My Appointment"** button appears
@@ -113,7 +113,7 @@ This is the core differentiator of the White Coat Website product. Every page ha
 **New patient forms flow:**
 - Nav "Patient Info" → `patient-info.html` (5-step digital intake wizard)
 - Topbar "Patient Forms" → same page
-- Sarah mentions the forms link in chat after booking summary
+- Sophia mentions the forms link in chat after booking summary
 - Patient confirmation email includes a teal CTA block linking to patient-info.html
 - On submit → `/api/patient-forms` → emails full intake to `tomz@pointzeroai.com` + confirmation to patient
 - Sections: Personal Info, Insurance (primary + optional secondary), Health History (conditions checklist, physician, tobacco, women's health), Allergies & Medications, Consent & Signature
@@ -133,7 +133,7 @@ This is the core differentiator of the White Coat Website product. Every page ha
 
 | Variable | Value | Purpose |
 |----------|-------|---------|
-| `ANTHROPIC_API_KEY` | `sk-ant-...` | Powers Sarah (Claude claude-opus-4-5) |
+| `ANTHROPIC_API_KEY` | `sk-ant-...` | Powers Sophia (Claude claude-opus-4-5) |
 | `GMAIL_USER` | `tzgainer@gmail.com` | Email sender |
 | `GMAIL_APP_PASSWORD` | 16-char app password | Gmail authentication |
 | `CALENDLY_API_TOKEN` | `eyJ...` | Fetches real calendar availability |
@@ -159,16 +159,16 @@ The user UUID is in the middle section of the JWT token (base64 decode the paylo
 - Filters by patient's preferred days (Monday, Tuesday, etc.) and time (morning/afternoon)
 - Timezone: **America/Phoenix (UTC-7, no DST)** — always convert before time-of-day filtering
 - Returns **one slot per calendar day** spread across different days (not 4 slots on same day)
-- Supports re-fetching: if patient says "3 weeks out" / "later" / "next month", Sarah emits `[FETCH_SLOTS]` again and server shifts search window accordingly
+- Supports re-fetching: if patient says "3 weeks out" / "later" / "next month", Sophia emits `[FETCH_SLOTS]` again and server shifts search window accordingly
 
-### Sarah's Behavior (system prompt approach)
+### Sophia's Behavior (system prompt approach)
 
-Sarah uses Claude claude-opus-4-5 via `client.messages.create()` — NOT the beta sessions API.
+Sophia uses Claude claude-opus-4-5 via `client.messages.create()` — NOT the beta sessions API.
 Conversation history is stored in-memory per session (`sessions` Map in server.js).
 Sessions are lost on server restart — this is acceptable for a demo.
 
-Sarah signals the server by writing `[FETCH_SLOTS]` in her response when ready to check the calendar.
-The server intercepts this, fetches real slots, injects them back, and Sarah presents them.
+Sophia signals the server by writing `[FETCH_SLOTS]` in her response when ready to check the calendar.
+The server intercepts this, fetches real slots, injects them back, and Sophia presents them.
 
 ### Email Flow
 

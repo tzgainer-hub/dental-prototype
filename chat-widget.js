@@ -230,7 +230,7 @@
         </div>
         <div class="chat-header-text">
           <p class="chat-title">Book Your Appointment</p>
-          <p class="chat-subtitle">Hi! I'm Sarah, your virtual assistant — here to help</p>
+          <p class="chat-subtitle">Hi! I'm Sophia, your virtual assistant — here to help</p>
         </div>
         <button class="chat-close" onclick="window.aiChat.toggle()" aria-label="Close">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -394,7 +394,7 @@
 
     saveTranscript: function () {
       const lines = transcript.map(m => {
-        const label = m.role === 'agent' ? 'Sarah (Scottsdale Surgical Arts)' : 'You';
+        const label = m.role === 'agent' ? 'Sophia (Scottsdale Surgical Arts)' : 'You';
         return `${label}:\n${m.text}`;
       });
       const content = [

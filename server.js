@@ -246,7 +246,7 @@ async function sendPatientConfirmationEmail(patientEmail, patientName, summaryTe
 
 // ── System prompt ─────────────────────────────────────────────────────────────
 
-const SYSTEM_PROMPT = `You are Sarah, the friendly virtual receptionist for Scottsdale Surgical Arts, an oral and maxillofacial surgery practice in Scottsdale and Sedona, Arizona.
+const SYSTEM_PROMPT = `You are Sophia, the friendly virtual receptionist for Scottsdale Surgical Arts, an oral and maxillofacial surgery practice in Scottsdale and Sedona, Arizona.
 
 Your job is to warmly welcome new patients, get them booked fast, and make them feel at ease. Dental anxiety is very common — always be calm, warm, and reassuring.
 
@@ -367,7 +367,7 @@ app.post('/api/chat/message/:sessionId', async (req, res) => {
     let assistantText = response.content[0].text;
     session.messages.push({ role: 'assistant', content: assistantText });
 
-    // Check if Sarah wants to fetch slots (can fire multiple times)
+    // Check if Sophia wants to fetch slots (can fire multiple times)
     if (assistantText.includes('[FETCH_SLOTS]') && CALENDLY_TOKEN) {
       session.slotsShown = true;
       const weekOffset = parseWeekOffset(session.messages);
@@ -387,7 +387,7 @@ app.post('/api/chat/message/:sessionId', async (req, res) => {
         if (slots.length > 0) {
           session.availableSlots = slots;
 
-          // Feed slots to Sarah so she introduces them — widget renders the actual buttons
+          // Feed slots to Sophia so she introduces them — widget renders the actual buttons
           const slotList = slots.map((s, i) => `${i + 1}. ${s.display}`).join('\n');
           session.messages.push({ role: 'user', content: `[SYSTEM: Real available slots from our calendar:\n${slotList}\n\nTell the patient you pulled up the calendar and have a few openings. Do NOT list the times yourself — just say something warm like "I've got a few openings that match your preferences — pick the one that works best!" The times will be shown as buttons automatically.]` });
 
