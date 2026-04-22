@@ -730,6 +730,7 @@ Pricing is fixed: **$1,599 + $149/mo** (Option A) or **$2,500 flat** (Option B, 
 12. **Don't use `display: contents` on layout containers** (hero-content, hero-photo-side). It makes them invisible as flex/grid parents. Use explicit `display: flex` or `display: block`.
 13. **Don't pick one doctor's photo when the practice has two doctors.** Use an office photo, a couple/patient photo, or a photo of both doctors together.
 14. **Don't invent color palettes.** Use the 4 proven palettes in this file. Current demo uses Palette 0: Airy & Modern (coral).
+15. **Don't ship a site without a Google Map on the homepage** (added 2026-04-22). Every white coat site gets a `.find-us` section with an embedded Google Maps iframe + full address + clickable phone + "Get Directions" button, positioned just before the CTA band. This is a trust signal every competitor has. Multi-location practices also get the detailed per-location maps on contact.html (already built for SSA demo). Only skip if the client explicitly says no.
 
 ---
 
