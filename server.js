@@ -314,7 +314,7 @@ app.post('/api/chat/start', async (req, res) => {
     });
 
     const response = await client.messages.create({
-      model: 'claude-opus-4-5',
+      model: 'claude-haiku-4-5',
       max_tokens: 1024,
       system: SYSTEM_PROMPT,
       messages: [
@@ -358,7 +358,7 @@ app.post('/api/chat/message/:sessionId', async (req, res) => {
 
   try {
     const response = await client.messages.create({
-      model: 'claude-opus-4-5',
+      model: 'claude-haiku-4-5',
       max_tokens: 1024,
       system: SYSTEM_PROMPT,
       messages: session.messages
@@ -392,7 +392,7 @@ app.post('/api/chat/message/:sessionId', async (req, res) => {
           session.messages.push({ role: 'user', content: `[SYSTEM: Real available slots from our calendar:\n${slotList}\n\nTell the patient you pulled up the calendar and have a few openings. Do NOT list the times yourself — just say something warm like "I've got a few openings that match your preferences — pick the one that works best!" The times will be shown as buttons automatically.]` });
 
           const slotResponse = await client.messages.create({
-            model: 'claude-opus-4-5',
+            model: 'claude-haiku-4-5',
             max_tokens: 256,
             system: SYSTEM_PROMPT,
             messages: session.messages
@@ -408,7 +408,7 @@ app.post('/api/chat/message/:sessionId', async (req, res) => {
           session.messages.push({ role: 'user', content: '[SYSTEM: No online slots available right now. Please tell the patient the team will call to confirm within one business day.]' });
 
           const fallbackResponse = await client.messages.create({
-            model: 'claude-opus-4-5',
+            model: 'claude-haiku-4-5',
             max_tokens: 512,
             system: SYSTEM_PROMPT,
             messages: session.messages
